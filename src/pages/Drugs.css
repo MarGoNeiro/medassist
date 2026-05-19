@@ -1,0 +1,22 @@
+.filter-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.filter-btn { padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 500; background: var(--color-card); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); min-height: 36px; }
+.filter-btn.active { background: var(--color-primary-light); color: var(--color-primary); border-color: var(--color-primary); }
+.list-block { border-radius: 12px; overflow: hidden; }
+
+.drug-disclaimer { font-size: 12px; color: var(--color-text-secondary); background: var(--color-card); border-left: 3px solid var(--color-primary); padding: 8px 12px; margin: 0; }
+
+.drug-tabs { display: flex; overflow-x: auto; gap: 0; border-bottom: 1.5px solid var(--color-border); background: var(--color-card); padding: 0 8px; }
+.drug-tab { padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--color-text-secondary); white-space: nowrap; border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; min-height: 44px; }
+.drug-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+.accordion { background: var(--color-card); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; font-size: 15px; font-weight: 600; color: var(--color-text); min-height: 52px; }
+.accordion-body { padding: 0 16px 14px; font-size: 14px; line-height: 1.6; color: var(--color-text); border-top: 1px solid var(--color-border); padding-top: 12px; }
+
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.chip { display: flex; align-items: center; gap: 6px; background: var(--color-primary-light); color: var(--color-primary); padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 500; }
+.chip-remove { background: none; border: none; color: var(--color-primary); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; }
+
+.interaction-card { border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+.interaction-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #111827; gap: 8px; }
+.interaction-desc { font-size: 13px; line-height: 1.5; color: #374151; }

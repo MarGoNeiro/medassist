@@ -1,18 +1,18 @@
 :root {
-  --color-primary: #2563EB;
-  --color-primary-hover: #1D4ED8;
-  --color-primary-light: #EFF6FF;
-  --color-primary-mid: #DBEAFE;
+  --color-primary: #4338CA;
+  --color-primary-hover: #3730A3;
+  --color-primary-light: #EEF2FF;
+  --color-primary-mid: #E0E7FF;
   --color-danger: #DC2626;
   --color-warning: #D97706;
   --color-success: #16A34A;
-  --color-text: #0F172A;
+  --color-text: #1E1B4B;
   --color-text-secondary: #64748B;
-  --color-text-tertiary: #94A3B8;
-  --color-border: #E2E8F0;
-  --color-border-light: #F1F5F9;
-  --color-bg: #F8FAFC;
-  --color-card: #FFFFFF;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #D8D4EC;
+  --color-border-light: #E8E5F5;
+  --color-bg: #E2DFF2;
+  --color-card: #F5F3FC;
   --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
   --shadow-md: 0 4px 12px rgba(15,23,42,0.08), 0 1px 4px rgba(15,23,42,0.04);
   --tab-height: 68px;
@@ -23,21 +23,7 @@
   --radius-xl: 20px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-text: #F1F5F9;
-    --color-text-secondary: #94A3B8;
-    --color-text-tertiary: #64748B;
-    --color-border: #1E293B;
-    --color-border-light: #0F172A;
-    --color-bg: #0B1120;
-    --color-card: #131C2E;
-    --color-primary-light: #1E3A5F;
-    --color-primary-mid: #1E3A5F;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
-  }
-}
+/* Тёмная тема — в разработке, пока отключена */
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
@@ -108,13 +94,13 @@ a { color: inherit; text-decoration: none; }
 .badge-green { background: #DCFCE7; color: #15803D; }
 .badge-red { background: #FEE2E2; color: #DC2626; }
 .badge-yellow { background: #FEF9C3; color: #854D0E; }
-.badge-blue { background: #DBEAFE; color: #1D4ED8; }
+.badge-blue { background: #E0E7FF; color: #3730A3; }
 
 .section-title {
-  font-size: 11px; font-weight: 700;
-  color: var(--color-text-tertiary);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 10px; margin-top: 20px;
+  font-size: 12px; font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 10px; margin-top: 24px;
 }
 
 .list-item {

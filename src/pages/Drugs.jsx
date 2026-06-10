@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { drugs, getInteraction } from '../data/drugs'
 import Fuse from 'fuse.js'
+import BookmarkBtn from '../components/BookmarkBtn'
 
 const fuse = new Fuse(drugs, { keys: ['inn', 'brand', 'group'], threshold: 0.35 })
 
@@ -10,6 +11,14 @@ function ChevronRight() {
 
 function ChevronDown({ open }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: '0.2s' }}><path d="m6 9 6 6 6-6"/></svg>
+}
+
+const FORM_URL = import.meta.env.VITE_FEEDBACK_FORM_URL
+
+function reportError(subject) {
+  if (!FORM_URL) return
+  const url = `${FORM_URL}?usp=pp_url&entry.2126400850=` + encodeURIComponent(subject)
+  window.open(url, '_blank', 'noopener')
 }
 
 function addRecent(drug) {
@@ -101,6 +110,14 @@ function DrugCard({ drug, onBack }) {
           <p style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>{drug.brand}</p>
         </div>
         {drug.znvlp && <span className="badge badge-green">ЖНВЛП</span>}
+        <BookmarkBtn
+          id={`drug_${drug.id}`}
+          type="drug"
+          title={drug.inn}
+          subtitle={drug.group}
+          section="drugs"
+          itemId={drug.id}
+        />
       </div>
 
       <div className="drug-tabs">
@@ -201,15 +218,22 @@ function DrugCard({ drug, onBack }) {
             ))}
           </div>
         )}
+
+        {FORM_URL && (
+          <button className="report-error-btn" onClick={() => reportError(drug.inn)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            Нашли ошибку в данных?
+          </button>
+        )}
       </div>
     </div>
   )
 }
 
-export default function Drugs() {
+export default function Drugs({ initialId }) {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState(() => initialId ? drugs.find(d => d.id === initialId) || null : null)
 
   if (selected) return <DrugCard drug={selected} onBack={() => setSelected(null)} />
 

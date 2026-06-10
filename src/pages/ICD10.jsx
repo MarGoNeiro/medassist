@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import { icd10 } from '../data/icd10'
 import Fuse from 'fuse.js'
+import BookmarkBtn from '../components/BookmarkBtn'
+
+const FORM_URL = import.meta.env.VITE_FEEDBACK_FORM_URL
+
+function reportError(subject) {
+  if (!FORM_URL) return
+  const url = `${FORM_URL}?usp=pp_url&entry.2126400850=` + encodeURIComponent(subject)
+  window.open(url, '_blank', 'noopener')
+}
 
 const fuse = new Fuse(icd10, { keys: ['code', 'title'], threshold: 0.3 })
 
@@ -35,6 +44,14 @@ function CodeCard({ item, onBack }) {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
         <h1>МКБ-10</h1>
+        <BookmarkBtn
+          id={`icd_${item.code}`}
+          type="icd"
+          title={`${item.code} — ${item.title}`}
+          subtitle={item.blockTitle}
+          section="icd"
+          itemId={item.code}
+        />
       </div>
       <div className="page-content">
         <div className="code-card">
@@ -64,14 +81,20 @@ function CodeCard({ item, onBack }) {
             </div>
           </>
         )}
+        {FORM_URL && (
+          <button className="report-error-btn" onClick={() => reportError(`${item.code} ${item.title}`)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            Нашли ошибку в данных?
+          </button>
+        )}
       </div>
     </div>
   )
 }
 
-export default function ICD10() {
+export default function ICD10({ initialCode }) {
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState(() => initialCode ? icd10.find(i => i.code === initialCode) || null : null)
 
   if (selected) return <CodeCard item={selected} onBack={() => setSelected(null)} />
 

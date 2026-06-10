@@ -3,7 +3,7 @@
 .filter-btn.active { background: var(--color-primary-light); color: var(--color-primary); border-color: var(--color-primary); }
 .list-block { border-radius: 12px; overflow: hidden; }
 
-.drug-disclaimer { font-size: 12px; color: var(--color-text-secondary); background: var(--color-card); border-left: 3px solid var(--color-primary); padding: 8px 12px; margin: 0; }
+.drug-disclaimer { font-size: 12px; color: var(--color-text-secondary); background: var(--color-primary-light); padding: 8px 14px; margin: 0; }
 
 .drug-tabs { display: flex; overflow-x: auto; gap: 0; border-bottom: 1.5px solid var(--color-border); background: var(--color-card); padding: 0 8px; }
 .drug-tab { padding: 12px 14px; font-size: 14px; font-weight: 500; color: var(--color-text-secondary); white-space: nowrap; border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; min-height: 44px; }

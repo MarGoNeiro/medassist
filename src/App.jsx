@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Drugs from './pages/Drugs'
 import Calculators from './pages/Calculators'
 import ICD10 from './pages/ICD10'
+import Favorites from './pages/Favorites'
 import Onboarding from './pages/Onboarding'
 import './pages/Drugs.css'
 import './pages/Calculators.css'
@@ -13,6 +14,8 @@ export default function App() {
   const [tab, setTab] = useState('home')
   const [specialty, setSpecialty] = useState(() => localStorage.getItem('specialty') || '')
   const [changingSpecialty, setChangingSpecialty] = useState(false)
+  const [drugInitId, setDrugInitId] = useState(null)
+  const [icdInitCode, setIcdInitCode] = useState(null)
 
   useEffect(() => {
     // Push a state so pressing browser Back doesn't exit
@@ -37,7 +40,9 @@ export default function App() {
     setChangingSpecialty(false)
   }
 
-  function navigateTo(section) {
+  function navigateTo(section, itemId) {
+    if (section === 'drugs') setDrugInitId(itemId || null)
+    if (section === 'icd') setIcdInitCode(itemId || null)
     setTab(section)
   }
 
@@ -53,10 +58,11 @@ export default function App() {
 
   return (
     <>
-      {tab === 'home' && <Home onNavigate={navigateTo} specialty={specialty} onChangeSpecialty={() => setChangingSpecialty(true)} />}
-      {tab === 'drugs' && <Drugs />}
-      {tab === 'calc' && <Calculators />}
-      {tab === 'icd' && <ICD10 />}
+      {tab === 'home'      && <Home onNavigate={navigateTo} specialty={specialty} onChangeSpecialty={() => setChangingSpecialty(true)} />}
+      {tab === 'drugs'     && <Drugs key={drugInitId || 'list'} initialId={drugInitId} />}
+      {tab === 'calc'      && <Calculators />}
+      {tab === 'icd'       && <ICD10 key={icdInitCode || 'list'} initialCode={icdInitCode} />}
+      {tab === 'favorites' && <Favorites onNavigate={navigateTo} />}
       <TabBar active={tab} onChange={setTab} />
     </>
   )

@@ -1,6 +1,6 @@
 .onboarding { height: 100%; display: flex; flex-direction: column; background: var(--color-bg); }
 
-.onboarding-top { background: linear-gradient(160deg, #1E1B4B, #3730A3 60%, #4F46E5); padding: 52px 24px 44px; display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; }
+.onboarding-top { background: linear-gradient(160deg, #2D2A6E, #4338CA 60%, #6366F1); padding: 52px 24px 44px; display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; }
 
 .ob-back { position: absolute; top: 16px; left: 16px; width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 

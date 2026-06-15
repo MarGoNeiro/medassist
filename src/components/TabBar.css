@@ -2,8 +2,8 @@
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: var(--tab-height);
-  background: var(--color-card);
-  border-top: 1px solid var(--color-border);
+  background: #0C6B8E;
+  border-top: 1px solid #0E88B2;
   display: flex;
   z-index: 100;
   padding-bottom: env(safe-area-inset-bottom);
@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: var(--color-text-tertiary);
+  color: rgba(255,255,255,0.4);
   position: relative;
   min-height: 44px;
   transition: color 0.15s;
@@ -29,7 +29,7 @@
 }
 
 .tab-item.active {
-  color: var(--color-primary);
+  color: #38BDF8;
 }
 
 .tab-item.active::before {
@@ -37,7 +37,7 @@
   position: absolute;
   top: 0; left: 20%; right: 20%;
   height: 2px;
-  background: var(--color-primary);
+  background: #38BDF8;
   border-radius: 0 0 2px 2px;
 }
 

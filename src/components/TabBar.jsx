@@ -3,8 +3,9 @@ import './TabBar.css'
 const tabs = [
   { id: 'home',      label: 'Главная',   icon: HomeIcon },
   { id: 'drugs',     label: 'Препараты', icon: PillIcon },
-  { id: 'calc',      label: 'Калькуляторы', icon: CalcIcon },
+  { id: 'cr',        label: 'КР',        icon: CRIcon },
   { id: 'icd',       label: 'МКБ-10',    icon: ListIcon },
+  { id: 'calc',      label: 'Расчёты',   icon: CalcIcon },
   { id: 'favorites', label: 'Избранное', icon: BookmarkIcon },
 ]
 
@@ -19,6 +20,9 @@ function CalcIcon() {
 }
 function ListIcon() {
   return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+}
+function CRIcon() {
+  return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
 }
 function BookmarkIcon() {
   return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>

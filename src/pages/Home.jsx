@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { drugs } from '../data/drugs'
 import { icd10 } from '../data/icd10'
 import { calculators } from '../data/calculators'
+import crData from '../data/cr_data.json'
 import './Home.css'
 
 const specialtyNames = {
@@ -58,6 +59,8 @@ function ArrowIcon() {
 // Кириллические буквы, визуально идентичные латинским (для ввода кодов МКБ с русской раскладки)
 const CYR_TO_LAT = { 'а':'a','в':'b','с':'c','е':'e','к':'k','м':'m','н':'h','о':'o','р':'p','т':'t','х':'x','А':'A','В':'B','С':'C','Е':'E','К':'K','М':'M','Н':'H','О':'O','Р':'P','Т':'T','Х':'X' }
 function normQuery(q) { return q.split('').map(ch => CYR_TO_LAT[ch] ?? ch).join('') }
+function stemWord(w) { return w.length > 5 ? w.slice(0, 5) : w }
+function stemMatch(text, q) { return q.split(/\s+/).filter(Boolean).every(w => text.includes(stemWord(w))) }
 
 function buildResults(q) {
   const lq = normQuery(q).toLowerCase()
@@ -76,13 +79,23 @@ function buildResults(q) {
     .slice(0, 3)
     .map(c => ({ type: 'calc', id: c.id, title: c.name, sub: c.description, section: 'calc' }))
 
-  return [...drugHits, ...icdHits, ...calcHits]
+  const crHits = crData
+    .filter(r => {
+      const nameMatch = r.name ? stemMatch(r.name.toLowerCase(), lq) : false
+      const mkbMatch = Array.isArray(r.mkb) && r.mkb.some(m => m && m.toLowerCase().includes(lq))
+      return nameMatch || mkbMatch
+    })
+    .slice(0, 4)
+    .map(r => ({ type: 'cr', id: r.id, title: r.name, sub: (r.mkb || []).slice(0, 3).join(', '), section: 'cr' }))
+
+  return [...drugHits, ...icdHits, ...calcHits, ...crHits]
 }
 
 const BADGE = {
   drug: { label: 'Препарат', cls: 'badge-blue' },
   icd:  { label: 'МКБ-10',   cls: 'badge-purple' },
   calc: { label: 'Шкала',    cls: 'badge-green' },
+  cr:   { label: 'КР',       cls: 'badge-green' },
 }
 
 export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
@@ -180,7 +193,7 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
               </div>
               <div className="tile-body">
                 <div className="tile-name">Препараты</div>
-                <div className="tile-desc">78 МНН · ЖНВЛП</div>
+                <div className="tile-desc">128 МНН · ЖНВЛП</div>
               </div>
             </button>
 
@@ -198,6 +211,18 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
               <div className="tile-body">
                 <div className="tile-name">Калькуляторы</div>
                 <div className="tile-desc">8 клинических шкал</div>
+              </div>
+            </button>
+
+            <button className="tile tile-emerald" onClick={() => onNavigate('cr')}>
+              <div className="tile-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+              </div>
+              <div className="tile-body">
+                <div className="tile-name">Клин. рекомендации</div>
+                <div className="tile-desc">1785 протоколов МЗ РФ</div>
               </div>
             </button>
 

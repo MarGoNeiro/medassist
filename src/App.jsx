@@ -5,6 +5,7 @@ import Drugs from './pages/Drugs'
 import Calculators from './pages/Calculators'
 import ICD10 from './pages/ICD10'
 import Favorites from './pages/Favorites'
+import ClinRecs from './pages/ClinRecs'
 import Onboarding from './pages/Onboarding'
 import './pages/Drugs.css'
 import './pages/Calculators.css'
@@ -62,6 +63,7 @@ export default function App() {
       {tab === 'drugs'     && <Drugs key={drugInitId || 'list'} initialId={drugInitId} />}
       {tab === 'calc'      && <Calculators />}
       {tab === 'icd'       && <ICD10 key={icdInitCode || 'list'} initialCode={icdInitCode} />}
+      {tab === 'cr'        && <ClinRecs />}
       {tab === 'favorites' && <Favorites onNavigate={navigateTo} />}
       <TabBar active={tab} onChange={setTab} />
     </>

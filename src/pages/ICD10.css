@@ -1,5 +1,18 @@
 .list-block { border-radius: 12px; overflow: hidden; }
 
+@media (min-width: 768px) {
+  .list-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 16px;
+  }
+
+  .icd-hero-search { max-width: 600px; }
+
+  .section-hero { padding: 28px 48px 24px; }
+  .section-hero-title { font-size: 34px; }
+}
+
 /* Поиск внутри шапки МКБ */
 .icd-hero-search {
   display: flex;

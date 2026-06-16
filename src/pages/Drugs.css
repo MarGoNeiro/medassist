@@ -3,6 +3,17 @@
 .filter-btn.active { background: var(--color-primary-light); color: var(--color-primary); border-color: var(--color-primary); }
 .list-block { border-radius: 12px; overflow: hidden; }
 
+@media (min-width: 768px) {
+  .list-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 16px;
+  }
+
+  .filter-row { padding: 0 16px; gap: 12px; }
+  .filter-btn { font-size: 15px; }
+}
+
 .drug-disclaimer { font-size: 12px; color: var(--color-text-secondary); background: var(--color-primary-light); padding: 8px 14px; margin: 0; }
 
 .drug-tabs { display: flex; overflow-x: auto; gap: 0; border-bottom: 1.5px solid var(--color-border); background: var(--color-card); padding: 0 8px; }

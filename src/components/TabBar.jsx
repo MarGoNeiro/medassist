@@ -3,7 +3,7 @@ import './TabBar.css'
 const tabs = [
   { id: 'home',      label: 'Главная',   icon: HomeIcon },
   { id: 'drugs',     label: 'Препараты', icon: PillIcon },
-  { id: 'calc',      label: 'Расчёты',   icon: CalcIcon },
+  { id: 'calc',      label: 'Калькуляторы', icon: CalcIcon },
   { id: 'icd',       label: 'МКБ-10',    icon: ListIcon },
   { id: 'favorites', label: 'Избранное', icon: BookmarkIcon },
 ]

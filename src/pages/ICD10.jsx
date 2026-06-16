@@ -300,13 +300,21 @@ export default function ICD10({ initialCode }) {
 
   return (
     <div className="page">
-      <div className="page-header"><h1>МКБ-10</h1></div>
-      <div className="page-content">
-        <div className="search-bar">
-          <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Код или название болезни..." />
-          {query && <button onClick={() => setQuery('')} style={{ color: 'var(--color-text-secondary)', fontSize: 18 }}>×</button>}
+      <div className="section-hero section-hero--icd">
+        <p className="section-hero-label">Справочник</p>
+        <h1 className="section-hero-title">МКБ-10</h1>
+        <div className="icd-hero-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'rgba(255,255,255,0.5)', flexShrink: 0 }}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Код или название болезни..."
+            className="icd-hero-input"
+          />
+          {query && <button onClick={() => setQuery('')} style={{ color: 'rgba(255,255,255,0.5)', fontSize: 18, lineHeight: 1 }}>×</button>}
         </div>
+      </div>
+      <div className="page-content">
 
         {/* Recent codes */}
         {recentCodes.length > 0 && !query && (
@@ -346,7 +354,7 @@ export default function ICD10({ initialCode }) {
                   style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === CHAPTERS.length - 1 ? '0 0 12px 12px' : 0 }}>
                   <div className="icd-chapter-code">{ch.range}</div>
                   <div className="list-item-content">
-                    <div className="list-item-title" style={{ fontSize: 13 }}>{ch.title}</div>
+                    <div className="list-item-title" style={{ fontSize: 13, whiteSpace: 'normal' }}>{ch.title}</div>
                   </div>
                   <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </button>

@@ -42,6 +42,49 @@ function shareText(text) {
   }
 }
 
+const EFFECT_RULES = [
+  { rx: /снижает.{0,60}(auc|концентрац|уровень|экспозиц)|уменьшает.{0,40}(auc|концентрац)|резко снижает концентрац|значительно снижает концентрац/i,
+    label: '↓ концентрация', bg: 'rgba(96,165,250,0.15)', color: '#60A5FA' },
+  { rx: /повышает.{0,60}(auc|концентрац|уровень)|увеличивает.{0,40}(auc|концентрац)|возрастает.{0,30}(auc|концентрац)/i,
+    label: '↑ концентрация', bg: 'rgba(248,113,113,0.15)', color: '#F87171' },
+  { rx: /усиливает.{0,20}(эффект|антикоагул|действие)|потенцирует.{0,20}эффект|резко усиливает|ингибир.{0,60}cyp.{0,30}усилива/i,
+    label: '↑ эффект', bg: 'rgba(248,113,113,0.15)', color: '#F87171' },
+  { rx: /удлинен.{0,12}qt|qt.{0,12}удлин|тдп|torsades/i,
+    label: 'QT ↑', bg: 'rgba(251,191,36,0.15)', color: '#FBBF24' },
+  { rx: /нефротоксич/i,
+    label: 'нефротоксичность', bg: 'rgba(167,139,250,0.15)', color: '#A78BFA' },
+  { rx: /гипогликем/i,
+    label: 'гипогликемия', bg: 'rgba(52,211,153,0.15)', color: '#34D399' },
+  { rx: /риск.{0,20}кровотечени|геморрагическ|кровотечени/i,
+    label: 'кровотечение', bg: 'rgba(248,113,113,0.15)', color: '#F87171' },
+  { rx: /гипотензи|снижени.{0,20}ад\b|артериальн.{0,10}гипотен/i,
+    label: 'гипотензия', bg: 'rgba(96,165,250,0.15)', color: '#60A5FA' },
+  { rx: /гиперкалием/i,
+    label: 'гиперкалиемия', bg: 'rgba(251,191,36,0.15)', color: '#FBBF24' },
+  { rx: /брадикарди|аддитивн.{0,20}(чсс|эффект на чсс)|эффект.{0,20}чсс/i,
+    label: 'брадикардия', bg: 'rgba(167,139,250,0.15)', color: '#A78BFA' },
+  { rx: /угнетени.{0,15}(цнс|дыхани|дыхательн)|цнс-депрессия|аддитивная.{0,20}депрессия/i,
+    label: 'депрессия ЦНС', bg: 'rgba(156,163,175,0.15)', color: '#9CA3AF' },
+  { rx: /гепатотоксич/i,
+    label: 'гепатотоксичность', bg: 'rgba(245,158,11,0.15)', color: '#F59E0B' },
+  { rx: /серотонинов/i,
+    label: 'серотониновый синдром', bg: 'rgba(236,72,153,0.15)', color: '#EC4899' },
+  { rx: /двойная блокада раас/i,
+    label: 'двойная блокада РААС', bg: 'rgba(251,191,36,0.15)', color: '#FBBF24' },
+  { rx: /антидот|нейтрализ.{0,20}(гепарин|эффект)|реверсирует|специфическ.{0,10}антаг/i,
+    label: 'антидот', bg: 'rgba(52,211,153,0.15)', color: '#34D399' },
+]
+
+function detectEffects(description) {
+  if (!description) return []
+  const seen = new Set()
+  return EFFECT_RULES.filter(r => {
+    if (seen.has(r.label)) return false
+    if (r.rx.test(description)) { seen.add(r.label); return true }
+    return false
+  })
+}
+
 function DrugCard({ drug, onBack }) {
   const [tab, setTab] = useState('dosing')
   const [openSection, setOpenSection] = useState('adult')
@@ -184,7 +227,23 @@ function DrugCard({ drug, onBack }) {
                         <span>{cfg.icon} {pair.a.inn} + {pair.b.inn}</span>
                         <span style={{ color: cfg.color, fontWeight: 600, fontSize: 13 }}>{cfg.label}</span>
                       </div>
-                      {pair.inter && <p className="interaction-desc">{pair.inter.description}</p>}
+                      {pair.inter && (() => {
+                        const effects = detectEffects(pair.inter.description)
+                        return (
+                          <>
+                            {effects.length > 0 && (
+                              <div className="interaction-effects">
+                                {effects.map(e => (
+                                  <span key={e.label} className="interaction-effect-chip" style={{ background: e.bg, color: e.color }}>
+                                    {e.label}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                            <p className="interaction-desc">{pair.inter.description}</p>
+                          </>
+                        )
+                      })()}
                       {!pair.inter && <p className="interaction-desc">Значимых взаимодействий не обнаружено в базе.</p>}
                     </div>
                   )

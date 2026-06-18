@@ -30,4 +30,6 @@
 
 .interaction-card { border-radius: 10px; padding: 14px; margin-bottom: 10px; }
 .interaction-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #111827; gap: 8px; }
+.interaction-effects { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.interaction-effect-chip { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; font-family: 'Inter', -apple-system, sans-serif; white-space: nowrap; }
 .interaction-desc { font-size: 13px; line-height: 1.5; color: #374151; }

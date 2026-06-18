@@ -28,6 +28,24 @@ function ExternalIcon() {
   )
 }
 
+function YaIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="7.5"/><path d="m20 20-3.5-3.5"/>
+    </svg>
+  )
+}
+
+function openExternal(url) {
+  const a = document.createElement('a')
+  a.href = url
+  a.target = '_blank'
+  a.rel = 'noopener noreferrer'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}
+
 const AGE_FILTERS = [
   { key: 'all',   label: 'Все' },
   { key: 'adult', label: 'Взрослые' },
@@ -109,12 +127,10 @@ export default function ClinRecs() {
             <div className="cr-empty">Ничего не найдено</div>
           ) : (
             shown.map(r => (
-              <a
+              <div
                 key={r.id}
-                href={`https://cr.minzdrav.gov.ru/recomend/${r.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="cr-item"
+                onClick={() => openExternal(`https://cr.minzdrav.gov.ru/recomend/${r.id}`)}
               >
                 <div className="cr-item-main">
                   <div className="cr-item-name">{r.name}</div>
@@ -136,10 +152,21 @@ export default function ClinRecs() {
                     </div>
                   </div>
                 </div>
-                <div className="cr-item-arrow">
-                  <ExternalIcon />
+                <div className="cr-item-actions">
+                  <button
+                    className="cr-ya-btn"
+                    onClick={e => {
+                      e.stopPropagation()
+                      openExternal(`https://yandex.ru/search/?text=${encodeURIComponent('клинические рекомендации ' + r.name)}`)
+                    }}
+                    title="Найти в Яндексе"
+                  >
+                    <YaIcon />
+                    <span>Яндекс</span>
+                  </button>
+                  <div className="cr-item-ext"><ExternalIcon /></div>
                 </div>
-              </a>
+              </div>
             ))
           )}
         </div>

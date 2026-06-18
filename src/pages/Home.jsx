@@ -193,7 +193,7 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
               </div>
               <div className="tile-body">
                 <div className="tile-name">Препараты</div>
-                <div className="tile-desc">674 МНН · ЖНВЛП</div>
+                <div className="tile-desc">685 МНН · ЖНВЛП</div>
               </div>
             </button>
 

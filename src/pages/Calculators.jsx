@@ -143,10 +143,10 @@ function CalcView({ calc, onBack }) {
   )
 }
 
-export default function Calculators() {
+export default function Calculators({ initialId } = {}) {
   const [specialty, setSpecialty] = useState('all')
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState(() => initialId ? calculators.find(c => c.id === initialId) ?? null : null)
 
   if (selected) return <CalcView calc={selected} onBack={() => setSelected(null)} />
 

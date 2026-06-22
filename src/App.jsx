@@ -17,6 +17,7 @@ export default function App() {
   const [changingSpecialty, setChangingSpecialty] = useState(false)
   const [drugInitId, setDrugInitId] = useState(null)
   const [icdInitCode, setIcdInitCode] = useState(null)
+  const [calcInitId, setCalcInitId] = useState(null)
 
   useEffect(() => {
     // Push a state so pressing browser Back doesn't exit
@@ -44,6 +45,7 @@ export default function App() {
   function navigateTo(section, itemId) {
     if (section === 'drugs') setDrugInitId(itemId || null)
     if (section === 'icd') setIcdInitCode(itemId || null)
+    if (section === 'calc') setCalcInitId(itemId || null)
     setTab(section)
   }
 
@@ -61,7 +63,7 @@ export default function App() {
     <>
       {tab === 'home'      && <Home onNavigate={navigateTo} specialty={specialty} onChangeSpecialty={() => setChangingSpecialty(true)} />}
       {tab === 'drugs'     && <Drugs key={drugInitId || 'list'} initialId={drugInitId} />}
-      {tab === 'calc'      && <Calculators />}
+      {tab === 'calc'      && <Calculators key={calcInitId || 'list'} initialId={calcInitId} />}
       {tab === 'icd'       && <ICD10 key={icdInitCode || 'list'} initialCode={icdInitCode} />}
       {tab === 'cr'        && <ClinRecs />}
       {tab === 'favorites' && <Favorites onNavigate={navigateTo} />}

@@ -3,7 +3,56 @@ import { drugs } from '../data/drugs'
 import { icd10 } from '../data/icd10'
 import { calculators } from '../data/calculators'
 import crData from '../data/cr_data.json'
+import PediatricSuite       from './suites/PediatricSuite'
+import CardiologySuite      from './suites/CardiologySuite'
+import ObGynSuite           from './suites/ObGynSuite'
+import NeurologySuite       from './suites/NeurologySuite'
+import TherapistSuite       from './suites/TherapistSuite'
+import EndocrinologySuite   from './suites/EndocrinologySuite'
+import PulmonologySuite     from './suites/PulmonologySuite'
+import AnesthesiologySuite  from './suites/AnesthesiologySuite'
+import SurgerySuite         from './suites/SurgerySuite'
+import GastroSuite          from './suites/GastroSuite'
+import NephrologySuite      from './suites/NephrologySuite'
+import EmergencySuite       from './suites/EmergencySuite'
+import DietologySuite       from './suites/DietologySuite'
+import InfectionSuite       from './suites/InfectionSuite'
+import OncologySuite        from './suites/OncologySuite'
+import PsychSuite           from './suites/PsychSuite'
+import RheumatologySuite    from './suites/RheumatologySuite'
+import UrologySuite         from './suites/UrologySuite'
+import TraumaSuite          from './suites/TraumaSuite'
 import './Home.css'
+
+const SPECIALTY_SUITE = {
+  'Педиатр':                   PediatricSuite,
+  'Кардиолог':                 CardiologySuite,
+  'Хирург (сосудистый)':       CardiologySuite,
+  'Гематолог':                 CardiologySuite,
+  'Гинеколог':                 ObGynSuite,
+  'Акушер':                    ObGynSuite,
+  'Невролог':                  NeurologySuite,
+  'Терапевт / ВОП':            TherapistSuite,
+  'Семейный врач':             TherapistSuite,
+  'Эндокринолог':              EndocrinologySuite,
+  'Диетолог / Нутрициолог':   DietologySuite,
+  'Пульмонолог':               PulmonologySuite,
+  'Фтизиатр':                  PulmonologySuite,
+  'Анестезиолог-реаниматолог': AnesthesiologySuite,
+  'Хирург':                    SurgerySuite,
+  'Гастроэнтеролог':           GastroSuite,
+  'Нефролог':                  NephrologySuite,
+  'Врач скорой помощи':        EmergencySuite,
+  'Инфекционист':              InfectionSuite,
+  'Онколог':                   OncologySuite,
+  'Психиатр':                  PsychSuite,
+  'Психотерапевт':             PsychSuite,
+  'Нарколог':                  PsychSuite,
+  'Ревматолог':                RheumatologySuite,
+  'Аллерголог-иммунолог':      RheumatologySuite,
+  'Уролог':                    UrologySuite,
+  'Травматолог-ортопед':       TraumaSuite,
+}
 
 const specialtyNames = {
   'Терапевт / ВОП': 'Терапевт',
@@ -48,14 +97,6 @@ function getGreeting() {
   return 'Доброй ночи,'
 }
 
-function ArrowIcon() {
-  return (
-    <svg className="tile-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m9 18 6-6-6-6"/>
-    </svg>
-  )
-}
-
 // Кириллические буквы, визуально идентичные латинским (для ввода кодов МКБ с русской раскладки)
 const CYR_TO_LAT = { 'а':'a','в':'b','с':'c','е':'e','к':'k','м':'m','н':'h','о':'o','р':'p','т':'t','х':'x','А':'A','В':'B','С':'C','Е':'E','К':'K','М':'M','Н':'H','О':'O','Р':'P','Т':'T','Х':'X' }
 function normQuery(q) { return q.split('').map(ch => CYR_TO_LAT[ch] ?? ch).join('') }
@@ -63,14 +104,27 @@ function stemWord(w) { return w.length > 5 ? w.slice(0, 5) : w }
 function stemMatch(text, q) { return q.split(/\s+/).filter(Boolean).every(w => text.includes(stemWord(w))) }
 
 function buildResults(q) {
-  const lq = normQuery(q).toLowerCase()
+  // normQuery только для кодов МКБ (С→C и т.п.) — для текстового поиска используем исходный запрос
+  const lq     = q.toLowerCase()
+  const lqNorm = normQuery(q).toLowerCase()
+
   const drugHits = drugs
-    .filter(d => d.inn.toLowerCase().includes(lq) || d.brand.toLowerCase().includes(lq) || d.group.toLowerCase().includes(lq))
-    .slice(0, 4)
-    .map(d => ({ type: 'drug', id: d.id, title: d.inn, sub: d.brand, section: 'drugs' }))
+    .filter(d => {
+      const inn   = d.inn.toLowerCase()
+      const brand = d.brand.toLowerCase()
+      const group = d.group.toLowerCase()
+      const alts  = (d.alternatives || []).join(' ').toLowerCase()
+      return inn.includes(lq) || brand.includes(lq) || group.includes(lq) || alts.includes(lq)
+    })
+    .slice(0, 5)
+    .map(d => {
+      // показываем торговое название в подписи если нашли по нему
+      const matchedBrand = d.brand.toLowerCase().includes(lq) && !d.inn.toLowerCase().includes(lq)
+      return { type: 'drug', id: d.id, title: d.inn, sub: matchedBrand ? `Торговое: ${d.brand}` : d.brand, section: 'drugs' }
+    })
 
   const icdHits = icd10
-    .filter(i => i.code.toLowerCase().includes(lq) || i.title.toLowerCase().includes(lq))
+    .filter(i => i.code.toLowerCase().includes(lqNorm) || i.title.toLowerCase().includes(lq))
     .slice(0, 4)
     .map(i => ({ type: 'icd', id: i.code, title: i.title, sub: i.code, section: 'icd' }))
 
@@ -82,7 +136,7 @@ function buildResults(q) {
   const crHits = crData
     .filter(r => {
       const nameMatch = r.name ? stemMatch(r.name.toLowerCase(), lq) : false
-      const mkbMatch = Array.isArray(r.mkb) && r.mkb.some(m => m && m.toLowerCase().includes(lq))
+      const mkbMatch = Array.isArray(r.mkb) && r.mkb.some(m => m && m.toLowerCase().includes(lqNorm))
       return nameMatch || mkbMatch
     })
     .slice(0, 4)
@@ -103,6 +157,8 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
   const recentStr = localStorage.getItem('recent') || '[]'
   const recent = JSON.parse(recentStr).slice(0, 5)
   const specialtyLabel = specialtyNames[specialty] || 'Доктор'
+
+  const SpecialtySuite = SPECIALTY_SUITE[specialty] || null
 
   const q = query.trim()
   const isSearching = q.length >= 2
@@ -182,72 +238,76 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
       {/* Normal home content — hidden while searching */}
       {!isSearching && (
         <>
-          {/* Tiles grid */}
-          <div className="home-tiles">
-            <button className="tile tile-blue" onClick={() => onNavigate('drugs')}>
-              <div className="tile-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
-                  <path d="m8.5 8.5 7 7"/>
-                </svg>
-              </div>
-              <div className="tile-body">
-                <div className="tile-name">Препараты</div>
-                <div className="tile-desc">823 МНН · ЖНВЛП</div>
-              </div>
-            </button>
+          {/* Specialty workroom */}
+          {SpecialtySuite ? (
+            <SpecialtySuite />
+          ) : (
+            /* Fallback tiles for specialties without a dedicated suite */
+            <div className="home-tiles">
+              <button className="tile tile-blue" onClick={() => onNavigate('drugs')}>
+                <div className="tile-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
+                    <path d="m8.5 8.5 7 7"/>
+                  </svg>
+                </div>
+                <div className="tile-body">
+                  <div className="tile-name">Препараты</div>
+                  <div className="tile-desc">823 МНН · ЖНВЛП</div>
+                </div>
+              </button>
 
-            <button className="tile tile-green" onClick={() => onNavigate('calc')}>
-              <div className="tile-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="16" height="20" x="4" y="2" rx="2"/>
-                  <line x1="8" x2="16" y1="6" y2="6"/>
-                  <line x1="16" x2="16" y1="14" y2="18"/>
-                  <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
-                  <path d="M12 14h.01"/><path d="M8 14h.01"/>
-                  <path d="M12 18h.01"/><path d="M8 18h.01"/>
-                </svg>
-              </div>
-              <div className="tile-body">
-                <div className="tile-name">Калькуляторы</div>
-                <div className="tile-desc">8 клинических шкал</div>
-              </div>
-            </button>
+              <button className="tile tile-green" onClick={() => onNavigate('calc')}>
+                <div className="tile-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="16" height="20" x="4" y="2" rx="2"/>
+                    <line x1="8" x2="16" y1="6" y2="6"/>
+                    <line x1="16" x2="16" y1="14" y2="18"/>
+                    <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
+                    <path d="M12 14h.01"/><path d="M8 14h.01"/>
+                    <path d="M12 18h.01"/><path d="M8 18h.01"/>
+                  </svg>
+                </div>
+                <div className="tile-body">
+                  <div className="tile-name">Калькуляторы</div>
+                  <div className="tile-desc">8 клинических шкал</div>
+                </div>
+              </button>
 
-            <button className="tile tile-emerald" onClick={() => onNavigate('cr')}>
-              <div className="tile-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                </svg>
-              </div>
-              <div className="tile-body">
-                <div className="tile-name">Клин. рекомендации</div>
-                <div className="tile-desc">1785 протоколов МЗ РФ</div>
-              </div>
-            </button>
+              <button className="tile tile-emerald" onClick={() => onNavigate('cr')}>
+                <div className="tile-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                </div>
+                <div className="tile-body">
+                  <div className="tile-name">Клин. рекомендации</div>
+                  <div className="tile-desc">1785 протоколов МЗ РФ</div>
+                </div>
+              </button>
 
-            <button className="tile tile-purple tile-wide" onClick={() => onNavigate('icd')}>
-              <div className="tile-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="8" x2="21" y1="6" y2="6"/>
-                  <line x1="8" x2="21" y1="12" y2="12"/>
-                  <line x1="8" x2="21" y1="18" y2="18"/>
-                  <line x1="3" x2="3.01" y1="6" y2="6"/>
-                  <line x1="3" x2="3.01" y1="12" y2="12"/>
-                  <line x1="3" x2="3.01" y1="18" y2="18"/>
-                </svg>
-              </div>
-              <div className="tile-body">
-                <div className="tile-name">МКБ-10</div>
-                <div className="tile-desc">Поиск кодов диагнозов</div>
-              </div>
-              <ArrowIcon />
-            </button>
-          </div>
+              <button className="tile tile-purple" onClick={() => onNavigate('icd')}>
+                <div className="tile-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="8" x2="21" y1="6" y2="6"/>
+                    <line x1="8" x2="21" y1="12" y2="12"/>
+                    <line x1="8" x2="21" y1="18" y2="18"/>
+                    <line x1="3" x2="3.01" y1="6" y2="6"/>
+                    <line x1="3" x2="3.01" y1="12" y2="12"/>
+                    <line x1="3" x2="3.01" y1="18" y2="18"/>
+                  </svg>
+                </div>
+                <div className="tile-body">
+                  <div className="tile-name">МКБ-10</div>
+                  <div className="tile-desc">Поиск кодов диагнозов</div>
+                </div>
+              </button>
+            </div>
+          )}
 
           {/* Recent */}
           {recent.length > 0 && (
-            <div className="page-content">
+            <div className="page-content" style={{ paddingTop: SpecialtySuite ? 0 : 8 }}>
               <p className="section-title">Недавние</p>
               <div className="recent-list">
                 {recent.map((item, i) => (

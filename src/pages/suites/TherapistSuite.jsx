@@ -58,12 +58,9 @@ export default function TherapistSuite() {
 
       {/* CURB-65 */}
       <div className="suite-card">
-        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="suite-card-title">
           <span>🫁 CURB-65 — тяжесть пневмонии</span>
-          <button onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}
-            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
-            Сбросить
-          </button>
+          <button className="suite-reset-btn" onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}>Сбросить</button>
         </div>
         {CURB_FIELDS.map(f => (
           <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>

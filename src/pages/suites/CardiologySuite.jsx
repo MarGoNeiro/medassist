@@ -76,12 +76,9 @@ export default function CardiologySuite() {
 
       {/* CHA2DS2-VASc */}
       <div className="suite-card">
-        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="suite-card-title">
           <span>🩺 Риск инсульта при ФП — CHA₂DS₂-VASc</span>
-          <button onClick={() => setFlags({ chf:false, htn:false, age75:false, diabetes:false, stroke:false, vascular:false, age65:false, female:false })}
-            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
-            Сбросить
-          </button>
+          <button className="suite-reset-btn" onClick={() => setFlags({ chf:false, htn:false, age75:false, diabetes:false, stroke:false, vascular:false, age65:false, female:false })}>Сбросить</button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {CHA2_FIELDS.map(f => (

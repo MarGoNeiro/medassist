@@ -89,12 +89,9 @@ export default function NeurologySuite() {
 
       {/* ABCD2 */}
       <div className="suite-card">
-        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="suite-card-title">
           <span>⚠️ Шкала ABCD² — риск инсульта после ТИА</span>
-          <button onClick={() => setAbcd2({ age:0, bp:0, clinical:0, duration:0, diabetes:0 })}
-            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
-            Сбросить
-          </button>
+          <button className="suite-reset-btn" onClick={() => setAbcd2({ age:0, bp:0, clinical:0, duration:0, diabetes:0 })}>Сбросить</button>
         </div>
         {ABCD2_FIELDS.map(f => (
           <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
@@ -120,12 +117,9 @@ export default function NeurologySuite() {
 
       {/* NIHSS */}
       <div className="suite-card">
-        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="suite-card-title">
           <span>📊 Скринер NIHSS — тяжесть инсульта</span>
-          <button onClick={() => setNihss(Object.fromEntries(nihssItems.map(f => [f.id, 0])))}
-            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
-            Сбросить
-          </button>
+          <button className="suite-reset-btn" onClick={() => setNihss(Object.fromEntries(nihssItems.map(f => [f.id, 0])))}>Сбросить</button>
         </div>
         <div className="suite-grid">
           {nihssItems.map(f => (

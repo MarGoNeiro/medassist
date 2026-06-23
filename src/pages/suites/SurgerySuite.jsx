@@ -78,12 +78,9 @@ export default function SurgerySuite() {
 
       {/* Alvarado */}
       <div className="suite-card">
-        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div className="suite-card-title">
           <span>🎯 Шкала Альварадо — острый аппендицит</span>
-          <button onClick={() => setAlv(Object.fromEntries(ALVARADO_FIELDS.map(f => [f.id, false])))}
-            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
-            Сбросить
-          </button>
+          <button className="suite-reset-btn" onClick={() => setAlv(Object.fromEntries(ALVARADO_FIELDS.map(f => [f.id, false])))}>Сбросить</button>
         </div>
         {ALVARADO_FIELDS.map(f => (
           <button key={f.id} className="suite-toggle-row" onClick={() => setAlv(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>

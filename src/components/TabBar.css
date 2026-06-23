@@ -46,3 +46,38 @@
   height: 22px;
 }
 
+@media (min-width: 600px) {
+  .tab-bar {
+    height: 72px;
+  }
+
+  .tab-item {
+    gap: 6px;
+  }
+
+  .tab-item svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .tab-item span {
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tab-bar {
+    height: 84px;
+  }
+
+  .tab-item svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .tab-item span {
+    font-size: 15px;
+  }
+}
+

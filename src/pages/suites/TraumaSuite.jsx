@@ -58,7 +58,13 @@ export default function TraumaSuite() {
 
       {/* Wells DVT */}
       <div className="suite-card">
-        <div className="suite-card-title">🩸 Wells — вероятность ТГВ нижних конечностей</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>🩸 Wells — вероятность ТГВ нижних конечностей</span>
+          <button onClick={() => setWells(Object.fromEntries(DVT_WELLS.map(f => [f.id, false])))}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         {DVT_WELLS.map(f => (
           <button key={f.id} className="suite-toggle-row" onClick={() => setWells(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
             <span className="suite-toggle-label" style={{ color: f.pts < 0 ? '#F87171' : 'var(--color-text)' }}>

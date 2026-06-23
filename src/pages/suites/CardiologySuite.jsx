@@ -76,7 +76,13 @@ export default function CardiologySuite() {
 
       {/* CHA2DS2-VASc */}
       <div className="suite-card">
-        <div className="suite-card-title">🩺 Риск инсульта при ФП — CHA₂DS₂-VASc</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>🩺 Риск инсульта при ФП — CHA₂DS₂-VASc</span>
+          <button onClick={() => setFlags({ chf:false, htn:false, age75:false, diabetes:false, stroke:false, vascular:false, age65:false, female:false })}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {CHA2_FIELDS.map(f => (
             <button key={f.id} className="suite-toggle-row"
@@ -107,6 +113,9 @@ export default function CardiologySuite() {
       {/* ASCVD */}
       <div className="suite-card">
         <div className="suite-card-title">🫁 10-летний риск ССЗ (ASCVD)</div>
+        <p style={{ fontSize:11, color:'var(--color-text-secondary)', marginBottom:10, lineHeight:1.4 }}>
+          Приближённая оценка. Для точного расчёта — ACC/AHA ASCVD Risk Estimator Plus.
+        </p>
         <div className="suite-grid">
           <div className="suite-field">
             <label>Возраст (лет)</label>

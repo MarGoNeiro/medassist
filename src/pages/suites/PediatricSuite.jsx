@@ -2,19 +2,25 @@ import { useState, useEffect } from 'react'
 import './suites.css'
 
 const vaccineSchedule = [
-  { age: 'В первые 24 часа', vaccine: 'Вирусный гепатит B (V1)', note: 'Профилактика гепатита B' },
-  { age: '3–7 дней',         vaccine: 'БЦЖ-М',                   note: 'Профилактика туберкулёза' },
-  { age: '1 месяц',          vaccine: 'Гепатит B (V2)',           note: 'Вторая вакцинация' },
-  { age: '2 месяца',         vaccine: 'Пневмококк (V1)',          note: 'Пневмония, отиты, менингиты' },
-  { age: '3 месяца',         vaccine: 'АКДС (V1), ИПВ (V1)',     note: 'Коклюш, дифтерия, столбняк, полиомиелит' },
-  { age: '4,5 месяца',       vaccine: 'АКДС (V2), ИПВ (V2)',     note: 'Повторная вакцинация' },
-  { age: '6 месяцев',        vaccine: 'АКДС (V3), ОПВ, Гепатит B (V3)', note: 'Третья вакцинация' },
-  { age: '12 месяцев',       vaccine: 'ККП (MMR V1)',             note: 'Корь, краснуха, паротит' },
-  { age: '15 месяцев',       vaccine: 'Пневмококк (V2)',          note: 'Ревакцинация' },
-  { age: '18 месяцев',       vaccine: 'АКДС (R1), ОПВ (R1)',     note: 'Первая ревакцинация' },
+  { age: 'В первые 24 ч',  vaccine: 'Гепатит B (V1)',                          note: 'Профилактика гепатита B' },
+  { age: '3–7 дней',       vaccine: 'БЦЖ-М',                                   note: 'Профилактика туберкулёза' },
+  { age: '1 месяц',        vaccine: 'Гепатит B (V2)',                           note: 'Вторая доза' },
+  { age: '2 месяца',       vaccine: 'Пневмококк (V1), Ротавирус (V1)',          note: 'Пневмония, менингит; ротавирусный гастроэнтерит' },
+  { age: '3 месяца',       vaccine: 'АКДС (V1), ИПВ (V1), Хиб (V1), Ротавирус (V2)', note: 'Коклюш, дифтерия, столбняк, полиомиелит, Haemophilus influenzae b' },
+  { age: '4,5 месяца',     vaccine: 'АКДС (V2), ИПВ (V2), Хиб (V2), Пневмококк (V2), Ротавирус (V3)', note: 'Повторные дозы' },
+  { age: '6 месяцев',      vaccine: 'АКДС (V3), ОПВ (V1), Гепатит B (V3), Хиб (V3)', note: 'Третья вакцинация' },
+  { age: '12 месяцев',     vaccine: 'ККП (V1), Ветряная оспа (V1)',             note: 'Корь, краснуха, паротит; ветрянка' },
+  { age: '15 месяцев',     vaccine: 'Пневмококк (R1)',                          note: 'Ревакцинация' },
+  { age: '18 месяцев',     vaccine: 'АКДС (R1), ОПВ (R1), Хиб (R1)',           note: 'Первая ревакцинация' },
+  { age: '20 месяцев',     vaccine: 'ОПВ (R2)',                                 note: 'Вторая ревакцинация полиомиелит' },
+  { age: '6 лет',          vaccine: 'ККП (R2)',                                 note: 'Ревакцинация корь, краснуха, паротит' },
+  { age: '6–7 лет',        vaccine: 'АДС-М (R2)',                              note: 'Ревакцинация дифтерия, столбняк' },
+  { age: '14 лет',         vaccine: 'АДС-М (R3), ОПВ (R3)',                    note: 'Третья ревакцинация' },
+  { age: 'Взрослые',       vaccine: 'АДС-М каждые 10 лет, Грипп ежегодно',    note: 'Поддерживающий иммунитет' },
 ]
 
 export default function PediatricSuite() {
+  const [drugName, setDrugName]     = useState('')
   const [weight, setWeight]         = useState(12)
   const [height, setHeight]         = useState(86)
   const [desiredDose, setDesiredDose] = useState(15)
@@ -54,6 +60,12 @@ export default function PediatricSuite() {
       <div className="suite-card">
         <div className="suite-card-title">🧮 Педиатрический дозатор & BSA</div>
 
+        <div className="suite-field" style={{ marginBottom: 10 }}>
+          <label>Название препарата (для заметок)</label>
+          <input className="suite-input" type="text" placeholder="Напр.: Амоксициллин"
+            value={drugName} onChange={e => setDrugName(e.target.value)} />
+        </div>
+
         <div className="suite-grid">
           <div className="suite-field">
             <label>Вес ребёнка (кг)</label>
@@ -83,23 +95,32 @@ export default function PediatricSuite() {
 
         {/* Suspension */}
         <div className="suite-subsection" style={{ marginTop: 14, background: '#FFF1F2' }}>
-          <div className="suite-subsection-title">🧃 Расчёт суспензии</div>
+          <div className="suite-subsection-title">🧃 Расчёт суспензии (напр. 120 мг / 5 мл)</div>
           <div className="suite-grid">
             <div className="suite-field">
-              <label>Концентрация (мг в объёме)</label>
-              <input className="suite-input" type="number" min="1"
+              <label>Количество мг в упаковке</label>
+              <input className="suite-input" type="number" min="1" placeholder="120"
                 value={suspStrength} onChange={e => setSuspStrength(Math.max(1, parseInt(e.target.value) || 0))} />
             </div>
             <div className="suite-field">
-              <label>Объём суспензии (мл)</label>
-              <input className="suite-input" type="number" min="1"
+              <label>На сколько мл (объём флакона)</label>
+              <input className="suite-input" type="number" min="1" placeholder="5"
                 value={suspVolume} onChange={e => setSuspVolume(Math.max(1, parseInt(e.target.value) || 0))} />
             </div>
           </div>
+          <p style={{ fontSize:11, color:'#9F1239', marginTop:6, lineHeight:1.4 }}>
+            Амоксициллин 250 мг/5 мл → введите 250 и 5. Нурофен 100 мг/5 мл → 100 и 5.
+          </p>
         </div>
 
         {/* Results */}
         <div className="suite-dark-box">
+          {drugName && (
+            <div className="suite-dark-row">
+              <span className="suite-dark-label">Препарат</span>
+              <span className="suite-dark-value" style={{ color:'#FBBF24' }}>{drugName}</span>
+            </div>
+          )}
           <div className="suite-dark-row">
             <span className="suite-dark-label">Индекс BSA (Мостеллер)</span>
             <span className="suite-dark-value">{bsa > 0 ? `${bsa} м²` : '—'}</span>

@@ -31,19 +31,32 @@ function abcd2Risk(score) {
 }
 
 const nihssItems = [
-  { id: 'loc',       label: 'Уровень сознания',       max: 3 },
-  { id: 'gaze',      label: 'Взор (горизонтальный)',   max: 2 },
-  { id: 'visual',    label: 'Поля зрения',             max: 3 },
-  { id: 'facial',    label: 'Мимическая мускулатура',  max: 3 },
-  { id: 'motorL',    label: 'Двигательная рука L',     max: 4 },
-  { id: 'motorR',    label: 'Двигательная рука R',     max: 4 },
-  { id: 'motorLegL', label: 'Двигательная нога L',     max: 4 },
-  { id: 'motorLegR', label: 'Двигательная нога R',     max: 4 },
-  { id: 'ataxia',    label: 'Атаксия в конечностях',   max: 2 },
-  { id: 'sensory',   label: 'Чувствительность',        max: 2 },
-  { id: 'language',  label: 'Речь (афазия)',            max: 3 },
-  { id: 'dysarthria', label: 'Дизартрия',              max: 2 },
-  { id: 'neglect',   label: 'Игнорирование/Гемиинопсия', max: 2 },
+  { id: 'loc',       label: 'Уровень сознания', max: 3,
+    opts: ['0 — Ясное', '1 — Оглушение (выполняет не все команды)', '2 — Сопор (реакция на боль)', '3 — Кома'] },
+  { id: 'gaze',      label: 'Взор горизонтальный', max: 2,
+    opts: ['0 — Норма', '1 — Частичный паралич взора', '2 — Полный паралич / девиация'] },
+  { id: 'visual',    label: 'Поля зрения', max: 3,
+    opts: ['0 — Норма', '1 — Частичная гемианопсия', '2 — Полная гемианопсия', '3 — Двусторонняя (слепота)'] },
+  { id: 'facial',    label: 'Парез лица', max: 3,
+    opts: ['0 — Норма', '1 — Лёгкий (носогубная складка)', '2 — Частичный (нижняя половина)', '3 — Полный (лоб + нижняя половина)'] },
+  { id: 'motorL',    label: 'Двигательная рука (левая)', max: 4,
+    opts: ['0 — Нет дрейфа 10 с', '1 — Дрейф до кушетки', '2 — Преодолевает гравитацию', '3 — Не преодолевает', '4 — Плегия'] },
+  { id: 'motorR',    label: 'Двигательная рука (правая)', max: 4,
+    opts: ['0 — Нет дрейфа 10 с', '1 — Дрейф до кушетки', '2 — Преодолевает гравитацию', '3 — Не преодолевает', '4 — Плегия'] },
+  { id: 'motorLegL', label: 'Двигательная нога (левая)', max: 4,
+    opts: ['0 — Нет дрейфа 5 с', '1 — Дрейф до кушетки', '2 — Преодолевает гравитацию', '3 — Не преодолевает', '4 — Плегия'] },
+  { id: 'motorLegR', label: 'Двигательная нога (правая)', max: 4,
+    opts: ['0 — Нет дрейфа 5 с', '1 — Дрейф до кушетки', '2 — Преодолевает гравитацию', '3 — Не преодолевает', '4 — Плегия'] },
+  { id: 'ataxia',    label: 'Атаксия в конечностях', max: 2,
+    opts: ['0 — Нет / невозможно оценить', '1 — В одной конечности', '2 — В двух конечностях'] },
+  { id: 'sensory',   label: 'Чувствительность', max: 2,
+    opts: ['0 — Норма', '1 — Лёгкая/умеренная потеря (укол ощущается)', '2 — Тяжёлая/полная потеря'] },
+  { id: 'language',  label: 'Речь (афазия)', max: 3,
+    opts: ['0 — Норма', '1 — Лёгкая афазия (подбирает слова)', '2 — Тяжёлая афазия (фраза невозможна)', '3 — Мутизм / глобальная афазия'] },
+  { id: 'dysarthria', label: 'Дизартрия', max: 2,
+    opts: ['0 — Норма', '1 — Лёгкая (стёртая речь)', '2 — Тяжёлая (непонятна окружающим)'] },
+  { id: 'neglect',   label: 'Угасание / игнорирование', max: 2,
+    opts: ['0 — Норма', '1 — Игнорирует в одной модальности', '2 — Игнорирует в ≥ 2 модальностях'] },
 ]
 
 function nihssSeverity(score) {
@@ -76,7 +89,13 @@ export default function NeurologySuite() {
 
       {/* ABCD2 */}
       <div className="suite-card">
-        <div className="suite-card-title">⚠️ Шкала ABCD² — риск инсульта после ТИА</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>⚠️ Шкала ABCD² — риск инсульта после ТИА</span>
+          <button onClick={() => setAbcd2({ age:0, bp:0, clinical:0, duration:0, diabetes:0 })}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         {ABCD2_FIELDS.map(f => (
           <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
             <label>{f.label}</label>
@@ -101,7 +120,13 @@ export default function NeurologySuite() {
 
       {/* NIHSS */}
       <div className="suite-card">
-        <div className="suite-card-title">📊 Скринер NIHSS — тяжесть инсульта</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>📊 Скринер NIHSS — тяжесть инсульта</span>
+          <button onClick={() => setNihss(Object.fromEntries(nihssItems.map(f => [f.id, 0])))}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         <div className="suite-grid">
           {nihssItems.map(f => (
             <div key={f.id} className="suite-field">
@@ -109,8 +134,8 @@ export default function NeurologySuite() {
               <select className="suite-select"
                 value={nihss[f.id]}
                 onChange={e => setNihss(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
-                {Array.from({ length: f.max + 1 }, (_, i) => (
-                  <option key={i} value={i}>{i}</option>
+                {f.opts.map((o, i) => (
+                  <option key={i} value={i}>{o}</option>
                 ))}
               </select>
             </div>

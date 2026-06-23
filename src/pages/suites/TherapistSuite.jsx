@@ -10,9 +10,9 @@ const CURB_FIELDS = [
 ]
 
 function curbResult(score) {
-  if (score <= 1) return { label: 'Низкий риск',     badge: 'badge-green',  advice: 'Амбулаторное лечение. Летальность < 3%.' }
+  if (score <= 1) return { label: 'Низкий риск',     badge: 'badge-green',  advice: 'Амбулаторное лечение. Летальность ~1–2%.' }
   if (score === 2) return { label: 'Умеренный риск', badge: 'badge-yellow', advice: 'Рассмотреть кратковременную госпитализацию. Летальность ≈ 9%.' }
-  return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность 15–40%.' }
+  return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность ~22%.' }
 }
 
 function bmiCategory(bmi) {
@@ -58,7 +58,13 @@ export default function TherapistSuite() {
 
       {/* CURB-65 */}
       <div className="suite-card">
-        <div className="suite-card-title">🫁 CURB-65 — тяжесть пневмонии</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>🫁 CURB-65 — тяжесть пневмонии</span>
+          <button onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         {CURB_FIELDS.map(f => (
           <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
             <span className="suite-toggle-label">{f.label}</span>

@@ -56,7 +56,7 @@ const GCS_EYES = [{ v:4,l:'4 — Самопроизвольно' },{ v:3,l:'3 �
 const GCS_VERBAL = [{ v:5,l:'5 — Ориентирован' },{ v:4,l:'4 — Спутанный' },{ v:3,l:'3 — Слова' },{ v:2,l:'2 — Звуки' },{ v:1,l:'1 — Нет' }]
 
 const PEARLS = [
-  { title: '5 «Г»/«Т» при остановке сердца', body: 'Гипоксия · Гиповолемия · Гипо/гиперкалиемия · Гипотермия · Гидроперикард\nТромбоз лёгочной артерии · Тромбоз коронарный · Тампонада · Токсины · Tension-pneumothorax' },
+  { title: '5 «Г»/«Т» при остановке сердца', body: '5 «Г»: Гипоксия · Гиповолемия · Гипо/гиперкалиемия · Гипотермия · Ацидоз (H⁺ ионы)\n5 «Т»: Тампонада сердца · Токсины · Тромбоз (ТЭЛА) · Тромбоз (ОКС) · Тензионный пневмоторакс' },
   { title: 'Инсульт — FAST', body: 'F — Face (перекошено?) · A — Arms (слабость?) · S — Speech (речь?) · T — Time (вызов 103, до 4.5 ч — тромболизис)' },
   { title: 'ОКС — ЭКГ критерии STEMI', body: 'Элевация ST: V2–V3 ≥ 2 мм (м), ≥ 1.5 мм (ж); остальные отведения ≥ 1 мм. БЛНПГ новый. Реперфузия < 90 мин.' },
 ]
@@ -68,12 +68,12 @@ export default function EmergencySuite() {
   const [sbp,       setSbp]      = useState(120)
   const [hr,        setHr]       = useState(78)
   const [temp,      setTemp]     = useState(36.6)
-  const [conscious, setConscious] = useState(true)
+  const [alteredCons, setAlteredCons] = useState(false)
   const [eyes,   setEyes]   = useState(4)
   const [verbal, setVerbal] = useState(5)
   const [motor,  setMotor]  = useState(6)
 
-  const news  = newsScore({ rr, spo2, o2, sbp, hr, temp, conscious })
+  const news  = newsScore({ rr, spo2, o2, sbp, hr, temp, conscious: !alteredCons })
   const nRes  = newsResult(news)
   const gcsTotal = eyes + verbal + motor
 
@@ -121,9 +121,9 @@ export default function EmergencySuite() {
           <span className="suite-toggle-label">Дополнительный O₂</span>
           <div className={`suite-toggle ${o2 ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
         </button>
-        <button className="suite-toggle-row" onClick={() => setConscious(v => !v)}>
-          <span className="suite-toggle-label">Сознание ясное (A по шкале AVPU)</span>
-          <div className={`suite-toggle ${conscious ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+        <button className="suite-toggle-row" onClick={() => setAlteredCons(v => !v)}>
+          <span className="suite-toggle-label">Нарушение сознания (не A по AVPU) [+3]</span>
+          <div className={`suite-toggle ${alteredCons ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
         </button>
         <div className="suite-result-banner">
           <div>

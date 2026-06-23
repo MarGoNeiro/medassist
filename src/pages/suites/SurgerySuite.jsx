@@ -69,7 +69,7 @@ export default function SurgerySuite() {
   return (
     <div className="suite">
       <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>🔪</div>
+        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>✂️</div>
         <div>
           <h2>Рабочий кабинет хирурга</h2>
           <p>Шкала Альварадо (аппендицит), классификация ран, критерии Рэнсона (панкреатит)</p>
@@ -78,7 +78,13 @@ export default function SurgerySuite() {
 
       {/* Alvarado */}
       <div className="suite-card">
-        <div className="suite-card-title">🎯 Шкала Альварадо — острый аппендицит</div>
+        <div className="suite-card-title" style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <span>🎯 Шкала Альварадо — острый аппендицит</span>
+          <button onClick={() => setAlv(Object.fromEntries(ALVARADO_FIELDS.map(f => [f.id, false])))}
+            style={{ fontSize:11, color:'var(--color-text-secondary)', background:'none', border:'none', cursor:'pointer', padding:'2px 6px' }}>
+            Сбросить
+          </button>
+        </div>
         {ALVARADO_FIELDS.map(f => (
           <button key={f.id} className="suite-toggle-row" onClick={() => setAlv(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
             <span className="suite-toggle-label" style={{ fontWeight: f.bold ? 700 : 400 }}>

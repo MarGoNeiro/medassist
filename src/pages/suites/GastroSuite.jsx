@@ -57,7 +57,7 @@ export default function GastroSuite() {
   return (
     <div className="suite">
       <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF7ED' }}>🫀</div>
+        <div className="suite-banner-emoji" style={{ background: '#FFF7ED' }}>🫄</div>
         <div>
           <h2>Рабочий кабинет гастроэнтеролога</h2>
           <p>Child-Pugh (цирроз), Blatchford (ЖКК), Рим IV (ФРЖ)</p>
@@ -66,7 +66,7 @@ export default function GastroSuite() {
 
       {/* Child-Pugh */}
       <div className="suite-card">
-        <div className="suite-card-title">🫀 Child-Pugh — тяжесть цирроза печени</div>
+        <div className="suite-card-title">🫁 Child-Pugh — тяжесть цирроза печени</div>
         {CP_FIELDS.map(f => (
           <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
             <label>{f.label}</label>

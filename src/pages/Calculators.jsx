@@ -53,6 +53,12 @@ function CalcView({ calc, onBack }) {
   const hasNumbers = calc.fields.some(f => f.type === 'number')
   const allFilled = !hasNumbers || calc.fields.filter(f => f.type === 'number').every(f => values[f.id])
 
+  function resetValues() {
+    const fresh = {}
+    calc.fields.forEach(f => { fresh[f.id] = f.type === 'toggle' ? false : f.type === 'select' ? 0 : '' })
+    setValues(fresh)
+  }
+
   return (
     <div className="page">
       <div className="page-header">
@@ -63,6 +69,9 @@ function CalcView({ calc, onBack }) {
           <h1 style={{ fontSize: 17 }}>{calc.name}</h1>
           <p style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>{calc.description}</p>
         </div>
+        <button onClick={resetValues} style={{ fontSize: 13, color: 'var(--color-text-secondary)', padding: '6px 10px', borderRadius: 8, background: 'rgba(255,255,255,0.07)', flexShrink: 0 }}>
+          Сбросить
+        </button>
       </div>
 
       <div className="page-content">

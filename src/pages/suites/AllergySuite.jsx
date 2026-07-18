@@ -17,10 +17,6 @@ const GINA_STEPS = [
   { step: 5, note: 'тяжёлая рефрактерная', preferred: 'Высокие ИКС/ДДБА + фенотипирование', alt: 'Омализумаб (анти-IgE), меполизумаб/бенрализумаб (анти-ИЛ-5), дупилумаб' },
 ]
 
-const AGP = [
-  { gen: 'II поколение (предпочтительны)', drugs: 'Цетиризин 10 мг, Лоратадин 10 мг, Дезлоратадин 5 мг, Фексофенадин 120–180 мг, Биластин 20 мг', note: 'Нет значимого седативного эффекта. Для длительной терапии.' },
-  { gen: 'I поколение (ограниченно)', drugs: 'Хлоропирамин 25 мг, Клемастин 1 мг, Дифенгидрамин 25–50 мг', note: 'Седация, холинолитические эффекты. Только коротким курсом или парентерально при анафилаксии.' },
-]
 
 function scoradResult(s) {
   if (s <= 25) return { label: 'Лёгкое течение', badge: 'badge-green',  advice: 'Эмоленты ежедневно, топические ГКС низкой потентности при обострениях.' }
@@ -81,7 +77,7 @@ export default function AllergySuite() {
       </div>
 
       {/* ── SCORAD ── */}
-      <div className="suite-card">
+      <div className="suite-card allergy-scorad-card">
         <div className="suite-card-title">🧴 ШКАЛА SCORAD — ТЯЖЕСТЬ АТОПИЧЕСКОГО ДЕРМАТИТА</div>
         <p className="allergy-hint">SCORAD = A×0.2 + B×0.7 + C</p>
         <div className="suite-grid">
@@ -113,19 +109,6 @@ export default function AllergySuite() {
         </div>
       </div>
 
-      {/* ── Антигистаминные ── */}
-      <div className="suite-card">
-        <div className="suite-card-title">💊 АНТИГИСТАМИННЫЕ ПРЕПАРАТЫ</div>
-        <div className="allergy-gina-list">
-          {AGP.map(a => (
-            <div key={a.gen} className="allergy-gina-step">
-              <div className="allergy-gina-badge" style={{ marginBottom: 6 }}>{a.gen}</div>
-              <div className="allergy-gina-preferred">{a.drugs}</div>
-              <div className="allergy-gina-alt">{a.note}</div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

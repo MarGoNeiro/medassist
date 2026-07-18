@@ -20,6 +20,7 @@ import InfectionSuite       from './suites/InfectionSuite'
 import OncologySuite        from './suites/OncologySuite'
 import PsychSuite           from './suites/PsychSuite'
 import RheumatologySuite    from './suites/RheumatologySuite'
+import AllergySuite         from './suites/AllergySuite'
 import UrologySuite         from './suites/UrologySuite'
 import HematologySuite      from './suites/HematologySuite'
 import TraumaSuite          from './suites/TraumaSuite'
@@ -51,6 +52,7 @@ const SPECIALTY_SUITE = {
   'Психотерапевт':             PsychSuite,
   'Нарколог':                  PsychSuite,
   'Ревматолог':                RheumatologySuite,
+  'Аллерголог-иммунолог':      AllergySuite,
   'Уролог':                    UrologySuite,
   'Травматолог-ортопед':       TraumaSuite,
 }

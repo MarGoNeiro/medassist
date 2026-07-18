@@ -21,21 +21,23 @@ import OncologySuite        from './suites/OncologySuite'
 import PsychSuite           from './suites/PsychSuite'
 import RheumatologySuite    from './suites/RheumatologySuite'
 import UrologySuite         from './suites/UrologySuite'
-import HematologySuite      from './suites/HematologySuite'
 import TraumaSuite          from './suites/TraumaSuite'
 import './Home.css'
 
 const SPECIALTY_SUITE = {
   'Педиатр':                   PediatricSuite,
   'Кардиолог':                 CardiologySuite,
-  'Гематолог':                 HematologySuite,
-  'Акушер-гинеколог':          ObGynSuite,
+  'Хирург (сосудистый)':       CardiologySuite,
+  'Гематолог':                 CardiologySuite,
+  'Гинеколог':                 ObGynSuite,
+  'Акушер':                    ObGynSuite,
   'Невролог':                  NeurologySuite,
   'Терапевт / ВОП':            TherapistSuite,
   'Семейный врач':             TherapistSuite,
   'Эндокринолог':              EndocrinologySuite,
   'Диетолог / Нутрициолог':   DietologySuite,
   'Пульмонолог':               PulmonologySuite,
+  'Фтизиатр':                  PulmonologySuite,
   'Анестезиолог-реаниматолог': AnesthesiologySuite,
   'Хирург':                    SurgerySuite,
   'Гастроэнтеролог':           GastroSuite,
@@ -47,6 +49,7 @@ const SPECIALTY_SUITE = {
   'Психотерапевт':             PsychSuite,
   'Нарколог':                  PsychSuite,
   'Ревматолог':                RheumatologySuite,
+  'Аллерголог-иммунолог':      RheumatologySuite,
   'Уролог':                    UrologySuite,
   'Травматолог-ортопед':       TraumaSuite,
 }
@@ -57,7 +60,7 @@ const specialtyNames = {
   'Кардиолог': 'Кардиолог',
   'Невролог': 'Невролог',
   'Хирург': 'Хирург',
-  'Акушер-гинеколог': 'Акушер-гинеколог',
+  'Гинеколог': 'Гинеколог',
   'Эндокринолог': 'Эндокринолог',
   'Гастроэнтеролог': 'Гастроэнтеролог',
   'Пульмонолог': 'Пульмонолог',
@@ -71,7 +74,9 @@ const specialtyNames = {
   'Ревматолог': 'Ревматолог',
   'Инфекционист': 'Инфекционист',
   'Анестезиолог-реаниматолог': 'Анестезиолог',
+  'Хирург (сосудистый)': 'Хирург',
   'Травматолог-ортопед': 'Травматолог',
+  'Акушер': 'Акушер',
   'Аллерголог-иммунолог': 'Аллерголог',
   'Гематолог': 'Гематолог',
   'Диетолог / Нутрициолог': 'Диетолог',
@@ -108,7 +113,8 @@ function buildResults(q) {
       const inn   = d.inn.toLowerCase()
       const brand = d.brand.toLowerCase()
       const group = d.group.toLowerCase()
-      return inn.includes(lq) || brand.includes(lq) || group.includes(lq)
+      const alts  = (d.alternatives || []).join(' ').toLowerCase()
+      return inn.includes(lq) || brand.includes(lq) || group.includes(lq) || alts.includes(lq)
     })
     .slice(0, 5)
     .map(d => {
@@ -127,29 +133,13 @@ function buildResults(q) {
     .slice(0, 3)
     .map(c => ({ type: 'calc', id: c.id, title: c.name, sub: c.description, section: 'calc' }))
 
-  const crStem = stemWord(lq)
   const crHits = crData
     .filter(r => {
       const nameMatch = r.name ? stemMatch(r.name.toLowerCase(), lq) : false
       const mkbMatch = Array.isArray(r.mkb) && r.mkb.some(m => m && m.toLowerCase().includes(lqNorm))
       return nameMatch || mkbMatch
     })
-    // дедупликация: одно название — только последняя версия (наибольший суффикс _N)
-    .reduce((acc, r) => {
-      const ver = id => parseInt((id.match(/_(\d+)$/) || ['', '0'])[1])
-      const prev = acc.find(x => x.name === r.name)
-      if (!prev) acc.push(r)
-      else if (ver(r.id) > ver(prev.id)) Object.assign(prev, r)
-      return acc
-    }, [])
-    // сортировка: сначала те, где название начинается со стема запроса
-    .sort((a, b) => {
-      const aName = (a.name || '').toLowerCase()
-      const bName = (b.name || '').toLowerCase()
-      const aFirst = aName.startsWith(crStem) ? 0 : 1
-      const bFirst = bName.startsWith(crStem) ? 0 : 1
-      return aFirst - bFirst
-    })
+    .slice(0, 4)
     .map(r => ({ type: 'cr', id: r.id, title: r.name, sub: (r.mkb || []).slice(0, 3).join(', '), section: 'cr' }))
 
   return [...drugHits, ...icdHits, ...calcHits, ...crHits]
@@ -220,11 +210,9 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
             </button>
           )}
         </div>
-      </div>{/* /home-hero */}
-
-      {/* Результаты поиска — ниже шапки, в потоке страницы */}
-      {isSearching && (
-        <div className="home-search-results">
+        {/* Выпадающий список результатов — оверлей под шапкой */}
+        {isSearching && (
+        <div className="home-search-dropdown">
           {results.length === 0 ? (
             <div className="search-empty">Ничего не найдено</div>
           ) : (
@@ -246,13 +234,14 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
           )}
         </div>
       )}
+      </div>{/* /home-hero */}
 
       {/* Normal home content — hidden while searching */}
       {!isSearching && (
         <>
           {/* Specialty workroom */}
           {SpecialtySuite ? (
-            <SpecialtySuite specialty={specialty} />
+            <SpecialtySuite />
           ) : (
             /* Fallback tiles for specialties without a dedicated suite */
             <div className="home-tiles">
@@ -264,7 +253,7 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
                   </svg>
                 </div>
                 <div className="tile-body">
-                  <div className="tile-name">ЛС</div>
+                  <div className="tile-name">Препараты</div>
                   <div className="tile-desc">823 МНН · ЖНВЛП</div>
                 </div>
               </button>

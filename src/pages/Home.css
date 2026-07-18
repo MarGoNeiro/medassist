@@ -18,8 +18,8 @@
 }
 
 .home-greeting { flex: 1; }
-.greeting { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.7); letter-spacing: 0.01em; }
-.greeting-name { font-size: 30px; font-weight: 800; color: white; letter-spacing: -0.03em; margin-top: 2px; line-height: 1.1; }
+.greeting { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7); letter-spacing: 0.01em; }
+.greeting-name { font-size: 26px; font-weight: 800; color: white; letter-spacing: -0.03em; margin-top: 2px; line-height: 1.1; }
 
 .specialty-switch-btn {
   display: flex;
@@ -29,14 +29,14 @@
   border: 1px solid rgba(255,255,255,0.22);
   border-radius: 20px;
   padding: 7px 12px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: white;
   white-space: nowrap;
   min-height: 36px;
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 2px;
   backdrop-filter: blur(4px);
   transition: background 0.15s;
 }
@@ -62,7 +62,7 @@
 
 .home-search-input {
   flex: 1;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: white;
@@ -85,9 +85,18 @@
   margin-left: 6px;
 }
 
-/* ─── SEARCH RESULTS — в потоке страницы под шапкой ─── */
-.home-search-results {
-  background: var(--color-bg);
+/* ─── SEARCH DROPDOWN — оверлей сразу под шапкой ─── */
+.home-search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  background: #1E1B4B;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  z-index: 50;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .search-result-row {
@@ -107,9 +116,9 @@
 
 .search-type-badge {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 6px;
   letter-spacing: 0.01em;
 }
@@ -118,10 +127,10 @@
 .badge-green  { background: #F0FDF4; color: #15803D; }
 
 .search-result-body { flex: 1; min-width: 0; }
-.search-result-title { font-size: 15px; font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.search-result-sub   { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-result-title { font-size: 14px; font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-result-sub   { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.search-empty { padding: 24px 16px; text-align: center; font-size: 15px; color: var(--color-text-secondary); }
+.search-empty { padding: 24px 16px; text-align: center; font-size: 14px; color: var(--color-text-secondary); }
 
 /* ─── TILES GRID ─── */
 .home-tiles {
@@ -170,8 +179,8 @@
 .tile-wide .tile-icon { margin-bottom: 0; margin-right: 14px; }
 
 .tile-body { flex: 1; }
-.tile-name { font-size: 17px; font-weight: 700; color: white; letter-spacing: -0.02em; }
-.tile-desc { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 3px; font-weight: 400; }
+.tile-name { font-size: 15px; font-weight: 700; color: white; letter-spacing: -0.02em; }
+.tile-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 3px; font-weight: 400; }
 
 .tile-arrow {
   flex-shrink: 0;
@@ -258,14 +267,14 @@
 }
 
 .spec-dash-name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: white;
   line-height: 1.2;
 }
 
 .spec-dash-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255,255,255,0.65);
   line-height: 1.3;
   display: -webkit-box;
@@ -307,7 +316,6 @@
 .dot-drugs  { background: #6366F1; }
 .dot-calc   { background: #0891B2; }
 .dot-icd    { background: #6366F1; }
-.dot-cr     { background: #0891B2; }
 
-.recent-label { flex: 1; font-size: 16px; font-weight: 500; }
+.recent-label { flex: 1; font-size: 14px; font-weight: 500; }
 .recent-chevron { color: var(--color-text-tertiary); }

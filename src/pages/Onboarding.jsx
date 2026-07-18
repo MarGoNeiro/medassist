@@ -34,60 +34,12 @@ const SPECIALTIES = [
   'Эндокринолог',
 ]
 
-function PillIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/>
-      <path d="m8.5 8.5 7 7"/>
-    </svg>
-  )
-}
-
-function ListIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/>
-      <line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/>
-      <line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>
-    </svg>
-  )
-}
-
-function CalcIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect width="16" height="20" x="4" y="2" rx="2"/>
-      <line x1="8" x2="16" y1="6" y2="6"/>
-      <line x1="16" x2="16" y1="14" y2="18"/>
-      <path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/>
-      <path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/>
-    </svg>
-  )
-}
-
-function CRIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-    </svg>
-  )
-}
-
-const FEATURES = [
-  { icon: PillIcon, color: 'indigo', title: '823 МНН', desc: 'Дозировки, взаимодействия, альтернативы' },
-  { icon: ListIcon, color: 'violet', title: 'МКБ-10', desc: 'Классификатор болезней по кодам' },
-  { icon: CalcIcon, color: 'blue', title: 'Калькуляторы', desc: '8 клинических шкал риска' },
-  { icon: CRIcon,   color: 'purple', title: 'КР', desc: 'Клинические рекомендации' },
-]
-
 export default function Onboarding({ onDone, canBack, onBack }) {
   const [selected, setSelected] = useState('')
 
   return (
     <div className="onboarding">
       <div className="onboarding-top">
-        {/* фото врачей — добавь файл public/doctor-bg.jpg чтобы оно появилось */}
         <div className="ob-photo-overlay" />
 
         {canBack && (
@@ -125,23 +77,6 @@ export default function Onboarding({ onDone, canBack, onBack }) {
       </div>
 
       <div className="onboarding-bottom">
-        <p className="ob-inside-label">Что внутри</p>
-        <div className="ob-feature-grid">
-          {FEATURES.map(({ icon: Icon, color, title, desc }) => (
-            <div key={title} className={`ob-feature-card ob-feature-card--${color}`}>
-              <div className="ob-fc-icon"><Icon /></div>
-              <span className="ob-fc-title">{title}</span>
-              <span className="ob-fc-desc">{desc}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="ob-divider" />
-
-        <p className="onboarding-step-label">Шаг 1 — персонализация</p>
-        <p className="onboarding-question">Ваша специальность</p>
-        <p className="onboarding-hint">Подберём калькуляторы и материалы под вашу специализацию</p>
-
         <div className="select-wrapper">
           <select
             className="specialty-select"

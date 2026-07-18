@@ -378,3 +378,79 @@
     column-count: 1;
   }
 }
+
+/* ─── Десктоп ─── */
+@media (min-width: 768px) {
+  .suite { padding: 0 32px 40px; }
+
+  .suite-banner { padding: 18px 24px; gap: 16px; margin-bottom: 16px; }
+  .suite-banner-emoji { width: 60px; height: 60px; font-size: 34px; }
+  .suite-banner h2 { font-size: 22px; }
+  .suite-banner p  { font-size: 15px; }
+
+  .suite-card { padding: 20px 24px; margin-bottom: 16px; }
+  .suite-card-title {
+    font-size: 13px;
+    margin: -20px -24px 18px -24px;
+    padding: 12px 24px;
+  }
+
+  .suite-reset-btn { font-size: 12px; padding: 4px 14px; }
+
+  .suite-grid { gap: 16px; }
+
+  .suite-field label { font-size: 13px; margin-bottom: 7px; }
+  .suite-input { font-size: 16px; padding: 11px 14px; }
+  .suite-select { font-size: 16px; padding: 11px 14px; }
+
+  .suite-dark-box { padding: 18px 22px; gap: 14px; margin-top: 18px; }
+  .suite-dark-label { font-size: 15px; }
+  .suite-dark-label small { font-size: 12px; }
+  .suite-dark-value { font-size: 20px; }
+  .suite-dark-value.accent-pink { font-size: 24px; }
+
+  .suite-subsection { padding: 16px; margin-top: 18px; }
+  .suite-subsection-title { font-size: 12px; margin-bottom: 14px; }
+
+  .suite-toggle-row { padding: 11px 12px; }
+  .suite-toggle-label { font-size: 16px; }
+  .suite-toggle { width: 44px; height: 26px; border-radius: 13px; }
+  .suite-toggle-thumb { width: 20px; height: 20px; }
+  .suite-toggle.on .suite-toggle-thumb { left: 21px; }
+
+  .suite-result-banner { padding: 18px 22px; margin-top: 18px; }
+  .suite-score-big { font-size: 40px; }
+  .suite-score-label { font-size: 13px; }
+  .suite-risk-badge { font-size: 13px; padding: 6px 14px; }
+  .suite-advice { font-size: 14px; max-width: 340px; }
+
+  .suite-table { font-size: 15px; }
+  .suite-table thead th { font-size: 12px; padding: 0 0 10px; }
+  .suite-table tbody td { padding: 12px 0; }
+  .suite-table .col-time { min-width: 120px; }
+
+  .suite-cheatsheet { padding: 18px 22px; margin-top: 16px; }
+  .suite-cheatsheet-title { font-size: 12px; margin-bottom: 14px; }
+  .suite-cheatsheet-grid { gap: 14px; }
+  .suite-cheatsheet dt { font-size: 12px; }
+  .suite-cheatsheet dd { font-size: 15px; }
+
+  .suite-screening-item { padding: 12px 0; gap: 12px; }
+  .suite-screening-dot { width: 8px; height: 8px; margin-top: 6px; }
+  .suite-screening-title { font-size: 16px; }
+  .suite-screening-desc { font-size: 14px; margin-top: 4px; }
+
+  .suite-btn { font-size: 15px; padding: 13px; }
+  .suite-btn-row { gap: 12px; margin-top: 14px; }
+
+  .suite-date-result { gap: 14px; margin-top: 16px; }
+  .suite-date-box { padding: 16px; }
+  .suite-date-box-label { font-size: 12px; margin-bottom: 6px; }
+  .suite-date-box-value { font-size: 20px; }
+
+  .suite-gender-row { gap: 8px; }
+  .suite-gender-btn { font-size: 15px; padding: 11px; min-height: 46px; }
+
+  .suite-criteria-2col .suite-screening-title { font-size: 15px; }
+  .suite-criteria-2col .suite-screening-desc  { font-size: 14px; }
+}

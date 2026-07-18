@@ -51,7 +51,6 @@ const SPECIALTY_SUITE = {
   'Психотерапевт':             PsychSuite,
   'Нарколог':                  PsychSuite,
   'Ревматолог':                RheumatologySuite,
-  'Аллерголог-иммунолог':      RheumatologySuite,
   'Уролог':                    UrologySuite,
   'Травматолог-ортопед':       TraumaSuite,
 }

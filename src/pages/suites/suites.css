@@ -347,3 +347,34 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 .suite-gender-btn.active { background: #1E293B; border-color: #1E293B; color: white; }
+
+/* 2-column static criteria / bullet list — column-major (top→bottom left, top→bottom right) */
+.suite-criteria-2col {
+  column-count: 2;
+  column-gap: 20px;
+}
+.suite-criteria-2col .suite-screening-item {
+  break-inside: avoid;
+  border-bottom: none;
+  padding: 5px 0;
+}
+.suite-criteria-2col .suite-screening-title { font-size: 12px; }
+.suite-criteria-2col .suite-screening-desc  { font-size: 11px; }
+
+/* 2-column interactive form layout — column-major */
+.suite-form-2col {
+  column-count: 2;
+  column-gap: 16px;
+}
+.suite-form-2col .suite-field,
+.suite-form-2col .suite-toggle-row {
+  break-inside: avoid;
+}
+
+/* На очень маленьких экранах (≤360px, старый iPhone SE) — одна колонка */
+@media (max-width: 360px) {
+  .suite-form-2col,
+  .suite-criteria-2col {
+    column-count: 1;
+  }
+}

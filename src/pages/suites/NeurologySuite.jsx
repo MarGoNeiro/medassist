@@ -121,7 +121,7 @@ export default function NeurologySuite() {
           <span>📊 Скринер NIHSS — тяжесть инсульта</span>
           <button className="suite-reset-btn" onClick={() => setNihss(Object.fromEntries(nihssItems.map(f => [f.id, 0])))}>Сбросить</button>
         </div>
-        <div className="suite-grid">
+        <div className="suite-form-2col">
           {nihssItems.map(f => (
             <div key={f.id} className="suite-field">
               <label>{f.label}</label>

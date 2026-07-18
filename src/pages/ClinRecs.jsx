@@ -1,6 +1,14 @@
 import { useState, useMemo } from 'react'
 import crData from '../data/cr_data.json'
+import BookmarkBtn from '../components/BookmarkBtn'
 import './ClinRecs.css'
+
+function addCrRecent(r) {
+  const recent = JSON.parse(localStorage.getItem('recent') || '[]')
+  const filtered = recent.filter(x => !(x.section === 'cr' && x.id === r.id))
+  filtered.unshift({ section: 'cr', id: r.id, label: r.name, ts: Date.now() })
+  localStorage.setItem('recent', JSON.stringify(filtered.slice(0, 10)))
+}
 
 function stemWord(word) {
   return word.length > 5 ? word.slice(0, 5) : word
@@ -36,14 +44,11 @@ function YaIcon() {
   )
 }
 
-function openExternal(url) {
-  const a = document.createElement('a')
-  a.href = url
-  a.target = '_blank'
-  a.rel = 'noopener noreferrer'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+function openUrl(url) {
+  // Passing a features string (3rd arg) to window.open makes browsers
+  // treat it as a popup request, which iOS and some Android browsers block.
+  // Using only target='_blank' with no features string is the reliable path.
+  window.open(url, '_blank')
 }
 
 const AGE_FILTERS = [
@@ -61,10 +66,71 @@ const sortedData = [...crData].sort((a, b) => {
 
 const PAGE_SIZE = 100
 
-export default function ClinRecs() {
+function CrItemRow({ r, pinned }) {
+  function handleOpen(url) {
+    addCrRecent(r)
+    openUrl(url)
+  }
+
+  return (
+    <div className={`cr-item${pinned ? ' cr-item-pinned' : ''}`}>
+      <div className="cr-item-top">
+        <div className="cr-item-name">{r.name}</div>
+        <BookmarkBtn
+          id={`cr_${r.id}`}
+          type="cr"
+          title={r.name}
+          subtitle={r.mkb.slice(0, 2).join(', ')}
+          section="cr"
+          itemId={r.id}
+        />
+      </div>
+      <div className="cr-item-footer">
+        <div className="cr-mkb-chips">
+          {r.mkb.slice(0, 4).map(code => (
+            <span key={code} className="cr-mkb-chip">{code}</span>
+          ))}
+          {r.mkb.length > 4 && (
+            <span className="cr-mkb-chip cr-mkb-more">+{r.mkb.length - 4}</span>
+          )}
+        </div>
+        {r.age && (
+          <span className={`cr-age-badge ${r.age === 'Дети' ? 'cr-age-child' : r.age === 'Взрослые, дети' ? 'cr-age-both' : 'cr-age-adult'}`}>
+            {r.age}
+          </span>
+        )}
+        <div className="cr-link-btns">
+          <button
+            className="cr-ya-btn"
+            onClick={() => handleOpen(`https://yandex.ru/search/?text=${encodeURIComponent('клинические рекомендации ' + r.name)}`)}
+            title="Найти в Яндексе"
+          >
+            <YaIcon />
+            <span>Яндекс</span>
+          </button>
+          <button
+            className="cr-ya-btn cr-mz-btn"
+            onClick={() => handleOpen(`https://cr.minzdrav.gov.ru/recomend/${r.id.replace(/_\d+$/, '')}`)}
+            title="Открыть на сайте Минздрава"
+          >
+            <ExternalIcon />
+            <span>Минздрав</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function ClinRecs({ initialId }) {
   const [query, setQuery] = useState('')
   const [ageFilter, setAgeFilter] = useState('all')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [pinnedDismissed, setPinnedDismissed] = useState(false)
+
+  const pinnedRecord = initialId && !pinnedDismissed
+    ? crData.find(r => r.id === initialId) ?? null
+    : null
 
   const results = useMemo(() => {
     setVisibleCount(PAGE_SIZE)
@@ -90,7 +156,7 @@ export default function ClinRecs() {
     <div className="page">
       <div className="section-hero section-hero--cr">
         <p className="section-hero-label">Минздрав РФ</p>
-        <h1 className="section-hero-title">Клинические<br/>рекомендации</h1>
+        <h1 className="section-hero-title">Клинические рекомендации</h1>
         <div className="icd-hero-search">
           <SearchIcon />
           <input
@@ -119,6 +185,20 @@ export default function ClinRecs() {
         ))}
       </div>
 
+      {pinnedRecord && (
+        <div className="cr-pinned-wrap">
+          <div className="cr-pinned-header">
+            <span className="cr-pinned-label">Из поиска</span>
+            <button className="cr-pinned-close" onClick={() => setPinnedDismissed(true)}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6 6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          <CrItemRow r={pinnedRecord} pinned />
+        </div>
+      )}
+
       <div className="page-content">
         <p className="section-title">{countLabel}</p>
 
@@ -126,48 +206,7 @@ export default function ClinRecs() {
           {shown.length === 0 ? (
             <div className="cr-empty">Ничего не найдено</div>
           ) : (
-            shown.map(r => (
-              <div
-                key={r.id}
-                className="cr-item"
-                onClick={() => openExternal(`https://cr.minzdrav.gov.ru/recomend/${r.id}`)}
-              >
-                <div className="cr-item-main">
-                  <div className="cr-item-name">{r.name}</div>
-                  <div className="cr-item-footer">
-                    <div className="cr-mkb-chips">
-                      {r.mkb.slice(0, 4).map(code => (
-                        <span key={code} className="cr-mkb-chip">{code}</span>
-                      ))}
-                      {r.mkb.length > 4 && (
-                        <span className="cr-mkb-chip cr-mkb-more">+{r.mkb.length - 4}</span>
-                      )}
-                    </div>
-                    <div className="cr-item-badges">
-                      {r.age && (
-                        <span className={`cr-age-badge ${r.age === 'Дети' ? 'cr-age-child' : r.age === 'Взрослые, дети' ? 'cr-age-both' : 'cr-age-adult'}`}>
-                          {r.age}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <div className="cr-item-actions">
-                  <button
-                    className="cr-ya-btn"
-                    onClick={e => {
-                      e.stopPropagation()
-                      openExternal(`https://yandex.ru/search/?text=${encodeURIComponent('клинические рекомендации ' + r.name)}`)
-                    }}
-                    title="Найти в Яндексе"
-                  >
-                    <YaIcon />
-                    <span>Яндекс</span>
-                  </button>
-                  <div className="cr-item-ext"><ExternalIcon /></div>
-                </div>
-              </div>
-            ))
+            shown.map(r => <CrItemRow key={r.id} r={r} />)
           )}
         </div>
 

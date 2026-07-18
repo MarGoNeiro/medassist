@@ -40,7 +40,13 @@ function gad7Category(score) {
   return                  { label: 'Тяжёлая тревога',     badge: 'badge-red' }
 }
 
-export default function PsychSuite() {
+const PSYCH_TITLE = {
+  'Психотерапевт': 'психотерапевта',
+  'Нарколог':      'нарколога',
+}
+
+export default function PsychSuite({ specialty }) {
+  const titleSuffix = PSYCH_TITLE[specialty] || 'психиатра'
   const [phq, setPhq] = useState(Array(9).fill(0))
   const [gad, setGad] = useState(Array(7).fill(0))
   const [tab, setTab] = useState('phq')
@@ -55,7 +61,7 @@ export default function PsychSuite() {
       <div className="suite-banner">
         <div className="suite-banner-emoji" style={{ background: '#F5F3FF' }}>🧩</div>
         <div>
-          <h2>Рабочий кабинет психиатра</h2>
+          <h2>Рабочий кабинет {titleSuffix}</h2>
           <p>PHQ-9 (депрессия), GAD-7 (тревога), шкалы самоопроса</p>
         </div>
       </div>
@@ -71,15 +77,17 @@ export default function PsychSuite() {
       {tab === 'phq' && (
         <div className="suite-card">
           <div className="suite-card-title">😔 PHQ-9 — за последние 2 недели</div>
-          {PHQ9.map((q, idx) => (
-            <div key={idx} className="suite-field" style={{ marginBottom: 10 }}>
-              <label>{idx + 1}. {q}</label>
-              <select className="suite-select" value={phq[idx]}
-                onChange={e => { const a = [...phq]; a[idx] = parseInt(e.target.value); setPhq(a) }}>
-                {OPT_LABELS.map((l, v) => <option key={v} value={v}>{v} — {l}</option>)}
-              </select>
-            </div>
-          ))}
+          <div className="suite-form-2col">
+            {PHQ9.map((q, idx) => (
+              <div key={idx} className="suite-field" style={{ marginBottom: 10 }}>
+                <label>{idx + 1}. {q}</label>
+                <select className="suite-select" value={phq[idx]}
+                  onChange={e => { const a = [...phq]; a[idx] = parseInt(e.target.value); setPhq(a) }}>
+                  {OPT_LABELS.map((l, v) => <option key={v} value={v}>{v} — {l}</option>)}
+                </select>
+              </div>
+            ))}
+          </div>
           <div className="suite-result-banner">
             <div>
               <div className="suite-score-label">PHQ-9 Score</div>
@@ -103,15 +111,17 @@ export default function PsychSuite() {
       {tab === 'gad' && (
         <div className="suite-card">
           <div className="suite-card-title">😰 GAD-7 — за последние 2 недели</div>
-          {GAD7.map((q, idx) => (
-            <div key={idx} className="suite-field" style={{ marginBottom: 10 }}>
-              <label>{idx + 1}. {q}</label>
-              <select className="suite-select" value={gad[idx]}
-                onChange={e => { const a = [...gad]; a[idx] = parseInt(e.target.value); setGad(a) }}>
-                {OPT_LABELS.map((l, v) => <option key={v} value={v}>{v} — {l}</option>)}
-              </select>
-            </div>
-          ))}
+          <div className="suite-form-2col">
+            {GAD7.map((q, idx) => (
+              <div key={idx} className="suite-field" style={{ marginBottom: 10 }}>
+                <label>{idx + 1}. {q}</label>
+                <select className="suite-select" value={gad[idx]}
+                  onChange={e => { const a = [...gad]; a[idx] = parseInt(e.target.value); setGad(a) }}>
+                  {OPT_LABELS.map((l, v) => <option key={v} value={v}>{v} — {l}</option>)}
+                </select>
+              </div>
+            ))}
+          </div>
           <div className="suite-result-banner">
             <div>
               <div className="suite-score-label">GAD-7 Score</div>

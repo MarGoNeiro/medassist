@@ -12,12 +12,12 @@ function gcsLevel(total) {
 }
 
 const ASA = [
-  { grade: 'ASA I',   desc: 'Здоровый, без заболеваний',                          example: 'Плановая операция у молодого пациента' },
-  { grade: 'ASA II',  desc: 'Лёгкое системное заболевание без функ. ограничений', example: 'АГ компенс., ожирение ИМТ 30–40, курение' },
-  { grade: 'ASA III', desc: 'Тяжёлое заб-е с функциональными ограничениями',     example: 'ХСН NYHA III, ХОБЛ, диализ, онко, ИМТ > 40' },
-  { grade: 'ASA IV',  desc: 'Угрожающее жизни тяжёлое заболевание',              example: 'Острый ИМ/ИИ < 3 мес., сепсис, ПОН' },
-  { grade: 'ASA V',   desc: 'Без операции не выживет (24 ч)',                     example: 'Разрыв АА, ишемия кишечника, ЧМТ с ГГ' },
-  { grade: 'ASA VI',  desc: 'Смерть мозга — донация органов',                    example: '' },
+  { grade: 'ASA I',   desc: 'Здоровый, без заболеваний',                             example: 'Плановая операция у молодого пациента' },
+  { grade: 'ASA II',  desc: 'Лёгкое системное заболевание без функц. ограничений',   example: 'АГ компенс., ожирение ИМТ 30–40, курение' },
+  { grade: 'ASA III', desc: 'Тяжёлое заб-е с функциональными ограничениями',         example: 'ХСН NYHA III, ХОБЛ, диализ, онко, ИМТ > 40' },
+  { grade: 'ASA IV',  desc: 'Угрожающее жизни тяжёлое заболевание',                 example: 'Острый ИМ/ИИ < 3 мес., сепсис, ПОН' },
+  { grade: 'ASA V',   desc: 'Без операции не выживет (24 ч)',                        example: 'Разрыв АА, ишемия кишечника, ЧМТ с ВЧГ' },
+  { grade: 'ASA VI',  desc: 'Смерть мозга – донация органов',                       example: '' },
 ]
 
 const MALLAMPATI = [
@@ -38,10 +38,10 @@ export default function AnesthesiologySuite() {
   return (
     <div className="suite">
       <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>😴</div>
+        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>🩺</div>
         <div>
           <h2>Кабинет анестезиолога-реаниматолога</h2>
-          <p>ШКГ (Glasgow), классификация ASA, Маллампати — оценка дыхательных путей</p>
+          <p>ШКГ (Glasgow), классификация ASA, Маллампати – оценка дыхательных путей</p>
         </div>
       </div>
 
@@ -52,19 +52,19 @@ export default function AnesthesiologySuite() {
           <div className="suite-field">
             <label>Открывание глаз (E)</label>
             <select className="suite-select" value={eyes} onChange={e => setEyes(parseInt(e.target.value))}>
-              {GCS_EYES.map(o => <option key={o.v} value={o.v}>{o.v} — {o.l}</option>)}
+              {GCS_EYES.map(o => <option key={o.v} value={o.v}>{o.v} – {o.l}</option>)}
             </select>
           </div>
           <div className="suite-field">
             <label>Речевой ответ (V)</label>
             <select className="suite-select" value={verbal} onChange={e => setVerbal(parseInt(e.target.value))}>
-              {GCS_VERBAL.map(o => <option key={o.v} value={o.v}>{o.v} — {o.l}</option>)}
+              {GCS_VERBAL.map(o => <option key={o.v} value={o.v}>{o.v} – {o.l}</option>)}
             </select>
           </div>
           <div className="suite-field">
             <label>Двигательный ответ (M)</label>
             <select className="suite-select" value={motor} onChange={e => setMotor(parseInt(e.target.value))}>
-              {GCS_MOTOR.map(o => <option key={o.v} value={o.v}>{o.v} — {o.l}</option>)}
+              {GCS_MOTOR.map(o => <option key={o.v} value={o.v}>{o.v} – {o.l}</option>)}
             </select>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function AnesthesiologySuite() {
 
       {/* ASA */}
       <div className="suite-card">
-        <div className="suite-card-title">🏷 Классификация ASA — физический статус</div>
+        <div className="suite-card-title">🏷️ Классификация ASA – физический статус</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {ASA.map((a, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: i < ASA.length - 1 ? '1px solid var(--color-border)' : 'none', alignItems: 'flex-start' }}>
@@ -100,7 +100,7 @@ export default function AnesthesiologySuite() {
 
       {/* Mallampati */}
       <div className="suite-card">
-        <div className="suite-card-title">👄 Маллампати — прогноз трудной интубации</div>
+        <div className="suite-card-title">👄 Маллампати – прогноз трудной интубации</div>
         <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', marginBottom: 10, lineHeight: 1.5 }}>
           Пациент сидит, рот широко открыт, язык максимально высунут, фонация отсутствует.
         </p>

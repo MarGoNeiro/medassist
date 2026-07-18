@@ -80,7 +80,7 @@ export default function CardiologySuite() {
           <span>🩺 Риск инсульта при ФП — CHA₂DS₂-VASc</span>
           <button className="suite-reset-btn" onClick={() => setFlags({ chf:false, htn:false, age75:false, diabetes:false, stroke:false, vascular:false, age65:false, female:false })}>Сбросить</button>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="suite-form-2col">
           {CHA2_FIELDS.map(f => (
             <button key={f.id} className="suite-toggle-row"
               disabled={f.id === 'age65' && flags.age75}

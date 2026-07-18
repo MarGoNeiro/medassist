@@ -9,7 +9,7 @@ function ChevronRight() {
 function addRecent(calc) {
   const recent = JSON.parse(localStorage.getItem('recent') || '[]')
   const filtered = recent.filter(r => !(r.section === 'calc' && r.id === calc.id))
-  filtered.unshift({ section: 'calc', id: calc.id, label: calc.name })
+  filtered.unshift({ section: 'calc', id: calc.id, label: calc.name, ts: Date.now() })
   localStorage.setItem('recent', JSON.stringify(filtered.slice(0, 10)))
 }
 
@@ -152,17 +152,17 @@ function CalcView({ calc, onBack }) {
   )
 }
 
-export default function Calculators({ initialId } = {}) {
+export default function Calculators({ initialId, pushBack, popBack } = {}) {
   const [specialty, setSpecialty] = useState('all')
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(() => initialId ? calculators.find(c => c.id === initialId) ?? null : null)
 
-  if (selected) return <CalcView calc={selected} onBack={() => setSelected(null)} />
+  if (selected) return <CalcView calc={selected} onBack={() => popBack?.()} />
 
   let list = specialty === 'all' ? calculators : calculators.filter(c => c.specialty.includes(specialty))
   if (query.length >= 2) list = list.filter(c => c.name.toLowerCase().includes(query.toLowerCase()) || c.description.toLowerCase().includes(query.toLowerCase()))
 
-  function select(calc) { addRecent(calc); setSelected(calc) }
+  function select(calc) { addRecent(calc); setSelected(calc); pushBack?.(() => setSelected(null)) }
 
   return (
     <div className="page">

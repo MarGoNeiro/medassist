@@ -3,41 +3,41 @@ import './suites.css'
 
 const DVT_WELLS = [
   { id: 'active_cancer',    label: 'Активная опухоль (лечение < 6 мес. / паллиативная)', pts: 1 },
-  { id: 'paralysis',        label: 'Паралич, парез или иммобилизация н/к (гипс)', pts: 1 },
-  { id: 'bed_rest',         label: 'Постельный режим > 3 дней или хирургия < 12 нед.', pts: 1 },
-  { id: 'tenderness',       label: 'Болезненность по ходу глубоких вен н/к', pts: 1 },
-  { id: 'swelling',         label: 'Отёк всей нижней конечности', pts: 1 },
-  { id: 'calf_swelling',    label: 'Отёк голени > 3 см vs. здоровой', pts: 1 },
-  { id: 'pitting',          label: 'Отёк со вдавлением (только поражённая н/к)', pts: 1 },
-  { id: 'collateral',       label: 'Расширение коллатеральных вен (не варикозных)', pts: 1 },
-  { id: 'prev_dvt',         label: 'ТГВ в анамнезе', pts: 1 },
-  { id: 'alt_diagnosis',    label: 'Другой диагноз столь же или более вероятен', pts: -2 },
+  { id: 'paralysis',        label: 'Паралич, парез или иммобилизация н/к (гипс)',         pts: 1 },
+  { id: 'bed_rest',         label: 'Постельный режим > 3 дней или хирургия < 12 нед.',   pts: 1 },
+  { id: 'tenderness',       label: 'Болезненность по ходу глубоких вен н/к',              pts: 1 },
+  { id: 'swelling',         label: 'Отёк всей нижней конечности',                         pts: 1 },
+  { id: 'calf_swelling',    label: 'Отёк голени > 3 см vs. здоровой',                    pts: 1 },
+  { id: 'pitting',          label: 'Отёк со вдавлением (только поражённая н/к)',          pts: 1 },
+  { id: 'collateral',       label: 'Расширение коллатеральных вен (не варикозных)',        pts: 1 },
+  { id: 'prev_dvt',         label: 'ТГВ в анамнезе',                                      pts: 1 },
+  { id: 'alt_diagnosis',    label: 'Другой диагноз столь же или более вероятен',          pts: -2 },
 ]
 
 function wellsDvtResult(score) {
-  if (score <= 0) return { label: 'Низкая вероятность ТГВ', badge: 'badge-green',  advice: 'D-димер. Если нормальный — ТГВ исключён.' }
+  if (score <= 0) return { label: 'Низкая вероятность ТГВ', badge: 'badge-green',  advice: 'D-димер. Если нормальный – ТГВ исключён.' }
   if (score <= 1) return { label: 'Умеренная вероятность',  badge: 'badge-yellow', advice: 'D-димер. При повышении → УЗДГ вен н/к.' }
   return               { label: 'Высокая вероятность ТГВ', badge: 'badge-red',    advice: 'УЗДГ вен н/к немедленно. Начать антикоагулянты.' }
 }
 
 const AO_GUIDE = [
-  { type: 'A (простой)',     sub: 'A1 — клиновидный', color: '#34D399' },
-  { type: 'A (простой)',     sub: 'A2 — вколоченный', color: '#34D399' },
-  { type: 'A (простой)',     sub: 'A3 — многооскольчатый простой', color: '#34D399' },
-  { type: 'B (частичный)',   sub: 'B1 — медиальный клин', color: '#FBBF24' },
-  { type: 'B (частичный)',   sub: 'B2 — боковой клин', color: '#FBBF24' },
-  { type: 'B (частичный)',   sub: 'B3 — фрагментированный клин', color: '#FBBF24' },
-  { type: 'C (сложный)',     sub: 'C1 — полный простой', color: '#F87171' },
-  { type: 'C (сложный)',     sub: 'C2 — сложный сегментарный', color: '#F87171' },
-  { type: 'C (сложный)',     sub: 'C3 — полный многооскольчатый', color: '#F87171' },
+  { type: 'A (простой)',     sub: 'A1 – клиновидный',              color: '#34D399' },
+  { type: 'A (простой)',     sub: 'A2 – вколоченный',              color: '#34D399' },
+  { type: 'A (простой)',     sub: 'A3 – многооскольчатый простой', color: '#34D399' },
+  { type: 'B (частичный)',   sub: 'B1 – медиальный клин',          color: '#FBBF24' },
+  { type: 'B (частичный)',   sub: 'B2 – боковой клин',             color: '#FBBF24' },
+  { type: 'B (частичный)',   sub: 'B3 – фрагментированный клин',   color: '#FBBF24' },
+  { type: 'C (сложный)',     sub: 'C1 – полный простой',           color: '#F87171' },
+  { type: 'C (сложный)',     sub: 'C2 – сложный сегментарный',     color: '#F87171' },
+  { type: 'C (сложный)',     sub: 'C3 – полный многооскольчатый',  color: '#F87171' },
 ]
 
 const GUSTILO = [
-  { type: 'I',    desc: 'Рана < 1 см, чистая, мин. контаминация', infection: '0–2%', color: '#34D399' },
-  { type: 'II',   desc: 'Рана 1–10 см, умеренный ушиб мягких тканей', infection: '2–10%', color: '#FBBF24' },
-  { type: 'IIIA', desc: 'Рана > 10 см, адекватное покрытие кости', infection: '7%', color: '#FB923C' },
-  { type: 'IIIB', desc: 'Массивная травма МТ, оголение кости, требует пластики', infection: '10–50%', color: '#F87171' },
-  { type: 'IIIC', desc: 'Сосудистая травма, требует реконструкции', infection: '25–50%', color: '#EF4444' },
+  { type: 'I',    desc: 'Рана < 1 см, чистая, мин. контаминация',                   infection: '0–2%',   color: '#34D399' },
+  { type: 'II',   desc: 'Рана 1–10 см, умеренный ушиб мягких тканей',               infection: '2–10%',  color: '#FBBF24' },
+  { type: 'IIIA', desc: 'Рана > 10 см, адекватное покрытие кости',                  infection: '7%',     color: '#FB923C' },
+  { type: 'IIIB', desc: 'Массивная травма МТ, оголение кости, требует пластики',     infection: '10–50%', color: '#F87171' },
+  { type: 'IIIC', desc: 'Сосудистая травма, требует реконструкции',                  infection: '25–50%', color: '#EF4444' },
 ]
 
 export default function TraumaSuite() {
@@ -59,7 +59,7 @@ export default function TraumaSuite() {
       {/* Wells DVT */}
       <div className="suite-card">
         <div className="suite-card-title">
-          <span>🩸 Wells — вероятность ТГВ нижних конечностей</span>
+          <span>🩸 Wells – вероятность ТГВ нижних конечностей</span>
           <button className="suite-reset-btn" onClick={() => setWells(Object.fromEntries(DVT_WELLS.map(f => [f.id, false])))}>Сбросить</button>
         </div>
         {DVT_WELLS.map(f => (
@@ -84,7 +84,7 @@ export default function TraumaSuite() {
 
       {/* AO */}
       <div className="suite-card">
-        <div className="suite-card-title">📐 Классификация AO/OTA переломов</div>
+        <div className="suite-card-title">📋 Классификация AO/OTA переломов</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {AO_GUIDE.map((r, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'center', padding: '5px 0', borderBottom: '1px solid var(--color-border)' }}>

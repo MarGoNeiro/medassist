@@ -45,20 +45,20 @@ function newsResult(score) {
     return { label: 'Низкий', badge: 'badge-green', color: '#34D399', advice: 'Мониторинг каждые 4–6 ч.' }
   }
   if (score <= 6) return { label: 'Средний', badge: 'badge-yellow', color: '#FBBF24', advice: 'Срочный осмотр врача. Мониторинг каждые 1 ч.' }
-  return { label: 'Высокий — экстренный', badge: 'badge-red', color: '#F87171', advice: 'Немедленная реакция. Вызов реанимационной бригады.' }
+  return { label: 'Высокий – экстренный', badge: 'badge-red', color: '#F87171', advice: 'Немедленная реакция. Вызов реанимационной бригады.' }
 }
 
 const GCS_MOTOR = [
-  { v:6,l:'6 — Выполняет команды' },{ v:5,l:'5 — Локализует боль' },{ v:4,l:'4 — Отдёргивает' },
-  { v:3,l:'3 — Патол. сгибание' },{ v:2,l:'2 — Патол. разгибание' },{ v:1,l:'1 — Отсутствует' }
+  { v:6,l:'6 – Выполняет команды' },{ v:5,l:'5 – Локализует боль' },{ v:4,l:'4 – Отдёргивает' },
+  { v:3,l:'3 – Патол. сгибание' },{ v:2,l:'2 – Патол. разгибание' },{ v:1,l:'1 – Отсутствует' }
 ]
-const GCS_EYES = [{ v:4,l:'4 — Самопроизвольно' },{ v:3,l:'3 — На голос' },{ v:2,l:'2 — На боль' },{ v:1,l:'1 — Нет' }]
-const GCS_VERBAL = [{ v:5,l:'5 — Ориентирован' },{ v:4,l:'4 — Спутанный' },{ v:3,l:'3 — Слова' },{ v:2,l:'2 — Звуки' },{ v:1,l:'1 — Нет' }]
+const GCS_EYES = [{ v:4,l:'4 – Самопроизвольно' },{ v:3,l:'3 – На голос' },{ v:2,l:'2 – На боль' },{ v:1,l:'1 – Нет' }]
+const GCS_VERBAL = [{ v:5,l:'5 – Ориентирован' },{ v:4,l:'4 – Спутанный' },{ v:3,l:'3 – Слова' },{ v:2,l:'2 – Звуки' },{ v:1,l:'1 – Нет' }]
 
 const PEARLS = [
-  { title: '5 «Г»/«Т» при остановке сердца', body: '5 «Г»: Гипоксия · Гиповолемия · Гипо/гиперкалиемия · Гипотермия · Ацидоз (H⁺ ионы)\n5 «Т»: Тампонада сердца · Токсины · Тромбоз (ТЭЛА) · Тромбоз (ОКС) · Тензионный пневмоторакс' },
-  { title: 'Инсульт — FAST', body: 'F — Face (перекошено?) · A — Arms (слабость?) · S — Speech (речь?) · T — Time (вызов 103, до 4.5 ч — тромболизис)' },
-  { title: 'ОКС — ЭКГ критерии STEMI', body: 'Элевация ST: V2–V3 ≥ 2 мм (м), ≥ 1.5 мм (ж); остальные отведения ≥ 1 мм. БЛНПГ новый. Реперфузия < 90 мин.' },
+  { title: '5 «Г»/«Т» при остановке сердца', body: '5 «Г»: Гипоксия · Гиповолемия · Гипо/гиперкалиемия · Гипотермия · Ацидоз (H⁺ ионы)\n5 «Т»: Тампонада сердца · Токсины · Тромбоз (ТЭЛА) · Тромбоз (ОКС) · Напряжённый пневмоторакс' },
+  { title: 'Инсульт – FAST', body: 'F – Face (перекошено?) · A – Arms (слабость?) · S – Speech (речь?) · T – Time (вызов 103, до 4.5 ч – тромболизис)' },
+  { title: 'ОКС – ЭКГ критерии STEMI', body: 'Элевация ST: V2–V3 ≥ 2 мм (м), ≥ 1.5 мм (ж); остальные отведения ≥ 1 мм. БЛНПГ новый. Реперфузия < 90 мин.' },
 ]
 
 export default function EmergencySuite() {
@@ -89,7 +89,7 @@ export default function EmergencySuite() {
 
       {/* NEWS2 */}
       <div className="suite-card">
-        <div className="suite-card-title">📡 NEWS2 — шкала ранней тревоги</div>
+        <div className="suite-card-title">📊 NEWS2 – шкала ранней тревоги</div>
         <div className="suite-grid">
           <div className="suite-field">
             <label>ЧДД (в мин.)</label>
@@ -173,7 +173,7 @@ export default function EmergencySuite() {
 
       {/* Pearls */}
       <div className="suite-card">
-        <div className="suite-card-title">⚡ Экстренные алгоритмы — шпаргалка</div>
+        <div className="suite-card-title">⚡ Экстренные алгоритмы – шпаргалка</div>
         {PEARLS.map((p, i) => (
           <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < PEARLS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-primary)', marginBottom: 4 }}>{p.title}</div>

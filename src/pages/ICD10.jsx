@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { icd10 } from '../data/icd10'
 
 const CYR_TO_LAT = { 'а':'a','в':'b','с':'c','е':'e','к':'k','м':'m','н':'h','о':'o','р':'p','т':'t','х':'x','А':'A','В':'B','С':'C','Е':'E','К':'K','М':'M','Н':'H','О':'O','Р':'P','Т':'T','Х':'X' }
@@ -17,7 +17,7 @@ function reportError(subject) {
 function addRecent(item) {
   const recent = JSON.parse(localStorage.getItem('recent') || '[]')
   const filtered = recent.filter(r => !(r.section === 'icd' && r.id === item.code))
-  filtered.unshift({ section: 'icd', id: item.code, label: `${item.code} ${item.title}` })
+  filtered.unshift({ section: 'icd', id: item.code, label: `${item.code} ${item.title}`, ts: Date.now() })
   localStorage.setItem('recent', JSON.stringify(filtered.slice(0, 10)))
 }
 
@@ -153,8 +153,8 @@ function CodeCard({ item, onBack, onNavigate }) {
                 <div key={c.code} className="list-item"
                   style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === children.length - 1 ? '0 0 12px 12px' : 0 }}>
                   <div className="list-item-content">
-                    <div className="list-item-title" style={{ fontFamily: 'monospace', fontSize: 15 }}>{c.code}</div>
-                    <div className="list-item-subtitle" style={{ whiteSpace: 'normal' }}>{c.title}</div>
+                    <div className="list-item-title" style={{ fontFamily: 'monospace', fontSize: 22 }}>{c.code}</div>
+                    <div className="list-item-subtitle" style={{ whiteSpace: 'normal', fontSize: 18 }}>{c.title}</div>
                   </div>
                 </div>
               ))}
@@ -207,21 +207,28 @@ function ChapterView({ chapter, onBlock, onBack }) {
         <button className="back-btn" onClick={onBack}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <h1 style={{ fontSize: 15 }}>{chapter.range}</h1>
+        <h1>{chapter.range}</h1>
       </div>
       <div className="page-content">
         <p className="chapter-subtitle">{chapter.title}</p>
         <div className="list-block">
           {blocks.map((block, i) => (
-            <button key={block.range} className="list-item" onClick={() => onBlock(block)}
+            <div key={block.range} className="list-item list-item-bm"
               style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === blocks.length - 1 ? '0 0 12px 12px' : 0 }}>
-              <div className="icd-chapter-code">{block.range}</div>
-              <div className="list-item-content">
-                <div className="list-item-title" style={{ fontSize: 13 }}>{block.title}</div>
-                <div className="list-item-subtitle">{block.count} кодов</div>
-              </div>
-              <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
+              <button className="list-item-btn" onClick={() => onBlock(block)}>
+                <div className="icd-chapter-code">{block.range}</div>
+                <div className="list-item-content">
+                  <div className="list-item-title" style={{ whiteSpace: 'normal', fontSize: 19 }}>{block.title}</div>
+                  <div className="list-item-subtitle">{block.count} кодов</div>
+                </div>
+                <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <BookmarkBtn
+                id={`icd_bl_${block.range.replace(/[^A-Za-z0-9]/g, '_')}`}
+                type="icd" title={block.title} subtitle={block.range}
+                section="icd" itemId={`_bl_${block.range}@${chapter.range}`}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -247,7 +254,7 @@ function BlockView({ block, chapter, onSelect, onBack }) {
         <button className="back-btn" onClick={onBack}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <h1 style={{ fontSize: 15 }}>{block.range}</h1>
+        <h1>{block.range}</h1>
       </div>
       <div className="page-content">
         <p className="chapter-subtitle">{block.title}</p>
@@ -258,17 +265,21 @@ function BlockView({ block, chapter, onSelect, onBack }) {
         </div>
         <div className="list-block">
           {codes.map((item, i) => (
-            <button key={item.code} className="list-item icd-code-row" onClick={() => onSelect(item)}
-              style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === codes.length - 1 ? '0 0 12px 12px' : 0,
-                       paddingLeft: item.code.includes('.') ? 28 : 14 }}>
-              <div className="list-item-content">
-                <div className="list-item-title" style={{ fontFamily: 'monospace' }}>
-                  {item.code}
+            <div key={item.code} className="list-item icd-code-row list-item-bm"
+              style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === codes.length - 1 ? '0 0 12px 12px' : 0 }}>
+              <button className="list-item-btn" onClick={() => onSelect(item)}>
+                <div className="list-item-content">
+                  <div className="list-item-title" style={{ fontFamily: 'monospace', fontSize: 23 }}>{item.code}</div>
+                  <div className="list-item-subtitle" style={{ whiteSpace: 'normal', fontSize: 19 }}>{item.title}</div>
                 </div>
-                <div className="list-item-subtitle" style={{ whiteSpace: 'normal' }}>{item.title}</div>
-              </div>
-              <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
+                <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <BookmarkBtn
+                id={`icd_${item.code}`}
+                type="icd" title={item.title} subtitle={item.code}
+                section="icd" itemId={item.code}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -276,13 +287,51 @@ function BlockView({ block, chapter, onSelect, onBack }) {
   )
 }
 
-export default function ICD10({ initialCode }) {
+export default function ICD10({ initialCode, pushBack, popBack }) {
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(() => initialCode ? icd10.find(i => i.code === initialCode) || null : null)
-  const [chapter, setChapter] = useState(null)
-  const [block, setBlock] = useState(null)
+  const [selected, setSelected] = useState(() => {
+    if (!initialCode || initialCode.startsWith('_')) return null
+    return icd10.find(i => i.code === initialCode) || null
+  })
+  const [chapter, setChapter] = useState(() => {
+    if (!initialCode) return null
+    if (initialCode.startsWith('_ch_')) {
+      return CHAPTERS.find(c => c.range === initialCode.slice(4)) || null
+    }
+    if (initialCode.startsWith('_bl_')) {
+      const chRange = initialCode.split('@')[1]
+      return CHAPTERS.find(c => c.range === chRange) || null
+    }
+    return null
+  })
+  const [block, setBlock] = useState(() => {
+    if (!initialCode?.startsWith('_bl_')) return null
+    const blRange = initialCode.slice(4).split('@')[0]
+    const chRange = initialCode.split('@')[1]
+    const ch = CHAPTERS.find(c => c.range === chRange)
+    if (!ch) return null
+    const all = getChapterCodes(ch)
+    const first = all.find(i => i.block === blRange)
+    if (!first) return null
+    return { range: blRange, title: first.blockTitle, count: all.filter(i => i.block === blRange).length }
+  })
 
-  const recentCodes = JSON.parse(localStorage.getItem('recent') || '[]').filter(r => r.section === 'icd').slice(0, 5)
+  // Deep-link from Favorites: push back handlers so history.back() works
+  useEffect(() => {
+    if (initialCode?.startsWith('_ch_') && chapter) {
+      pushBack?.(() => setChapter(null))
+    } else if (initialCode?.startsWith('_bl_') && chapter && block) {
+      pushBack?.(() => setChapter(null))
+      pushBack?.(() => setBlock(null))
+    } else if (initialCode && !initialCode.startsWith('_') && selected) {
+      pushBack?.(() => setSelected(null))
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000
+  const recentCodes = JSON.parse(localStorage.getItem('recent') || '[]')
+    .filter(r => r.section === 'icd' && r.ts && Date.now() - r.ts < THIRTY_DAYS)
+    .slice(0, 5)
 
   const results = useMemo(() => {
     if (query.length < 2) return null
@@ -290,13 +339,15 @@ export default function ICD10({ initialCode }) {
     return icd10.filter(i => i.code.toLowerCase().includes(lq) || i.title.toLowerCase().includes(lq)).slice(0, 60)
   }, [query])
 
-  function openItem(item) { addRecent(item); setSelected(item) }
+  function openItem(item) { addRecent(item); setSelected(item); pushBack?.(() => setSelected(null)) }
+  function openBlock(b)   { setBlock(b);  pushBack?.(() => setBlock(null)) }
+  function openChapter(ch){ setChapter(ch); pushBack?.(() => setChapter(null)) }
 
-  if (selected) return <CodeCard item={selected} onBack={() => setSelected(null)} onNavigate={openItem} />
-  if (block)   return <BlockView block={block} chapter={chapter} onSelect={openItem} onBack={() => setBlock(null)} />
-  if (chapter) return <ChapterView chapter={chapter} onBlock={b => setBlock(b)} onBack={() => { setChapter(null); setBlock(null) }} />
+  if (selected) return <CodeCard item={selected} onBack={() => popBack?.()} onNavigate={openItem} />
+  if (block)   return <BlockView block={block} chapter={chapter} onSelect={openItem} onBack={() => popBack?.()} />
+  if (chapter) return <ChapterView chapter={chapter} onBlock={openBlock} onBack={() => popBack?.()} />
 
-  function select(item) { addRecent(item); setSelected(item) }
+  function select(item) { addRecent(item); setSelected(item); pushBack?.(() => setSelected(null)) }
 
   return (
     <div className="page">
@@ -318,19 +369,22 @@ export default function ICD10({ initialCode }) {
 
         {/* Recent codes */}
         {recentCodes.length > 0 && !query && (
-          <div className="recent-chips">
-            {recentCodes.map(r => (
-              <button key={r.id} className="recent-chip" onClick={() => { const item = icd10.find(i => i.code === r.id); if (item) select(item) }}>
-                {r.id}
-              </button>
-            ))}
-          </div>
+          <>
+            <p className="section-title" style={{ marginTop: 12 }}>Недавние</p>
+            <div className="recent-chips">
+              {recentCodes.map(r => (
+                <button key={r.id} className="recent-chip" onClick={() => { const item = icd10.find(i => i.code === r.id); if (item) select(item) }}>
+                  {r.id}
+                </button>
+              ))}
+            </div>
+          </>
         )}
 
         {/* Search results */}
         {results && (
           <div className="list-block">
-            {results.length === 0 && <div style={{ padding: '24px 16px', textAlign: 'center', color: 'var(--color-text-secondary)', fontSize: 14 }}>Ничего не найдено</div>}
+            {results.length === 0 && <div style={{ padding: '24px 16px', textAlign: 'center', color: 'var(--color-text-secondary)', fontSize: 16 }}>Ничего не найдено</div>}
             {results.map((item, i) => (
               <button key={item.code} className="list-item" onClick={() => select(item)}
                 style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === results.length - 1 ? '0 0 12px 12px' : 0 }}>
@@ -350,14 +404,21 @@ export default function ICD10({ initialCode }) {
             <p className="section-title">Классы МКБ-10</p>
             <div className="list-block">
               {CHAPTERS.map((ch, i) => (
-                <button key={ch.range} className="list-item" onClick={() => setChapter(ch)}
+                <div key={ch.range} className="list-item list-item-bm"
                   style={{ borderRadius: i === 0 ? '12px 12px 0 0' : i === CHAPTERS.length - 1 ? '0 0 12px 12px' : 0 }}>
-                  <div className="icd-chapter-code">{ch.range}</div>
-                  <div className="list-item-content">
-                    <div className="list-item-title" style={{ fontSize: 13, whiteSpace: 'normal' }}>{ch.title}</div>
-                  </div>
-                  <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </button>
+                  <button className="list-item-btn" onClick={() => openChapter(ch)}>
+                    <div className="icd-chapter-code">{ch.range}</div>
+                    <div className="list-item-content">
+                      <div className="list-item-title" style={{ whiteSpace: 'normal', fontSize: 21 }}>{ch.title}</div>
+                    </div>
+                    <svg className="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                  </button>
+                  <BookmarkBtn
+                    id={`icd_ch_${ch.range.replace(/[^A-Za-z0-9]/g, '_')}`}
+                    type="icd" title={ch.title} subtitle={ch.range}
+                    section="icd" itemId={`_ch_${ch.range}`}
+                  />
+                </div>
               ))}
             </div>
           </>

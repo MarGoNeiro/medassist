@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import TabBar from './components/TabBar'
 import Home from './pages/Home'
 import Drugs from './pages/Drugs'
@@ -18,34 +18,54 @@ export default function App() {
   const [drugInitId, setDrugInitId] = useState(null)
   const [icdInitCode, setIcdInitCode] = useState(null)
   const [calcInitId, setCalcInitId] = useState(null)
+  const [crInitId, setCrInitId] = useState(null)
+  const backStackRef = useRef([])
+
+  const pushBack = useCallback((fn) => {
+    backStackRef.current.push(fn)
+    window.history.pushState({ app: true }, '')
+  }, [])
+
+  const popBack = useCallback(() => {
+    if (backStackRef.current.length > 0) {
+      const fn = backStackRef.current.pop()
+      fn()
+    }
+  }, [])
 
   useEffect(() => {
-    // Push a state so pressing browser Back doesn't exit
     window.history.pushState({ app: true }, '')
 
-    function handlePopState() {
-      // Push again to stay in the app
-      window.history.pushState({ app: true }, '')
-      // Treat as in-app back
-      if (changingSpecialty) {
-        setChangingSpecialty(false)
+    function handlePopState(e) {
+      if (e.state?.app) {
+        // Потребляем одну запись истории — вызываем обработчик из стека
+        if (backStackRef.current.length > 0) {
+          const fn = backStackRef.current.pop()
+          fn()
+        }
+      } else {
+        // Дошли до "дна" (запись без нашего state) — не выпускаем из приложения
+        window.history.pushState({ app: true }, '')
       }
     }
 
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
-  }, [changingSpecialty])
+  }, [])
 
   function handleOnboardingDone(spec) {
     localStorage.setItem('specialty', spec)
     setSpecialty(spec)
     setChangingSpecialty(false)
+    backStackRef.current = []
   }
 
   function navigateTo(section, itemId) {
+    backStackRef.current = []
     if (section === 'drugs') setDrugInitId(itemId || null)
-    if (section === 'icd') setIcdInitCode(itemId || null)
-    if (section === 'calc') setCalcInitId(itemId || null)
+    if (section === 'icd')   setIcdInitCode(itemId || null)
+    if (section === 'calc')  setCalcInitId(itemId || null)
+    if (section === 'cr')    setCrInitId(itemId || null)
     setTab(section)
   }
 
@@ -54,20 +74,20 @@ export default function App() {
       <Onboarding
         onDone={handleOnboardingDone}
         canBack={!!specialty}
-        onBack={() => setChangingSpecialty(false)}
+        onBack={() => window.history.back()}
       />
     )
   }
 
   return (
     <>
-      {tab === 'home'      && <Home onNavigate={navigateTo} specialty={specialty} onChangeSpecialty={() => setChangingSpecialty(true)} />}
-      {tab === 'drugs'     && <Drugs key={drugInitId || 'list'} initialId={drugInitId} />}
-      {tab === 'calc'      && <Calculators key={calcInitId || 'list'} initialId={calcInitId} />}
-      {tab === 'icd'       && <ICD10 key={icdInitCode || 'list'} initialCode={icdInitCode} />}
-      {tab === 'cr'        && <ClinRecs />}
+      {tab === 'home'      && <Home onNavigate={navigateTo} specialty={specialty} onChangeSpecialty={() => { setChangingSpecialty(true); pushBack(() => setChangingSpecialty(false)) }} />}
+      {tab === 'drugs'     && <Drugs key={drugInitId || 'list'} initialId={drugInitId} pushBack={pushBack} popBack={popBack} />}
+      {tab === 'calc'      && <Calculators key={calcInitId || 'list'} initialId={calcInitId} pushBack={pushBack} popBack={popBack} />}
+      {tab === 'icd'       && <ICD10 key={icdInitCode || 'list'} initialCode={icdInitCode} pushBack={pushBack} popBack={popBack} />}
+      {tab === 'cr'        && <ClinRecs key={crInitId || 'list'} initialId={crInitId} />}
       {tab === 'favorites' && <Favorites onNavigate={navigateTo} />}
-      <TabBar active={tab} onChange={setTab} />
+      <TabBar active={tab} onChange={newTab => { pushBack(() => setTab(tab)); setTab(newTab) }} />
     </>
   )
 }

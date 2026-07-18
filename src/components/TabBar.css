@@ -23,9 +23,12 @@
 }
 
 .tab-item span {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .tab-item.active {

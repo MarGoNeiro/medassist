@@ -1,11 +1,11 @@
 import './TabBar.css'
 
 const tabs = [
-  { id: 'home',      label: 'Главная',   icon: HomeIcon },
-  { id: 'drugs',     label: 'Препараты', icon: PillIcon },
+  { id: 'home',      label: 'Кабинет',   icon: HomeIcon },
+  { id: 'drugs',     label: 'ЛС', icon: PillIcon },
   { id: 'cr',        label: 'КР',        icon: CRIcon },
   { id: 'icd',       label: 'МКБ-10',    icon: ListIcon },
-  { id: 'calc',      label: 'Расчёты',   icon: CalcIcon },
+  { id: 'calc',      label: 'Калькуляторы', icon: CalcIcon },
   { id: 'favorites', label: 'Избранное', icon: BookmarkIcon },
 ]
 

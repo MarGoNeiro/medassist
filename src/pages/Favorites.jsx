@@ -6,6 +6,7 @@ const typeConfig = {
   drug: { label: 'Препарат', color: '#2563EB', bg: '#EFF6FF' },
   icd:  { label: 'МКБ-10',   color: '#7C3AED', bg: '#F5F3FF' },
   calc: { label: 'Шкала',    color: '#059669', bg: '#ECFDF5' },
+  cr:   { label: 'КР',       color: '#0891B2', bg: '#ECFEFF' },
 }
 
 function plural(n, one, few, many) {
@@ -37,7 +38,7 @@ export default function Favorites({ onNavigate }) {
             </svg>
           </div>
           <p className="fav-empty-title">Пока ничего нет</p>
-          <p className="fav-empty-sub">Нажмите на закладку в карточке препарата, кода МКБ или калькулятора — и она появится здесь</p>
+          <p className="fav-empty-sub">Нажмите на закладку в карточке препарата, кода МКБ, калькулятора или клинической рекомендации — и она появится здесь</p>
         </div>
       ) : (
         <div className="page-content">

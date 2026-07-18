@@ -35,7 +35,8 @@ const BP_CLASSES = [
   { name: 'АГ 3 степени',         sys: '≥ 180',   dia: '≥ 110',  color: '#EF4444' },
 ]
 
-export default function TherapistSuite() {
+export default function TherapistSuite({ specialty }) {
+  const titleSuffix = specialty === 'Семейный врач' ? 'семейного врача' : 'терапевта'
   const [curb, setCurb]   = useState({ confusion: false, urea: false, rr: false, bp: false, age: false })
   const [weight, setWeight] = useState(75)
   const [height, setHeight] = useState(170)
@@ -51,7 +52,7 @@ export default function TherapistSuite() {
       <div className="suite-banner">
         <div className="suite-banner-emoji" style={{ background: '#EFF6FF' }}>🩺</div>
         <div>
-          <h2>Рабочий кабинет терапевта</h2>
+          <h2>Рабочий кабинет {titleSuffix}</h2>
           <p>CURB-65 (пневмония), ИМТ, классификация АД по ЕОК/РМОАГ</p>
         </div>
       </div>

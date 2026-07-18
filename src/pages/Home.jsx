@@ -21,6 +21,7 @@ import OncologySuite        from './suites/OncologySuite'
 import PsychSuite           from './suites/PsychSuite'
 import RheumatologySuite    from './suites/RheumatologySuite'
 import UrologySuite         from './suites/UrologySuite'
+import HematologySuite      from './suites/HematologySuite'
 import TraumaSuite          from './suites/TraumaSuite'
 import './Home.css'
 
@@ -28,7 +29,8 @@ const SPECIALTY_SUITE = {
   'Педиатр':                   PediatricSuite,
   'Кардиолог':                 CardiologySuite,
   'Хирург (сосудистый)':       CardiologySuite,
-  'Гематолог':                 CardiologySuite,
+  'Гематолог':                 HematologySuite,
+  'Акушер-гинеколог':          ObGynSuite,
   'Гинеколог':                 ObGynSuite,
   'Акушер':                    ObGynSuite,
   'Невролог':                  NeurologySuite,
@@ -76,6 +78,7 @@ const specialtyNames = {
   'Анестезиолог-реаниматолог': 'Анестезиолог',
   'Хирург (сосудистый)': 'Хирург',
   'Травматолог-ортопед': 'Травматолог',
+  'Акушер-гинеколог': 'Акушер-гин.',
   'Акушер': 'Акушер',
   'Аллерголог-иммунолог': 'Аллерголог',
   'Гематолог': 'Гематолог',

@@ -60,8 +60,22 @@ export default function Onboarding({ onDone, canBack, onBack }) {
         <p className="onboarding-subtitle">Справочник врача в кармане</p>
 
         <svg className="ob-ecg" viewBox="0 0 375 48" preserveAspectRatio="none" fill="none" aria-hidden="true">
-          <path d="M0,24 L35,24 L48,8 L61,40 L74,2 L87,24 L140,24 L153,8 L166,40 L179,2 L192,24 L245,24 L258,8 L271,40 L284,2 L297,24 L375,24"
-            stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          {/* 3 настоящих PQRST-комплекса */}
+          <path d="
+            M0,24 L15,24
+            C20,24 24,18 27,18 C30,18 34,24 38,24
+            L43,24 L45,27 L48,4 L51,34 L56,24 L66,24
+            C71,24 75,15 80,15 C85,15 88,24 92,24
+            L128,24
+            C133,24 137,18 140,18 C143,18 147,24 151,24
+            L156,24 L158,27 L161,4 L164,34 L169,24 L179,24
+            C184,24 188,15 193,15 C198,15 201,24 205,24
+            L241,24
+            C246,24 250,18 253,18 C256,18 260,24 264,24
+            L269,24 L271,27 L274,4 L277,34 L282,24 L292,24
+            C297,24 301,15 306,15 C311,15 314,24 318,24
+            L375,24
+          " stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
 
         <svg className="ob-wave" viewBox="0 0 390 48" preserveAspectRatio="none" aria-hidden="true">

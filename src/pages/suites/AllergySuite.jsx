@@ -46,36 +46,37 @@ export default function AllergySuite() {
         </div>
       </div>
 
-      {/* ── Анафилаксия ── */}
-      <div className="suite-card">
-        <div className="suite-card-title">🚨 АНАФИЛАКСИЯ — НЕОТЛОЖНАЯ ПОМОЩЬ</div>
-        <div className="allergy-anaph-list">
-          {ANAPH_STEPS.map(s => (
-            <div key={s.num} className="allergy-anaph-step" style={{ '--step-color': s.color }}>
-              <div className="allergy-anaph-num">{s.num}</div>
-              <div>
-                <div className="allergy-anaph-text">{s.text}</div>
-                <div className="allergy-anaph-sub">{s.sub}</div>
+      {/* ── Анафилаксия + GINA рядом на десктопе ── */}
+      <div className="allergy-two-col">
+        <div className="suite-card allergy-col-card">
+          <div className="suite-card-title">🚨 АНАФИЛАКСИЯ — НЕОТЛОЖНАЯ ПОМОЩЬ</div>
+          <div className="allergy-anaph-list">
+            {ANAPH_STEPS.map(s => (
+              <div key={s.num} className="allergy-anaph-step" style={{ '--step-color': s.color }}>
+                <div className="allergy-anaph-num">{s.num}</div>
+                <div>
+                  <div className="allergy-anaph-text">{s.text}</div>
+                  <div className="allergy-anaph-sub">{s.sub}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* ── GINA ── */}
-      <div className="suite-card">
-        <div className="suite-card-title">🫁 СТУПЕНЧАТАЯ ТЕРАПИЯ БА (GINA 2023)</div>
-        <div className="allergy-gina-list">
-          {GINA_STEPS.map(s => (
-            <div key={s.step} className="allergy-gina-step">
-              <div className="allergy-gina-header">
-                <span className="allergy-gina-badge">Ступень {s.step}</span>
-                <span className="allergy-gina-note">{s.note}</span>
+        <div className="suite-card allergy-col-card">
+          <div className="suite-card-title">🫁 СТУПЕНЧАТАЯ ТЕРАПИЯ БА (GINA 2023)</div>
+          <div className="allergy-gina-list">
+            {GINA_STEPS.map(s => (
+              <div key={s.step} className="allergy-gina-step">
+                <div className="allergy-gina-header">
+                  <span className="allergy-gina-badge">Ступень {s.step}</span>
+                  <span className="allergy-gina-note">{s.note}</span>
+                </div>
+                <div className="allergy-gina-preferred">{s.preferred}</div>
+                <div className="allergy-gina-alt">Альт.: {s.alt}</div>
               </div>
-              <div className="allergy-gina-preferred">{s.preferred}</div>
-              <div className="allergy-gina-alt">Альт.: {s.alt}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 

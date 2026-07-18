@@ -372,6 +372,24 @@
 }
 
 /* ─── AllergySuite ─── */
+.allergy-two-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.allergy-col-card { flex: 1; }
+
+@media (min-width: 768px) {
+  .allergy-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .allergy-col-card { margin-bottom: 0; }
+}
+
+
 .allergy-hint {
   font-size: 12px;
   color: var(--color-text-secondary);

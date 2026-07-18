@@ -56,15 +56,8 @@ export default function Onboarding({ onDone, canBack, onBack }) {
           </svg>
         </div>
 
-        <h1 className="onboarding-title">MedAssist</h1>
+        <h1 className="onboarding-title">Медицинский ассистент</h1>
         <p className="onboarding-subtitle">Справочник врача в кармане</p>
-
-        <div className="ob-features">
-          <span className="ob-feature-chip">823 МНН</span>
-          <span className="ob-feature-chip">МКБ-10</span>
-          <span className="ob-feature-chip">Калькуляторы</span>
-          <span className="ob-feature-chip">КР</span>
-        </div>
 
         <svg className="ob-ecg" viewBox="0 0 375 48" preserveAspectRatio="none" fill="none" aria-hidden="true">
           <path d="M0,24 L35,24 L48,8 L61,40 L74,2 L87,24 L140,24 L153,8 L166,40 L179,2 L192,24 L245,24 L258,8 L271,40 L284,2 L297,24 L375,24"

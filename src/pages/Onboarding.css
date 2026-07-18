@@ -10,13 +10,27 @@
 
 .onboarding-top {
   background: linear-gradient(155deg, #0D0B22 0%, #1A1748 30%, #2D2A8A 70%, #4338CA 100%);
-  padding: 56px 24px 76px;
+  padding: 52px 24px 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* фото врачей (появляется только если файл public/doctor-bg.jpg существует) */
+.ob-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/doctor-bg.jpg');
+  background-size: cover;
+  background-position: center 20%;
+  opacity: 0.13;
+  mix-blend-mode: luminosity;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* decorative glow – top right */
@@ -30,6 +44,7 @@
   top: -110px;
   right: -90px;
   pointer-events: none;
+  z-index: 1;
 }
 
 /* decorative glow – bottom left */
@@ -43,6 +58,7 @@
   bottom: 50px;
   left: -70px;
   pointer-events: none;
+  z-index: 1;
 }
 
 .ob-back {
@@ -98,7 +114,6 @@
   z-index: 2;
 }
 
-/* feature chips */
 .ob-features {
   display: flex;
   gap: 8px;
@@ -121,7 +136,6 @@
   letter-spacing: 0.02em;
 }
 
-/* decorative ECG line */
 .ob-ecg {
   position: absolute;
   bottom: 48px;
@@ -131,7 +145,6 @@
   z-index: 1;
 }
 
-/* wave divider */
 .ob-wave {
   position: absolute;
   bottom: -1px;
@@ -145,15 +158,97 @@
   fill: var(--color-bg);
 }
 
-/* ─── Form section ──────────────────────────────────────────── */
+/* ─── Bottom (form + features) ──────────────────────────────── */
 
 .onboarding-bottom {
   flex: 1;
-  padding: 24px 20px 36px;
+  padding: 20px 16px 28px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* ─── Feature grid ──────────────────────────────────────────── */
+
+.ob-inside-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.ob-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ob-feature-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ob-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.ob-feature-card--indigo::before { background: linear-gradient(90deg, #6366F1, #818CF8); }
+.ob-feature-card--violet::before { background: linear-gradient(90deg, #7C3AED, #A78BFA); }
+.ob-feature-card--blue::before   { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.ob-feature-card--purple::before { background: linear-gradient(90deg, #9333EA, #C084FC); }
+
+.ob-fc-icon {
+  color: var(--color-text-secondary);
+  margin-bottom: 2px;
+}
+
+.ob-feature-card--indigo .ob-fc-icon { color: #818CF8; }
+.ob-feature-card--violet .ob-fc-icon { color: #A78BFA; }
+.ob-feature-card--blue   .ob-fc-icon { color: #60A5FA; }
+.ob-feature-card--purple .ob-fc-icon { color: #C084FC; }
+
+.ob-fc-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.ob-fc-desc {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── Divider ────────────────────────────────────────────────── */
+
+.ob-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin-bottom: 18px;
+  opacity: 0.6;
+}
+
+/* ─── Form ───────────────────────────────────────────────────── */
 
 .onboarding-step-label {
   font-size: 11px;
@@ -161,33 +256,33 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-primary);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .onboarding-question {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--color-text);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   letter-spacing: -0.02em;
 }
 
 .onboarding-hint {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   line-height: 1.5;
 }
 
 .select-wrapper {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .specialty-select {
   width: 100%;
-  min-height: 54px;
+  min-height: 52px;
   padding: 14px 44px 14px 16px;
   font-size: 16px;
   font-weight: 500;
@@ -223,12 +318,12 @@
 
 .ob-start-btn {
   width: 100%;
-  min-height: 54px;
+  min-height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: white;
@@ -251,8 +346,8 @@
 }
 
 .onboarding-note {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--color-text-tertiary);
   text-align: center;
-  margin-top: 16px;
+  margin-top: 12px;
 }

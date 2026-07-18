@@ -59,23 +59,9 @@ export default function Onboarding({ onDone, canBack, onBack }) {
         <h1 className="onboarding-title">Медицинский ассистент</h1>
         <p className="onboarding-subtitle">Справочник врача в кармане</p>
 
-        <svg className="ob-ecg" viewBox="0 0 375 48" preserveAspectRatio="none" fill="none" aria-hidden="true">
-          {/* 3 настоящих PQRST-комплекса */}
-          <path d="
-            M0,24 L15,24
-            C20,24 24,18 27,18 C30,18 34,24 38,24
-            L43,24 L45,27 L48,4 L51,34 L56,24 L66,24
-            C71,24 75,15 80,15 C85,15 88,24 92,24
-            L128,24
-            C133,24 137,18 140,18 C143,18 147,24 151,24
-            L156,24 L158,27 L161,4 L164,34 L169,24 L179,24
-            C184,24 188,15 193,15 C198,15 201,24 205,24
-            L241,24
-            C246,24 250,18 253,18 C256,18 260,24 264,24
-            L269,24 L271,27 L274,4 L277,34 L282,24 L292,24
-            C297,24 301,15 306,15 C311,15 314,24 318,24
-            L375,24
-          " stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg className="ob-ecg" viewBox="0 0 600 80" preserveAspectRatio="none" fill="none" aria-hidden="true">
+          <path d="M0,48 L18,48 C24,48 28,36 33,36 C38,36 42,48 50,48 L58,48 L61,54 L65,5 L69,60 L74,48 L88,48 C94,48 102,28 113,28 C124,28 131,48 140,48 L190,48 C196,48 200,36 205,36 C210,36 214,48 222,48 L230,48 L233,54 L237,5 L241,60 L246,48 L260,48 C266,48 274,28 285,28 C296,28 303,48 312,48 L362,48 C368,48 372,36 377,36 C382,36 386,48 394,48 L402,48 L405,54 L409,5 L413,60 L418,48 L432,48 C438,48 446,28 457,28 C468,28 475,48 484,48 L600,48"
+            stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
 
         <svg className="ob-wave" viewBox="0 0 390 48" preserveAspectRatio="none" aria-hidden="true">

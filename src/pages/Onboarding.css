@@ -4,12 +4,15 @@
   flex-direction: column;
   background: var(--color-bg);
   overflow: hidden;
+  position: relative;
 }
 
 /* ─── Hero ─────────────────────────────────────────────────── */
 
 .onboarding-top {
-  background: linear-gradient(155deg, #0D0B22 0%, #1A1748 30%, #2D2A8A 70%, #4338CA 100%);
+  background: linear-gradient(155deg, rgba(13,11,34,0.93) 0%, rgba(26,23,72,0.88) 30%, rgba(45,42,138,0.82) 70%, rgba(67,56,202,0.72) 100%);
+  position: relative;
+  z-index: 1;
   padding: 52px 24px 32px;
   display: flex;
   flex-direction: column;
@@ -26,8 +29,8 @@
   inset: 0;
   background-image: url('/doctor-bg.jpg');
   background-size: cover;
-  background-position: 35% center;
-  opacity: 0.28;
+  background-position: 68% center;
+  opacity: 0.30;
   mix-blend-mode: luminosity;
   z-index: 0;
   pointer-events: none;
@@ -169,6 +172,9 @@
   flex-direction: column;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 1;
+  background: rgba(13,11,34,0.78);
 }
 
 /* ─── Feature grid ──────────────────────────────────────────── */

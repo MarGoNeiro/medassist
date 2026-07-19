@@ -39,8 +39,8 @@ export default function Onboarding({ onDone, canBack, onBack }) {
 
   return (
     <div className="onboarding">
+      <div className="ob-photo-overlay" />
       <div className="onboarding-top">
-        <div className="ob-photo-overlay" />
 
         {canBack && (
           <button className="ob-back" onClick={onBack}>

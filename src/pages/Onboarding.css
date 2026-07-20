@@ -19,17 +19,17 @@
   pointer-events: none;
 }
 
-/* Desktop: доктор занимает только правые 60% экрана */
+/* Desktop: доктор слева, взгляд направлен вправо к тексту */
 @media (min-width: 900px) {
   .onboarding::before {
-    left: 40%;
-    right: 0;
+    left: 0;
+    right: 58%;
     top: 0;
     bottom: 0;
-    background: url('/doctor-bg.jpg') 35% center / cover no-repeat;
-    opacity: 0.85;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 14%, black 26%);
-    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 14%, black 26%);
+    background: url('/doctor-bg.jpg') 48% center / cover no-repeat;
+    opacity: 0.88;
+    -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.7) 14%, black 28%);
+    mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.7) 14%, black 28%);
   }
 }
 
@@ -49,13 +49,13 @@
   flex-shrink: 0;
 }
 
-/* Desktop: текст слева, тёмный фон только слева (справа фото просвечивает) */
+/* Desktop: доктор слева, текст справа */
 @media (min-width: 900px) {
   .onboarding-top {
     align-items: flex-start;
-    padding: 52px 5% 32px 6%;
+    padding: 52px 6% 32px 44%;
     background:
-      linear-gradient(to right, rgba(8,6,22,0.93) 0%, rgba(8,6,22,0.90) 36%, rgba(8,6,22,0.55) 55%, rgba(8,6,22,0.22) 78%, rgba(8,6,22,0.06) 100%),
+      linear-gradient(to right, rgba(8,6,22,0.05) 0%, rgba(8,6,22,0.20) 36%, rgba(8,6,22,0.78) 46%, rgba(8,6,22,0.92) 62%, rgba(8,6,22,0.92) 100%),
       linear-gradient(155deg, rgba(13,11,34,0) 0%, rgba(26,23,72,0.40) 30%, rgba(45,42,138,0.22) 55%, rgba(67,56,202,0.08) 100%);
   }
 }

@@ -48,7 +48,7 @@ export default function AnesthesiologySuite() {
       {/* GCS */}
       <div className="suite-card">
         <div className="suite-card-title">🧠 Шкала комы Глазго (GCS)</div>
-        <div className="suite-grid-1 suite-grid" style={{ gap: 10 }}>
+        <div className="suite-grid gcs-grid">
           <div className="suite-field">
             <label>Открывание глаз (E)</label>
             <select className="suite-select" value={eyes} onChange={e => setEyes(parseInt(e.target.value))}>
@@ -68,12 +68,12 @@ export default function AnesthesiologySuite() {
             </select>
           </div>
         </div>
-        <div className="suite-result-banner">
-          <div>
+        <div className="suite-result-banner scorad-result">
+          <div className="scorad-score">
             <div className="suite-score-label">ШКГ (E{eyes} V{verbal} M{motor})</div>
             <div className="suite-score-big" style={{ color: '#34D399' }}>{gcsTotal}</div>
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
+          <div className="scorad-verdict">
             <span className={`suite-risk-badge ${gcsLvl.badge}`}>{gcsLvl.label}</span>
             <div className="suite-advice">
               {gcsTotal <= 8 ? 'Показана интубация трахеи / защита дыхательных путей' : gcsTotal <= 12 ? 'Тщательный мониторинг. Риск аспирации.' : 'Пациент в сознании, стандартный мониторинг.'}
@@ -82,42 +82,41 @@ export default function AnesthesiologySuite() {
         </div>
       </div>
 
-      {/* ASA */}
-      <div className="suite-card">
-        <div className="suite-card-title">🏷️ Классификация ASA – физический статус</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {ASA.map((a, i) => (
-            <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: i < ASA.length - 1 ? '1px solid var(--color-border)' : 'none', alignItems: 'flex-start' }}>
-              <span style={{ fontWeight: 800, color: 'var(--color-primary)', fontSize: 12, minWidth: 52, flexShrink: 0 }}>{a.grade}</span>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text)', lineHeight: 1.3 }}>{a.desc}</div>
-                {a.example && <div style={{ fontSize: 11, color: 'var(--color-text-secondary)', marginTop: 2, lineHeight: 1.3 }}>{a.example}</div>}
+      {/* ASA + Mallampati рядом на десктопе */}
+      <div className="anesthesia-two-col">
+        <div className="suite-card">
+          <div className="suite-card-title">🏷️ Классификация ASA – физический статус</div>
+          <div className="asa-list">
+            {ASA.map((a, i) => (
+              <div key={i} className={`asa-row${i === ASA.length - 1 ? ' asa-row-last' : ''}`}>
+                <span className="asa-grade">{a.grade}</span>
+                <div>
+                  <div className="asa-desc">{a.desc}</div>
+                  {a.example && <div className="asa-example">{a.example}</div>}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Mallampati */}
-      <div className="suite-card">
-        <div className="suite-card-title">👄 Маллампати – прогноз трудной интубации</div>
-        <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', marginBottom: 10, lineHeight: 1.5 }}>
-          Пациент сидит, рот широко открыт, язык максимально высунут, фонация отсутствует.
-        </p>
-        <table className="suite-table">
-          <thead>
-            <tr><th>Класс</th><th>Видимые структуры</th><th>Риск интубации</th></tr>
-          </thead>
-          <tbody>
-            {MALLAMPATI.map((m, i) => (
-              <tr key={i}>
-                <td className="col-time" style={{ minWidth: 56 }}>Класс {m.grade}</td>
-                <td className="col-drug">{m.vis}</td>
-                <td className="col-note">{m.risk}</td>
-              </tr>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
+
+        <div className="suite-card anesthesia-mallampati-card">
+          <div className="suite-card-title">👄 Маллампати – прогноз трудной интубации</div>
+          <p className="anesthesia-hint">
+            Пациент сидит, рот широко открыт, язык максимально высунут, фонация отсутствует.
+          </p>
+          <div className="mallampati-list">
+            <div className="mallampati-head">
+              <span>Класс</span><span>Видимые структуры</span><span>Риск</span>
+            </div>
+            {MALLAMPATI.map((m, i) => (
+              <div key={i} className="mallampati-row">
+                <span className="mallampati-cls">Класс {m.grade}</span>
+                <span className="mallampati-vis">{m.vis}</span>
+                <span className="mallampati-risk">{m.risk}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

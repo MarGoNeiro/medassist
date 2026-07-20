@@ -380,6 +380,7 @@
 }
 .scorad-score {
   flex-shrink: 0;
+  text-align: center;
 }
 .scorad-verdict {
   flex-shrink: 1;
@@ -387,7 +388,7 @@
 .scorad-verdict .suite-advice {
   text-align: left;
   max-width: 100%;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 /* ─── AnesthesiologySuite ─── */

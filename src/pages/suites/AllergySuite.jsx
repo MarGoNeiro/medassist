@@ -80,7 +80,7 @@ export default function AllergySuite() {
       <div className="suite-card allergy-scorad-card">
         <div className="suite-card-title">🧴 ШКАЛА SCORAD — ТЯЖЕСТЬ АТОПИЧЕСКОГО ДЕРМАТИТА</div>
         <p className="allergy-hint">SCORAD = A×0.2 + B×0.7 + C</p>
-        <div className="suite-grid">
+        <div className="suite-grid scorad-grid">
           <div className="suite-field">
             <label>A — Площадь поражения (0–100 %)</label>
             <input className="suite-input" type="number" min="0" max="100"
@@ -97,12 +97,12 @@ export default function AllergySuite() {
               value={subjective} onChange={e => setSubjective(Math.min(20, Math.max(0, +e.target.value || 0)))} />
           </div>
         </div>
-        <div className="suite-result-banner">
-          <div>
+        <div className="suite-result-banner scorad-result">
+          <div className="scorad-score">
             <div className="suite-score-label">SCORAD</div>
             <div className="suite-score-big">{scorad}</div>
           </div>
-          <div style={{ textAlign: 'right' }}>
+          <div className="scorad-verdict">
             <span className={`suite-risk-badge ${res.badge}`}>{res.label}</span>
             <p className="suite-advice">{res.advice}</p>
           </div>

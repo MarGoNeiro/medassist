@@ -371,6 +371,25 @@
   break-inside: avoid;
 }
 
+/* ─── SCORAD result layout ─── */
+.scorad-result {
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: fit-content;
+  min-width: 260px;
+}
+.scorad-score {
+  flex-shrink: 0;
+}
+.scorad-verdict {
+  flex-shrink: 1;
+}
+.scorad-verdict .suite-advice {
+  text-align: left;
+  max-width: 100%;
+  margin-top: 4px;
+}
+
 /* ─── AllergySuite ─── */
 .allergy-two-col {
   display: flex;
@@ -391,13 +410,6 @@
     display: flex;
     flex-direction: column;
   }
-  .allergy-col-card .allergy-anaph-list,
-  .allergy-col-card .allergy-gina-list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
 }
 
 
@@ -405,6 +417,7 @@
   font-size: 12px;
   color: var(--color-text-secondary);
   margin-bottom: 12px;
+  text-align: center;
 }
 
 .allergy-anaph-list { display: flex; flex-direction: column; gap: 8px; }
@@ -455,7 +468,10 @@
 .allergy-gina-alt     { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.4; }
 
 @media (min-width: 768px) {
-  .allergy-scorad-card { max-width: 640px; }
+  .scorad-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .scorad-result { max-width: 50%; margin-left: auto; margin-right: auto; padding: 10px 18px; }
+  .scorad-result .suite-score-big { font-size: 22px; }
+  .scorad-result .suite-advice { font-size: 12px; }
   .allergy-hint { font-size: 14px; }
   .allergy-anaph-step { padding: 16px 18px; gap: 16px; }
   .allergy-anaph-num  { width: 32px; height: 32px; font-size: 14px; }

@@ -319,3 +319,54 @@
 
 .recent-label { flex: 1; font-size: 14px; font-weight: 500; }
 .recent-chevron { color: var(--color-text-tertiary); }
+
+/* ─── PRO BANNER ─── */
+.home-pro-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(29,78,216,0.1) 0%, rgba(99,102,241,0.12) 100%);
+  border: 1px solid rgba(37,99,235,0.22);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  text-align: left;
+  min-height: 56px;
+  transition: background 0.15s;
+}
+.home-pro-banner:active {
+  background: linear-gradient(135deg, rgba(29,78,216,0.16) 0%, rgba(99,102,241,0.18) 100%);
+}
+
+.home-pro-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #2563EB, #6366F1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.home-pro-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-pro-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1D4ED8;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.home-pro-sub {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}

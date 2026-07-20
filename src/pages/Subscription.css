@@ -1,0 +1,206 @@
+.sub-page {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Hero ─────────────────────────────────────── */
+
+.sub-hero {
+  background: linear-gradient(160deg, #2D2A6E 0%, #4338CA 55%, #6366F1 100%);
+  padding: 52px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  position: relative;
+  border-radius: 0 0 28px 28px;
+  flex-shrink: 0;
+}
+
+.sub-back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-hero-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.14);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.sub-hero-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-hero-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 260px;
+}
+
+/* ─── Content ──────────────────────────────────── */
+
+.sub-content {
+  padding-top: 20px;
+}
+
+/* ─── Tier cards ───────────────────────────────── */
+
+.sub-tier {
+  background: var(--color-card);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.sub-tier-pro {
+  border-color: #2563EB;
+  background: linear-gradient(135deg, rgba(37,99,235,0.04) 0%, rgba(99,102,241,0.07) 100%);
+  position: relative;
+}
+
+.sub-pro-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #2563EB, #6366F1);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-tier-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sub-tier-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-tier-name-pro {
+  color: #1D4ED8;
+}
+
+.sub-tier-price-free {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.sub-price-amount {
+  font-size: 22px;
+  font-weight: 800;
+  color: #2563EB;
+  letter-spacing: -0.02em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-price-period {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-includes-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.sub-feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.4;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sub-feature-list li svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── CTA ──────────────────────────────────────── */
+
+.sub-cta-btn {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: rgba(255,255,255,0.75);
+  background: linear-gradient(135deg, #93C5FD 0%, #A5B4FC 100%);
+  border-radius: var(--radius-md);
+  margin-top: 8px;
+  cursor: not-allowed;
+  letter-spacing: -0.01em;
+}
+
+.sub-note {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 0 8px;
+}

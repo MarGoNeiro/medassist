@@ -156,7 +156,7 @@ const BADGE = {
   cr:   { label: 'КР',       cls: 'badge-green' },
 }
 
-export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
+export default function Home({ onNavigate, specialty, onChangeSpecialty, onOpenSubscription }) {
   const [query, setQuery] = useState('')
   const recentStr = localStorage.getItem('recent') || '[]'
   const recent = JSON.parse(recentStr).slice(0, 5)
@@ -310,21 +310,40 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty }) {
             </div>
           )}
 
-          {/* Recent */}
-          {recent.length > 0 && (
-            <div className="page-content" style={{ paddingTop: SpecialtySuite ? 0 : 8 }}>
-              <p className="section-title">Недавние</p>
-              <div className="recent-list">
-                {recent.map((item, i) => (
-                  <button key={i} className="recent-item" onClick={() => onNavigate(item.section, item.id)}>
-                    <span className={`recent-dot dot-${item.section}`} />
-                    <span className="recent-label">{item.label}</span>
-                    <svg className="recent-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                  </button>
-                ))}
+          <div className="page-content" style={{ paddingTop: SpecialtySuite ? 0 : 8 }}>
+            {/* Pro banner */}
+            <button className="home-pro-banner" onClick={onOpenSubscription}>
+              <div className="home-pro-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z"/>
+                  <path d="M5 20h14"/>
+                </svg>
               </div>
-            </div>
-          )}
+              <div className="home-pro-text">
+                <span className="home-pro-title">MedAssist Pro</span>
+                <span className="home-pro-sub">Препараты · Кабинет · Калькуляторы</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#93C5FD', flexShrink: 0 }}>
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+
+            {/* Recent */}
+            {recent.length > 0 && (
+              <>
+                <p className="section-title">Недавние</p>
+                <div className="recent-list">
+                  {recent.map((item, i) => (
+                    <button key={i} className="recent-item" onClick={() => onNavigate(item.section, item.id)}>
+                      <span className={`recent-dot dot-${item.section}`} />
+                      <span className="recent-label">{item.label}</span>
+                      <svg className="recent-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </>
       )}
     </div>

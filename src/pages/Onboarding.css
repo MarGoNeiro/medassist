@@ -9,22 +9,35 @@
 
 /* ─── Hero ─────────────────────────────────────────────────── */
 
-/* Доктор: position 55% → лицо уходит влево от центрального текста на десктопе */
+/* Mobile: кадрируем голографический дисплей справа (лицо вне кадра) */
 .onboarding::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/doctor-bg.jpg') 55% 30% / cover no-repeat;
+  background: url('/doctor-bg.jpg') 82% 28% / cover no-repeat;
   opacity: 0.80;
   pointer-events: none;
 }
 
+/* Desktop: доктор занимает только правые 60% экрана */
+@media (min-width: 900px) {
+  .onboarding::before {
+    left: 40%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url('/doctor-bg.jpg') 35% center / cover no-repeat;
+    opacity: 0.85;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 14%, black 26%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.7) 14%, black 26%);
+  }
+}
+
 .onboarding-top {
-  /* слой 1 (сверху): слева светлее — видно доктора; справа темнее — читается текст */
-  /* слой 2: индиго-атмосфера */
+  /* Мобайл: атмосферный оверлей поверх голографического дисплея */
   background:
-    linear-gradient(to right, rgba(8,6,22,0.15) 0%, rgba(8,6,22,0.60) 42%, rgba(8,6,22,0.75) 100%),
-    linear-gradient(155deg, rgba(13,11,34,0) 0%, rgba(26,23,72,0.28) 30%, rgba(45,42,138,0.24) 60%, rgba(67,56,202,0.18) 100%);
+    linear-gradient(175deg, rgba(8,6,22,0.50) 0%, rgba(8,6,22,0.74) 100%),
+    linear-gradient(155deg, rgba(13,11,34,0) 0%, rgba(26,23,72,0.35) 30%, rgba(45,42,138,0.28) 60%, rgba(67,56,202,0.22) 100%);
   padding: 52px 24px 32px;
   display: flex;
   flex-direction: column;
@@ -36,7 +49,17 @@
   flex-shrink: 0;
 }
 
-/* фото врачей (появляется только если файл public/doctor-bg.jpg существует) */
+/* Desktop: текст слева, тёмный фон только слева (справа фото просвечивает) */
+@media (min-width: 900px) {
+  .onboarding-top {
+    align-items: flex-start;
+    padding: 52px 5% 32px 6%;
+    background:
+      linear-gradient(to right, rgba(8,6,22,0.93) 0%, rgba(8,6,22,0.90) 36%, rgba(8,6,22,0.55) 55%, rgba(8,6,22,0.22) 78%, rgba(8,6,22,0.06) 100%),
+      linear-gradient(155deg, rgba(13,11,34,0) 0%, rgba(26,23,72,0.40) 30%, rgba(45,42,138,0.22) 55%, rgba(67,56,202,0.08) 100%);
+  }
+}
+
 .ob-photo-overlay {
   display: none;
 }
@@ -113,6 +136,13 @@
   z-index: 2;
 }
 
+@media (min-width: 900px) {
+  .onboarding-title {
+    text-align: left;
+    font-size: 38px;
+  }
+}
+
 .onboarding-subtitle {
   font-size: 15px;
   color: rgba(255,255,255,0.72);
@@ -123,6 +153,12 @@
   z-index: 2;
 }
 
+@media (min-width: 900px) {
+  .onboarding-subtitle {
+    text-align: left;
+  }
+}
+
 .ob-features {
   display: flex;
   gap: 8px;
@@ -131,6 +167,12 @@
   margin-top: 4px;
   position: relative;
   z-index: 2;
+}
+
+@media (min-width: 900px) {
+  .ob-features {
+    justify-content: flex-start;
+  }
 }
 
 .ob-feature-chip {

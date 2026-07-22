@@ -391,6 +391,49 @@
   margin-top: 10px;
 }
 
+/* ─── EmergencySuite ─── */
+.news2-grid { grid-template-columns: 1fr 1fr; }
+.news2-toggles { display: flex; flex-direction: column; }
+
+.emergency-two-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pearl-list { display: flex; flex-direction: column; }
+.pearl-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.pearl-item-last { border-bottom: none; }
+.pearl-title { font-size: 12px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+.pearl-body  { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; white-space: pre-line; }
+
+@media (min-width: 768px) {
+  .news2-grid { grid-template-columns: repeat(5, 1fr); }
+  .news2-toggles { flex-direction: row; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .news2-toggles .suite-toggle-row { flex: 0 0 auto; width: auto; justify-content: flex-start; gap: 12px; padding: 8px 0; }
+  .news2-toggles .suite-toggle-label { flex: 0 1 auto; padding-right: 0; }
+  .emergency-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .emergency-two-col .suite-card { margin-bottom: 0; }
+  .emergency-pearls-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .emergency-pearls-card .pearl-list {
+    flex: 1;
+    justify-content: space-between;
+  }
+  .pearl-title { font-size: 14px; }
+  .pearl-body  { font-size: 13px; }
+  .pearl-item  { padding: 14px 0; }
+}
+
 /* ─── AnesthesiologySuite ─── */
 .gcs-grid { grid-template-columns: 1fr; }
 

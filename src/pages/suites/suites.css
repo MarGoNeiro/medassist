@@ -391,6 +391,43 @@
   margin-top: 10px;
 }
 
+/* ─── GastroSuite ─── */
+.gastro-cp-grid { grid-template-columns: 1fr; }
+.gastro-hint { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; line-height: 1.5; }
+.gastro-dot { background: #F87171 !important; }
+.gastro-criteria-text { font-size: 12px; color: var(--color-text); }
+
+.gastro-main-col { display: flex; flex-direction: column; }
+.gastro-right-col { display: flex; flex-direction: column; }
+
+.rome-list { display: flex; flex-direction: column; }
+.rome-two-col { display: grid; grid-template-columns: 1fr; gap: 0 24px; }
+.rome-item { padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+.rome-item-last { border-bottom: none; }
+.rome-dx       { font-size: 13px; font-weight: 700; color: var(--color-primary); margin-bottom: 3px; }
+.rome-criteria { font-size: 11px; color: var(--color-text-secondary); line-height: 1.45; }
+
+@media (min-width: 768px) {
+  .gastro-cp-grid { grid-template-columns: repeat(6, 1fr); }
+  .gastro-cp-grid .suite-field:nth-child(-n+3) { grid-column: span 2; }
+  .gastro-cp-grid .suite-field:nth-child(4) { grid-column: 2 / 4; }
+  .gastro-cp-grid .suite-field:nth-child(5) { grid-column: 4 / 6; }
+  .gastro-cp-card .scorad-result { width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding: 10px 14px; }
+  .gastro-main-col {
+    flex-direction: row;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .gastro-cp-card { flex: 1; margin-bottom: 0; display: flex; flex-direction: column; }
+  .gastro-blatchford-card { flex: 1; margin-bottom: 0; display: flex; flex-direction: column; }
+  .gastro-hint { font-size: 13px; }
+  .rome-two-col { grid-template-columns: 1fr 1fr; }
+  .rome-two-col .rome-item:nth-last-child(-n+2) { border-bottom: none; }
+  .rome-dx       { font-size: 15px; }
+  .rome-criteria { font-size: 13px; }
+  .rome-item     { padding: 14px 0; }
+}
+
 /* ─── EmergencySuite ─── */
 .news2-grid { grid-template-columns: 1fr 1fr; }
 .news2-toggles { display: flex; flex-direction: column; }

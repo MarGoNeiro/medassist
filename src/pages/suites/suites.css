@@ -442,6 +442,54 @@
   .rome-item     { padding: 14px 0; }
 }
 
+/* ─── HematologySuite ─── */
+.hemato-two-col { display: flex; flex-direction: column; }
+.hemato-anemia-grid { grid-template-columns: 1fr; }
+.hemato-anemia-bottom { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.hemato-gender-col { flex-direction: column; }
+.hemato-hb-result { width: 100%; max-width: 100%; margin-left: 0; }
+.hemato-norms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hemato-norm-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--color-bg);
+}
+.hemato-norm-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+.hemato-norm-item.badge-green  .hemato-norm-label { color: #34D399; }
+.hemato-norm-item.badge-yellow .hemato-norm-label { color: #FBBF24; }
+.hemato-norm-item.badge-red    .hemato-norm-label { color: #F87171; }
+.hemato-norm-val   { font-size: 12px; color: var(--color-text); }
+
+.hemato-right-panel { display: flex; flex-direction: column; gap: 10px; }
+.hemato-interp-item { padding: 10px 12px; background: var(--color-bg); border-radius: 10px; display: flex; flex-direction: column; gap: 6px; }
+.hemato-interp-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); }
+.hemato-interp-sub { font-size: 12px; color: var(--color-text-secondary); line-height: 1.45; }
+.hemato-interp-dx-name { font-size: 14px; font-weight: 700; color: var(--color-text); }
+.anticoag-list { display: flex; flex-direction: column; gap: 10px; }
+.anticoag-item { padding: 10px 12px; background: var(--color-bg); border-radius: 8px; }
+.anticoag-name { font-size: 16px; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+.anticoag-dose { font-size: 15px; color: var(--color-text); margin-bottom: 3px; }
+.anticoag-note { font-size: 13px; color: var(--color-text-secondary); }
+
+@media (min-width: 768px) {
+  .hemato-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
+  .hemato-two-col .suite-card { margin-bottom: 0; }
+  .hemato-anemia-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .hemato-anemia-bottom { flex-direction: row; align-items: stretch; gap: 16px; }
+  .hemato-anemia-left { flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: space-between; }
+  .hemato-anemia-left .suite-gender-row { flex-direction: column; gap: 8px; }
+  .hemato-anemia-left .suite-gender-btn { width: 100%; }
+  .hemato-anemia-left .scorad-result { width: 100%; max-width: 100%; margin: 0; }
+  .hemato-right-panel { flex: 1; justify-content: space-between; }
+  .hemato-norms { flex: 1; justify-content: space-between; }
+  .hemato-interp-sub { font-size: 13px; }
+  .hemato-interp-dx-name { font-size: 15px; }
+}
+
 /* ─── EmergencySuite ─── */
 .news2-grid { grid-template-columns: 1fr 1fr; }
 .news2-toggles { display: flex; flex-direction: column; }

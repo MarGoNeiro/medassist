@@ -152,29 +152,42 @@ export default function DietologySuite() {
       {/* NRS-2002 */}
       <div className="suite-card">
         <div className="suite-card-title">🏥 NRS-2002 – нутритивный риск госпитализированного пациента</div>
-        {NRS_ITEMS.map(f => (
-          <button key={f.id} className="suite-toggle-row" onClick={() => setNrs(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
-            <span className="suite-toggle-label">{f.label}</span>
-            <div className={`suite-toggle ${nrs[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        ))}
-        {age >= 70 && (
-          <div style={{ padding: '8px 12px', background: '#FEF9C3', borderRadius: 8, marginTop: 6, fontSize: 11, color: '#92400E' }}>
-            +1 балл автоматически – возраст ≥ 70 лет
+        <div className="nrs-layout">
+          {/* Колонка 1 */}
+          <div className="nrs-col">
+            {[NRS_ITEMS[0], NRS_ITEMS[1]].map(f => (
+              <button key={f.id} className="suite-toggle-row" onClick={() => setNrs(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+                <span className="suite-toggle-label">{f.label}</span>
+                <div className={`suite-toggle ${nrs[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
+            ))}
           </div>
-        )}
-        <div className="suite-result-banner">
-          <div>
-            <div className="suite-score-label">NRS-2002</div>
-            <div className="suite-score-big" style={{ color: nrsAge >= 3 ? '#F87171' : '#34D399' }}>{nrsAge}</div>
+          {/* Колонка 2 */}
+          <div className="nrs-col">
+            {[NRS_ITEMS[2], NRS_ITEMS[3]].map(f => (
+              <button key={f.id} className="suite-toggle-row" onClick={() => setNrs(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+                <span className="suite-toggle-label">{f.label}</span>
+                <div className={`suite-toggle ${nrs[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
+            ))}
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
-            <span className={`suite-risk-badge ${nrsAge >= 3 ? 'badge-red' : 'badge-green'}`}>
-              {nrsAge >= 3 ? 'Нутр. риск есть' : 'Нутр. риск нет'}
-            </span>
-            <div className="suite-advice">
-              {nrsAge >= 3 ? 'Нутритивная поддержка обязательна. Нутрициониcт + нутр. смеси.' : 'Повторная оценка еженедельно или при изменении состояния.'}
+          {/* Колонка 3: результат */}
+          <div className="nrs-result-col">
+            <div className="nrs-result-label">NRS-2002</div>
+            <div className="nrs-result-big" style={{ color: nrsAge >= 3 ? '#F87171' : nrsAge >= 1 ? '#FBBF24' : '#34D399' }}>
+              {nrsAge}
             </div>
+            <span className={`suite-risk-badge ${nrsAge >= 3 ? 'badge-red' : nrsAge >= 1 ? 'badge-yellow' : 'badge-green'}`}>
+              {nrsAge >= 3 ? 'Нутритивный риск' : nrsAge >= 1 ? 'Под наблюдением' : 'Риска нет'}
+            </span>
+            <div className="nrs-result-advice">
+              {nrsAge >= 3
+                ? 'Нутритивная поддержка обязательна. Нутрициолог, нутритивные смеси, контроль белка.'
+                : nrsAge >= 1
+                ? 'Контроль питания и динамики массы тела. Повторная оценка через неделю.'
+                : 'Нутритивного риска нет. Повторная оценка еженедельно или при изменении состояния пациента.'}
+            </div>
+            {age >= 70 && <div className="nrs-age-note">+1 балл: возраст ≥ 70 лет</div>}
           </div>
         </div>
       </div>

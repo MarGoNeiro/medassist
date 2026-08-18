@@ -795,6 +795,16 @@
   .dieto-tile-sub   { font-size: 11px; }
 }
 
+/* ─── CHA₂DS₂-VASc layout ─── */
+.cha2-layout { display: flex; flex-direction: column; gap: 4px; }
+.cha2-col    { display: flex; flex-direction: column; }
+.cha2-pts    { color: var(--color-text-secondary); font-size: 11px; }
+
+@media (min-width: 768px) {
+  .cha2-layout { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 12px; align-items: stretch; }
+  .cha2-col .suite-toggle-row { min-height: unset; padding-top: 6px; padding-bottom: 6px; flex: 1; }
+}
+
 /* ─── NRS-2002 layout ─── */
 .nrs-layout     { display: flex; flex-direction: column; gap: 4px; }
 .nrs-col        { display: flex; flex-direction: column; }

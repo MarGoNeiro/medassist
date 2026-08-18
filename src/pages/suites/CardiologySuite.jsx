@@ -80,29 +80,35 @@ export default function CardiologySuite() {
           <span>🩺 Риск инсульта при ФП — CHA₂DS₂-VASc</span>
           <button className="suite-reset-btn" onClick={() => setFlags({ chf:false, htn:false, age75:false, diabetes:false, stroke:false, vascular:false, age65:false, female:false })}>Сбросить</button>
         </div>
-        <div className="suite-form-2col">
-          {CHA2_FIELDS.map(f => (
-            <button key={f.id} className="suite-toggle-row"
-              disabled={f.id === 'age65' && flags.age75}
-              onClick={() => toggle(f.id)}
-              style={{ opacity: f.id === 'age65' && flags.age75 ? 0.4 : 1 }}>
-              <span className="suite-toggle-label" style={{ fontWeight: f.bold ? 700 : 500 }}>
-                {f.label} <span style={{ color: 'var(--color-text-secondary)', fontSize: 11 }}>[+{f.points}]</span>
-              </span>
-              <div className={`suite-toggle ${flags[f.id] ? 'on' : ''}`}>
-                <div className="suite-toggle-thumb" />
-              </div>
-            </button>
-          ))}
-        </div>
-        <div className="suite-result-banner">
-          <div>
-            <div className="suite-score-label">CHA₂DS₂-VASc балл</div>
-            <div className="suite-score-big" style={{ color: '#F87171' }}>{score}</div>
+        <div className="cha2-layout">
+          <div className="cha2-col">
+            {CHA2_FIELDS.slice(0, 4).map(f => (
+              <button key={f.id} className="suite-toggle-row" onClick={() => toggle(f.id)}>
+                <span className="suite-toggle-label" style={{ fontWeight: f.bold ? 700 : 500 }}>
+                  {f.label} <span className="cha2-pts">[+{f.points}]</span>
+                </span>
+                <div className={`suite-toggle ${flags[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
+            ))}
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
+          <div className="cha2-col">
+            {CHA2_FIELDS.slice(4).map(f => (
+              <button key={f.id} className="suite-toggle-row"
+                disabled={f.id === 'age65' && flags.age75}
+                onClick={() => toggle(f.id)}
+                style={{ opacity: f.id === 'age65' && flags.age75 ? 0.4 : 1 }}>
+                <span className="suite-toggle-label" style={{ fontWeight: f.bold ? 700 : 500 }}>
+                  {f.label} <span className="cha2-pts">[+{f.points}]</span>
+                </span>
+                <div className={`suite-toggle ${flags[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
+            ))}
+          </div>
+          <div className="nrs-result-col">
+            <div className="nrs-result-label">CHA₂DS₂-VASc</div>
+            <div className="nrs-result-big" style={{ color: score >= 2 ? '#F87171' : score === 1 ? '#FBBF24' : '#34D399' }}>{score}</div>
             <span className={`suite-risk-badge ${cha2.badge}`}>{cha2.label} · {cha2.risk}/год</span>
-            <div className="suite-advice">{cha2.advice}</div>
+            <div className="nrs-result-advice">{cha2.advice}</div>
           </div>
         </div>
       </div>

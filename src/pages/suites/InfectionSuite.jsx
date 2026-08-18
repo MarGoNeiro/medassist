@@ -46,57 +46,59 @@ export default function InfectionSuite() {
         </div>
       </div>
 
-      {/* qSOFA */}
-      <div className="suite-card">
-        <div className="suite-card-title">⚠️ qSOFA — скрининг сепсиса</div>
-        {QSOFA.map(f => (
-          <button key={f.id} className="suite-toggle-row" onClick={() => setQsofa(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
-            <span className="suite-toggle-label">{f.label}</span>
-            <div className={`suite-toggle ${qsofa[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        ))}
-        <div className="suite-result-banner">
-          <div>
-            <div className="suite-score-label">qSOFA</div>
-            <div className="suite-score-big" style={{ color: qsofaScore >= 2 ? '#F87171' : '#34D399' }}>{qsofaScore} / 3</div>
+      <div className="dermato-two-col">
+        {/* qSOFA */}
+        <div className="suite-card">
+          <div className="suite-card-title">⚠️ qSOFA — скрининг сепсиса</div>
+          {QSOFA.map(f => (
+            <button key={f.id} className="suite-toggle-row" onClick={() => setQsofa(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+              <span className="suite-toggle-label">{f.label}</span>
+              <div className={`suite-toggle ${qsofa[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
+          ))}
+          <div className="suite-result-banner">
+            <div>
+              <div className="suite-score-label">qSOFA</div>
+              <div className="suite-score-big" style={{ color: qsofaScore >= 2 ? '#F87171' : '#34D399' }}>{qsofaScore} / 3</div>
+            </div>
+            <div style={{ textAlign: 'right', flex: 1 }}>
+              <span className={`suite-risk-badge ${qsofaRes.badge}`}>{qsofaRes.label}</span>
+              <div className="suite-advice">{qsofaRes.advice}</div>
+            </div>
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
-            <span className={`suite-risk-badge ${qsofaRes.badge}`}>{qsofaRes.label}</span>
-            <div className="suite-advice">{qsofaRes.advice}</div>
-          </div>
+        </div>
+
+        {/* Маркёры тяжести */}
+        <div className="suite-card">
+          <div className="suite-card-title">🔴 Маркёры тяжести и триггеры эскалации</div>
+          <table className="suite-table">
+            <thead>
+              <tr><th>Показатель</th><th>Тактика</th></tr>
+            </thead>
+            <tbody>
+              {COVID_WATCH.map((r, i) => (
+                <tr key={i}>
+                  <td className="col-time">{r.name}</td>
+                  <td className="col-note">{r.action}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Antibiotics */}
+      {/* Антибиотики — полная ширина */}
       <div className="suite-card">
         <div className="suite-card-title">💊 Спектр антибиотиков — шпаргалка</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div className="infection-ab-grid">
           {ANTIBIOTICS.map((ab, i) => (
-            <div key={i} style={{ padding: '8px 10px', background: 'var(--color-bg)', borderRadius: 8 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-primary)', marginBottom: 3 }}>{ab.group}</div>
-              <div style={{ fontSize: 11, color: 'var(--color-text)', marginBottom: 2 }}>🎯 {ab.spectrum} · {ab.examples}</div>
-              <div style={{ fontSize: 10, color: 'var(--color-text-secondary)' }}>📌 {ab.use}</div>
+            <div key={i} className="infection-ab-tile">
+              <div className="infection-ab-group">{ab.group}</div>
+              <div className="infection-ab-spectrum">{ab.spectrum} · {ab.examples}</div>
+              <div className="infection-ab-use">{ab.use}</div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* COVID */}
-      <div className="suite-card">
-        <div className="suite-card-title">🔴 Маркёры тяжести и триггеры эскалации</div>
-        <table className="suite-table">
-          <thead>
-            <tr><th>Показатель</th><th>Тактика</th></tr>
-          </thead>
-          <tbody>
-            {COVID_WATCH.map((r, i) => (
-              <tr key={i}>
-                <td className="col-time">{r.name}</td>
-                <td className="col-note">{r.action}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   )

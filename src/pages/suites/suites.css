@@ -821,6 +821,18 @@
   .nrs-result-big { font-size: 40px; }
 }
 
+/* ─── InfectionSuite ─── */
+.infection-ab-grid   { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.infection-ab-tile   { background: var(--color-bg); border-radius: var(--radius-md); padding: 12px 14px; }
+.infection-ab-group  { font-size: 16px; font-weight: 700; color: var(--color-primary); margin-bottom: 5px; }
+.infection-ab-spectrum { font-size: 14px; color: var(--color-text); margin-bottom: 4px; line-height: 1.4; }
+.infection-ab-use    { font-size: 13px; color: var(--color-text-secondary); }
+
+@media (min-width: 768px) {
+  .infection-ab-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .infection-ab-tile:last-child { grid-column: 2; }
+}
+
 /* На очень маленьких экранах (≤360px, старый iPhone SE) — одна колонка */
 @media (max-width: 360px) {
   .suite-form-2col,

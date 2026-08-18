@@ -758,6 +758,43 @@
   .allergy-gina-alt   { font-size: 14px; }
 }
 
+/* ─── DietologySuite ─── */
+.dieto-layout  { display: flex; flex-direction: column; gap: 14px; }
+.dieto-inputs  { display: flex; flex-direction: column; gap: 10px; }
+.dieto-nums-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.dieto-act-row  { display: flex; gap: 10px; align-items: flex-end; }
+.dieto-act-field { flex: 1; }
+.dieto-bmi-col {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 12px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; gap: 10px;
+}
+.dieto-bmi-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); }
+.dieto-bmi-val   { font-size: 36px; font-weight: 800; }
+.dieto-metrics   { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dieto-tile      { background: var(--color-bg); border-radius: var(--radius-md); padding: 10px 12px; }
+.dieto-tile-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin-bottom: 4px; }
+.dieto-tile-value { font-size: 15px; font-weight: 800; color: var(--color-text); }
+.dieto-tile-sub  { font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+.dieto-green { color: #34D399; }
+.dieto-pink  { color: #F472B6; }
+
+@media (min-width: 768px) {
+  .dieto-layout  { display: grid; grid-template-columns: 1fr 200px 1fr; gap: 16px; align-items: stretch; }
+  .dieto-inputs  { justify-content: space-between; }
+  .dieto-bmi-col { justify-content: center; }
+  .dieto-bmi-val { font-size: 44px; }
+  .dieto-metrics { grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-content: start; align-items: start; }
+  .dieto-tile    { padding: 12px 14px; }
+  .dieto-tile-label { font-size: 11px; }
+  .dieto-tile-value { font-size: 17px; }
+  .dieto-tile-sub   { font-size: 11px; }
+}
+
 /* На очень маленьких экранах (≤360px, старый iPhone SE) — одна колонка */
 @media (max-width: 360px) {
   .suite-form-2col,

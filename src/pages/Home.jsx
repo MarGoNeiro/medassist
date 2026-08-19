@@ -19,6 +19,7 @@ import DietologySuite       from './suites/DietologySuite'
 import InfectionSuite       from './suites/InfectionSuite'
 import OncologySuite        from './suites/OncologySuite'
 import PsychSuite           from './suites/PsychSuite'
+import NarcologySuite      from './suites/NarcologySuite'
 import RheumatologySuite    from './suites/RheumatologySuite'
 import AllergySuite         from './suites/AllergySuite'
 import UrologySuite         from './suites/UrologySuite'
@@ -51,7 +52,7 @@ const SPECIALTY_SUITE = {
   'Онколог':                   OncologySuite,
   'Психиатр':                  PsychSuite,
   'Психотерапевт':             PsychSuite,
-  'Нарколог':                  PsychSuite,
+  'Нарколог':                  NarcologySuite,
   'Ревматолог':                RheumatologySuite,
   'Аллерголог-иммунолог':      AllergySuite,
   'Уролог':                    UrologySuite,
@@ -247,7 +248,7 @@ export default function Home({ onNavigate, specialty, onChangeSpecialty, onOpenS
         <>
           {/* Specialty workroom */}
           {SpecialtySuite ? (
-            <SpecialtySuite />
+            <SpecialtySuite specialty={specialty} />
           ) : (
             /* Fallback tiles for specialties without a dedicated suite */
             <div className="home-tiles">

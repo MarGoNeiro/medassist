@@ -89,7 +89,7 @@ export default function NarcologySuite() {
           <div className="suite-form-2col">
             {AUDIT_Q.map((q, qi) => (
               <div key={qi} className="suite-field" style={{ marginBottom: 10 }}>
-                <label>{qi + 1}. {q.q}</label>
+                <label style={{ fontSize: 15 }}>{qi + 1}. {q.q}</label>
                 <select className="suite-select" value={audit[qi]}
                   onChange={e => { const a = [...audit]; a[qi] = parseInt(e.target.value); setAudit(a) }}>
                   {q.opts.map((opt, oi) => <option key={oi} value={oi}>{opt}</option>)}
@@ -114,20 +114,19 @@ export default function NarcologySuite() {
       {tab === 'cage' && (
         <div className="suite-card">
           <div className="suite-card-title">🔍 CAGE — экспресс-скрининг алкогольной зависимости</div>
-          <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', marginBottom: 12 }}>
-            4 вопроса — ответьте «Да» или «Нет»
-          </p>
-          {CAGE_Q.map((q, qi) => (
-            <div key={qi} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: qi < 3 ? '1px solid var(--color-border)' : 'none' }}>
-              <span style={{ flex: 1, fontSize: 13, lineHeight: 1.4 }}>{qi + 1}. {q}</span>
-              <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                <button className={`suite-gender-btn ${cage[qi] === 1 ? 'active' : ''}`} style={{ minWidth: 52 }}
-                  onClick={() => { const a = [...cage]; a[qi] = 1; setCage(a) }}>Да</button>
-                <button className={`suite-gender-btn ${cage[qi] === 0 ? 'active' : ''}`} style={{ minWidth: 52 }}
-                  onClick={() => { const a = [...cage]; a[qi] = 0; setCage(a) }}>Нет</button>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 4 }}>
+            {CAGE_Q.map((q, qi) => (
+              <div key={qi} style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '10px 12px', background: 'var(--color-bg)', borderRadius: 10, border: '1px solid var(--color-border)' }}>
+                <span style={{ fontSize: 15, lineHeight: 1.45, flex: 1, color: 'var(--color-text-secondary)', fontWeight: 700 }}>{qi + 1}. {q}</span>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  <button className={`suite-gender-btn ${cage[qi] === 1 ? 'active' : ''}`} style={{ flex: 1 }}
+                    onClick={() => { const a = [...cage]; a[qi] = 1; setCage(a) }}>Да</button>
+                  <button className={`suite-gender-btn ${cage[qi] === 0 ? 'active' : ''}`} style={{ flex: 1 }}
+                    onClick={() => { const a = [...cage]; a[qi] = 0; setCage(a) }}>Нет</button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
           <div className="suite-result-banner" style={{ marginTop: 12 }}>
             <div>
               <div className="suite-score-label">CAGE</div>
@@ -148,7 +147,7 @@ export default function NarcologySuite() {
           <div className="suite-form-2col">
             {FAGER_Q.map((q, qi) => (
               <div key={qi} className="suite-field" style={{ marginBottom: 10 }}>
-                <label>{qi + 1}. {q.q}</label>
+                <label style={{ fontSize: 15 }}>{qi + 1}. {q.q}</label>
                 <select className="suite-select" value={fager[qi]}
                   onChange={e => { const a = [...fager]; a[qi] = parseInt(e.target.value); setFager(a) }}>
                   {q.opts.map((opt, oi) => <option key={oi} value={oi}>{opt}</option>)}

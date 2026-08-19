@@ -32,7 +32,7 @@ export default function CardiologySuite() {
   const [gender, setGender]     = useState('male')
   const [sbp, setSbp]           = useState(140)
   const [chol, setChol]         = useState(5.2)
-  const [hdl, setHdl]           = useState(1.1)
+  const [ldl, setLdl]           = useState(2.8)
   const [smoker, setSmoker]     = useState(false)
   const [diabetic, setDiabetic] = useState(false)
   const [ascvd, setAscvd]       = useState(0)
@@ -46,13 +46,14 @@ export default function CardiologySuite() {
     if (age > 60) base += (age - 60) * 0.6
     if (sbp > 120) base += (sbp - 120) * 0.18
     if (sbp > 140) base += (sbp - 140) * 0.25
-    const ratio = hdl > 0 ? chol / hdl : 4.0
-    if (ratio > 3.5) base += (ratio - 3.5) * 2.2
+    if (chol > 5.0) base += (chol - 5.0) * 1.5
+    if (ldl > 2.6)  base += (ldl - 2.6) * 3.5
+    if (ldl > 4.0)  base += (ldl - 4.0) * 2.5
     if (smoker)  base *= 1.85
     if (diabetic) base *= 1.6
     if (gender === 'male') base *= 1.2
     setAscvd(parseFloat(Math.min(99.9, Math.max(0.1, base)).toFixed(1)))
-  }, [age, gender, sbp, chol, hdl, smoker, diabetic])
+  }, [age, gender, sbp, chol, ldl, smoker, diabetic])
 
   function toggle(id) {
     setFlags(prev => {
@@ -113,57 +114,58 @@ export default function CardiologySuite() {
         </div>
       </div>
 
+      <div className="cardio-two-col">
       {/* ASCVD */}
       <div className="suite-card">
         <div className="suite-card-title">🫁 10-летний риск ССЗ (ASCVD)</div>
-        <p style={{ fontSize:11, color:'var(--color-text-secondary)', marginBottom:10, lineHeight:1.4 }}>
+        <p style={{ fontSize:11, color:'var(--color-text-secondary)', marginBottom:8, lineHeight:1.4 }}>
           Приближённая оценка. Для точного расчёта — ACC/AHA ASCVD Risk Estimator Plus.
         </p>
-        <div className="suite-grid">
-          <div className="suite-field">
-            <label>Возраст (лет)</label>
-            <input className="suite-input" type="number" value={age}
-              onChange={e => setAge(Math.max(1, parseInt(e.target.value) || 0))} />
-          </div>
-          <div className="suite-field">
-            <label>Пол</label>
-            <div className="suite-gender-row">
-              <button className={`suite-gender-btn ${gender === 'male' ? 'active' : ''}`} onClick={() => setGender('male')}>Муж</button>
-              <button className={`suite-gender-btn ${gender === 'female' ? 'active' : ''}`} onClick={() => setGender('female')}>Жен</button>
+        <div className="ascvd-layout">
+          <div className="ascvd-grid">
+            <div className="suite-field">
+              <label>Возраст</label>
+              <input className="suite-input" type="number" value={age}
+                onChange={e => setAge(Math.max(1, parseInt(e.target.value) || 0))} />
+            </div>
+            <div className="suite-field">
+              <label>АД систол.</label>
+              <input className="suite-input" type="number" value={sbp}
+                onChange={e => setSbp(Math.max(40, parseInt(e.target.value) || 120))} />
+            </div>
+            <div className="suite-field">
+              <label>Пол</label>
+              <div className="suite-gender-row">
+                <button className={`suite-gender-btn ${gender === 'male' ? 'active' : ''}`} onClick={() => setGender('male')}>Муж</button>
+                <button className={`suite-gender-btn ${gender === 'female' ? 'active' : ''}`} onClick={() => setGender('female')}>Жен</button>
+              </div>
+            </div>
+            <div className="suite-field">
+              <label>ЛПНП</label>
+              <input className="suite-input" type="number" step="0.1" value={ldl}
+                onChange={e => setLdl(Math.max(0.1, parseFloat(e.target.value) || 0))} />
+            </div>
+            <div className="suite-field">
+              <label>Холестерин</label>
+              <input className="suite-input" type="number" step="0.1" value={chol}
+                onChange={e => setChol(Math.max(0.1, parseFloat(e.target.value) || 0))} />
+            </div>
+            <div className="suite-field" style={{ display: 'flex', flexDirection: 'column', gap: 4, justifyContent: 'flex-end' }}>
+              <button className="suite-toggle-row" onClick={() => setSmoker(v => !v)} style={{ padding: '4px 0' }}>
+                <span className="suite-toggle-label" style={{ fontSize: 12 }}>Курение</span>
+                <div className={`suite-toggle ${smoker ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
+              <button className="suite-toggle-row" onClick={() => setDiabetic(v => !v)} style={{ padding: '4px 0' }}>
+                <span className="suite-toggle-label" style={{ fontSize: 12 }}>СД 2 типа</span>
+                <div className={`suite-toggle ${diabetic ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+              </button>
             </div>
           </div>
-          <div className="suite-field">
-            <label>Систолическое АД (мм рт.ст.)</label>
-            <input className="suite-input" type="number" value={sbp}
-              onChange={e => setSbp(Math.max(40, parseInt(e.target.value) || 120))} />
+          <div className="nrs-result-col">
+            <div className="nrs-result-label">ASCVD 10 лет</div>
+            <div className="nrs-result-big" style={{ color: '#F87171' }}>{ascvd}%</div>
+            <span className={`suite-risk-badge ${ascvdCat.badge}`}>{ascvdCat.label}</span>
           </div>
-          <div className="suite-field">
-            <label>Общий холестерин (ммоль/л)</label>
-            <input className="suite-input" type="number" step="0.1" value={chol}
-              onChange={e => setChol(Math.max(0.1, parseFloat(e.target.value) || 0))} />
-          </div>
-          <div className="suite-field">
-            <label>ЛПВП (ммоль/л)</label>
-            <input className="suite-input" type="number" step="0.1" value={hdl}
-              onChange={e => setHdl(Math.max(0.1, parseFloat(e.target.value) || 0))} />
-          </div>
-          <div className="suite-field" style={{ display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'flex-end' }}>
-            <button className="suite-toggle-row" onClick={() => setSmoker(v => !v)} style={{ padding: '4px 0' }}>
-              <span className="suite-toggle-label" style={{ fontSize: 12 }}>Курение</span>
-              <div className={`suite-toggle ${smoker ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-            </button>
-            <button className="suite-toggle-row" onClick={() => setDiabetic(v => !v)} style={{ padding: '4px 0' }}>
-              <span className="suite-toggle-label" style={{ fontSize: 12 }}>СД 2 типа</span>
-              <div className={`suite-toggle ${diabetic ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-            </button>
-          </div>
-        </div>
-        <div className="suite-result-banner">
-          <div>
-            <div className="suite-score-label">10-летний риск CC-катастрофы</div>
-            <div className="suite-score-big" style={{ color: '#F87171' }}>{ascvd}%</div>
-          </div>
-          <span className={`suite-risk-badge ${ascvdCat.badge}`}>{ascvdCat.label}</span>
         </div>
       </div>
 
@@ -181,6 +183,7 @@ export default function CardiologySuite() {
             <div><dt>ПЖ</dt><dd>V3R, V4R</dd></div>
           </dl>
         </div>
+      </div>
       </div>
     </div>
   )

@@ -198,12 +198,10 @@
 
 .suite-result-banner {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 14px;
-  padding: 14px 16px;
-  background: #1E293B;
-  border-radius: var(--radius-md);
-  color: white;
+  padding-top: 14px;
+  border-top: 2px solid var(--color-border);
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -903,7 +901,7 @@
   .suite-toggle-thumb { width: 20px; height: 20px; }
   .suite-toggle.on .suite-toggle-thumb { left: 21px; }
 
-  .suite-result-banner { padding: 18px 22px; margin-top: 18px; }
+  .suite-result-banner { padding-top: 18px; margin-top: 18px; }
   .suite-score-big { font-size: 40px; }
   .suite-score-label { font-size: 13px; }
   .suite-risk-badge { font-size: 13px; padding: 6px 14px; }

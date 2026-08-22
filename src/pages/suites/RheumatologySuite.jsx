@@ -80,7 +80,7 @@ export default function RheumatologySuite() {
               <div className="suite-score-label">DAS28-CRP</div>
               <div className="suite-score-big" style={{ color: '#F87171' }}>{das28}</div>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{}}>
               <span className={`suite-risk-badge ${dasRes.badge}`}>{dasRes.label}</span>
               <div className="suite-advice">{dasRes.advice}</div>
             </div>

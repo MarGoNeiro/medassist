@@ -75,7 +75,7 @@ export default function TraumaSuite() {
             <div className="suite-score-label">Wells DVT</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{wellsScore}</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{}}>
             <span className={`suite-risk-badge ${wellsRes.badge}`}>{wellsRes.label}</span>
             <div className="suite-advice">{wellsRes.advice}</div>
           </div>

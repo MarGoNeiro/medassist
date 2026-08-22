@@ -87,32 +87,50 @@ export default function NeurologySuite() {
         </div>
       </div>
 
+      <div className="cardio-two-col">
       {/* ABCD2 */}
       <div className="suite-card">
         <div className="suite-card-title">
           <span>⚠️ Шкала ABCD² — риск инсульта после ТИА</span>
           <button className="suite-reset-btn" onClick={() => setAbcd2({ age:0, bp:0, clinical:0, duration:0, diabetes:0 })}>Сбросить</button>
         </div>
-        {ABCD2_FIELDS.map(f => (
-          <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
-            <label>{f.label}</label>
-            <select className="suite-select"
-              value={abcd2[f.id]}
-              onChange={e => setAbcd2(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
-              {f.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-            </select>
-          </div>
-        ))}
+        <div className="suite-form-2col">
+          {ABCD2_FIELDS.map(f => (
+            <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
+              <label>{f.label}</label>
+              <select className="suite-select"
+                value={abcd2[f.id]}
+                onChange={e => setAbcd2(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
+                {f.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+              </select>
+            </div>
+          ))}
+        </div>
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">ABCD² Score</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{abcdScore}</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div>
             <span className={`suite-risk-badge ${abcdRes.badge}`}>{abcdRes.label} · {abcdRes.pct}</span>
             <div className="suite-advice">{abcdRes.advice}</div>
           </div>
         </div>
+      </div>
+
+      {/* Quick reference */}
+      <div className="suite-card">
+        <div className="suite-card-title">📖 Тромболизис — окно терапии</div>
+        <div className="suite-cheatsheet">
+          <div className="suite-cheatsheet-title">Временные критерии rt-PA / Альтеплаза</div>
+          <dl className="suite-cheatsheet-grid" style={{ gap: 16 }}>
+            <div><dt style={{ fontSize: 13 }}>Ишемический инсульт</dt><dd style={{ fontSize: 15 }}>до 4,5 ч от начала симптомов</dd></div>
+            <div><dt style={{ fontSize: 13 }}>NIHSS для тромболизиса</dt><dd style={{ fontSize: 15 }}>4–25 баллов (оптимально)</dd></div>
+            <div><dt style={{ fontSize: 13 }}>Внутриартериальный лизис</dt><dd style={{ fontSize: 15 }}>до 6 ч (СМА), до 24 ч (баз. арт.)</dd></div>
+            <div><dt style={{ fontSize: 13 }}>Тромбэктомия</dt><dd style={{ fontSize: 15 }}>до 6–24 ч при ASPECTS ≥ 6</dd></div>
+          </dl>
+        </div>
+      </div>
       </div>
 
       {/* NIHSS */}
@@ -144,19 +162,6 @@ export default function NeurologySuite() {
         </div>
       </div>
 
-      {/* Quick reference */}
-      <div className="suite-card">
-        <div className="suite-card-title">📖 Тромболизис — окно терапии</div>
-        <div className="suite-cheatsheet">
-          <div className="suite-cheatsheet-title">Временные критерии rt-PA / Альтеплаза</div>
-          <dl className="suite-cheatsheet-grid" style={{ gap: 12 }}>
-            <div><dt>Ишемический инсульт</dt><dd>до 4,5 ч от начала симптомов</dd></div>
-            <div><dt>NIHSS для тромболизиса</dt><dd>4–25 баллов (оптимально)</dd></div>
-            <div><dt>Внутриартериальный лизис</dt><dd>до 6 ч (СМА), до 24 ч (баз. арт.)</dd></div>
-            <div><dt>Тромбэктомия</dt><dd>до 6–24 ч при ASPECTS ≥ 6</dd></div>
-          </dl>
-        </div>
-      </div>
     </div>
   )
 }

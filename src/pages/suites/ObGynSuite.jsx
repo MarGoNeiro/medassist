@@ -176,7 +176,7 @@ export default function ObGynSuite() {
               <div className="suite-score-label">Баллы Бишопа</div>
               <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{}}>
               <span className={`suite-risk-badge ${bRes.badge}`}>{bRes.label}</span>
               <div className="suite-advice">{bRes.advice}</div>
             </div>

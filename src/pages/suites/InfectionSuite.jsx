@@ -61,7 +61,7 @@ export default function InfectionSuite() {
               <div className="suite-score-label">qSOFA</div>
               <div className="suite-score-big" style={{ color: qsofaScore >= 2 ? '#F87171' : '#34D399' }}>{qsofaScore} / 3</div>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{}}>
               <span className={`suite-risk-badge ${qsofaRes.badge}`}>{qsofaRes.label}</span>
               <div className="suite-advice">{qsofaRes.advice}</div>
             </div>

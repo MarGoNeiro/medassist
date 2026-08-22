@@ -77,7 +77,7 @@ export default function UrologySuite() {
             <div className="suite-score-label">IPSS</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{ipssScore} / 35</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{}}>
             <span className={`suite-risk-badge ${ipssRes.badge}`}>{ipssRes.label}</span>
             <div className="suite-advice">{ipssRes.advice}</div>
           </div>

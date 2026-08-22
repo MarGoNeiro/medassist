@@ -93,7 +93,7 @@ export default function PsychSuite({ specialty }) {
               <div className="suite-score-label">PHQ-9 Score</div>
               <div className="suite-score-big" style={{ color: phqScore >= 10 ? '#F87171' : '#34D399' }}>{phqScore}</div>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{}}>
               <span className={`suite-risk-badge ${phqCat.badge}`}>{phqCat.label}</span>
               <div className="suite-advice">{phqCat.advice}</div>
             </div>

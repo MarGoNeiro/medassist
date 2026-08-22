@@ -74,7 +74,7 @@ export default function TherapistSuite({ specialty }) {
             <div className="suite-score-label">CURB-65</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{curbScore}</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{}}>
             <span className={`suite-risk-badge ${curbRes.badge}`}>{curbRes.label}</span>
             <div className="suite-advice">{curbRes.advice}</div>
           </div>

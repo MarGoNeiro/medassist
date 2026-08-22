@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import './suites.css'
 
 function bmiCategory(bmi) {
@@ -95,7 +95,7 @@ export default function DietologySuite() {
                   {ACTIVITY_LEVELS.map(l => <option key={l.k} value={l.k}>{l.label}</option>)}
                 </select>
               </div>
-              <div className="suite-field" style={{ flex: 1 }}>
+              <div className="suite-field" style={{}}>
                 <label>Пол</label>
                 <div className="suite-gender-row">
                   <button className={`suite-gender-btn ${!female ? 'active' : ''}`} onClick={() => setFemale(false)}>Мужской</button>

@@ -95,7 +95,7 @@ export default function SurgerySuite() {
             <div className="suite-score-label">Альварадо</div>
             <div className="suite-score-big" style={{ color: '#FB923C' }}>{alvScore} / 10</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{}}>
             <span className={`suite-risk-badge ${alvRes.badge}`}>{alvRes.label}</span>
             <div className="suite-advice">{alvRes.advice}</div>
           </div>
@@ -138,7 +138,7 @@ export default function SurgerySuite() {
             <div className="suite-score-label">Рэнсон</div>
             <div className="suite-score-big" style={{ color: '#FB923C' }}>{ranScore} / 11</div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{}}>
             <span className={`suite-risk-badge ${ranRes.badge}`}>{ranRes.label}</span>
             <div className="suite-advice">{ranRes.note}</div>
           </div>

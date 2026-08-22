@@ -199,13 +199,12 @@
 .suite-result-banner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-top: 14px;
   padding: 14px 16px;
   background: #1E293B;
   border-radius: var(--radius-md);
   color: white;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -229,8 +228,6 @@
   color: #94A3B8;
   line-height: 1.5;
   margin-top: 4px;
-  max-width: 260px;
-  text-align: right;
 }
 
 .suite-table {

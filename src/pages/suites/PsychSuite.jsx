@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const PHQ9 = [
@@ -93,7 +93,7 @@ export default function PsychSuite({ specialty }) {
               <div className="suite-score-label">PHQ-9 Score</div>
               <div className="suite-score-big" style={{ color: phqScore >= 10 ? '#F87171' : '#34D399' }}>{phqScore}</div>
             </div>
-            <div style={{ textAlign: 'right', flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <span className={`suite-risk-badge ${phqCat.badge}`}>{phqCat.label}</span>
               <div className="suite-advice">{phqCat.advice}</div>
             </div>

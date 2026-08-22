@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const IPSS_QUESTIONS = [
@@ -77,7 +77,7 @@ export default function UrologySuite() {
             <div className="suite-score-label">IPSS</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{ipssScore} / 35</div>
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <span className={`suite-risk-badge ${ipssRes.badge}`}>{ipssRes.label}</span>
             <div className="suite-advice">{ipssRes.advice}</div>
           </div>

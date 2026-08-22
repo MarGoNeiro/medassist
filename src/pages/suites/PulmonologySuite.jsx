@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const CURB_FIELDS = [
@@ -73,7 +73,7 @@ export default function PulmonologySuite() {
             <div className="suite-score-label">CURB-65</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{curbScore}</div>
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <span className={`suite-risk-badge ${curbRes.badge}`}>{curbRes.label}</span>
             <div className="suite-advice">{curbRes.advice}</div>
           </div>

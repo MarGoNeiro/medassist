@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const BISHOP_FIELDS = [
@@ -176,7 +176,7 @@ export default function ObGynSuite() {
               <div className="suite-score-label">Баллы Бишопа</div>
               <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
             </div>
-            <div style={{ textAlign: 'right', flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <span className={`suite-risk-badge ${bRes.badge}`}>{bRes.label}</span>
               <div className="suite-advice">{bRes.advice}</div>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const ABCD2_FIELDS = [
@@ -108,7 +108,7 @@ export default function NeurologySuite() {
             <div className="suite-score-label">ABCD² Score</div>
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{abcdScore}</div>
           </div>
-          <div style={{ textAlign: 'right', flex: 1 }}>
+          <div style={{ flex: 1 }}>
             <span className={`suite-risk-badge ${abcdRes.badge}`}>{abcdRes.label} · {abcdRes.pct}</span>
             <div className="suite-advice">{abcdRes.advice}</div>
           </div>

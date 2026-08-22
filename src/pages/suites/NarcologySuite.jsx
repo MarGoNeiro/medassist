@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './suites.css'
 
 const AUDIT_Q = [
@@ -102,7 +102,7 @@ export default function NarcologySuite() {
               <div className="suite-score-label">AUDIT</div>
               <div className="suite-score-big" style={{ color: auditScore >= 16 ? '#F87171' : auditScore >= 8 ? '#FBBF24' : '#34D399' }}>{auditScore}</div>
             </div>
-            <div style={{ textAlign: 'right', flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <span className={`suite-risk-badge ${ac.badge}`}>{ac.label}</span>
               <div className="suite-advice">{ac.advice}</div>
             </div>
@@ -132,7 +132,7 @@ export default function NarcologySuite() {
               <div className="suite-score-label">CAGE</div>
               <div className="suite-score-big" style={{ color: cageScore >= 2 ? '#F87171' : cageScore === 1 ? '#FBBF24' : '#34D399' }}>{cageScore} / 4</div>
             </div>
-            <div style={{ textAlign: 'right', flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <span className={`suite-risk-badge ${cc.badge}`}>{cc.label}</span>
               <div className="suite-advice">{cc.advice}</div>
             </div>
@@ -160,7 +160,7 @@ export default function NarcologySuite() {
               <div className="suite-score-label">Фагерстрём</div>
               <div className="suite-score-big" style={{ color: fagerScore >= 6 ? '#F87171' : fagerScore >= 3 ? '#FBBF24' : '#34D399' }}>{fagerScore} / 10</div>
             </div>
-            <div style={{ textAlign: 'right', flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <span className={`suite-risk-badge ${fc.badge}`}>{fc.label}</span>
               <div className="suite-advice">{fc.advice}</div>
             </div>

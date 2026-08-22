@@ -123,7 +123,7 @@ export default function NeurologySuite() {
         <div className="suite-card-title">📖 Тромболизис — окно терапии</div>
         <div className="suite-cheatsheet">
           <div className="suite-cheatsheet-title">Временные критерии rt-PA / Альтеплаза</div>
-          <dl className="suite-cheatsheet-grid" style={{ gap: 16 }}>
+          <dl className="suite-cheatsheet-grid" style={{ gap: 10, gridTemplateColumns: '1fr' }}>
             <div><dt style={{ fontSize: 13 }}>Ишемический инсульт</dt><dd style={{ fontSize: 15 }}>до 4,5 ч от начала симптомов</dd></div>
             <div><dt style={{ fontSize: 13 }}>NIHSS для тромболизиса</dt><dd style={{ fontSize: 15 }}>4–25 баллов (оптимально)</dd></div>
             <div><dt style={{ fontSize: 13 }}>Внутриартериальный лизис</dt><dd style={{ fontSize: 15 }}>до 6 ч (СМА), до 24 ч (баз. арт.)</dd></div>

@@ -201,10 +201,13 @@
   align-items: flex-start;
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 2px solid var(--color-border);
+  border-top: 3px solid var(--color-border);
   gap: 16px;
   flex-wrap: wrap;
 }
+.suite-result-banner:has(.badge-green)  { border-top-color: #22C55E; }
+.suite-result-banner:has(.badge-yellow) { border-top-color: #FBBF24; }
+.suite-result-banner:has(.badge-red)    { border-top-color: #F87171; }
 
 .suite-score-big { font-size: 28px; font-weight: 900; }
 .suite-score-label { font-size: 10px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }

@@ -71,7 +71,7 @@ export default function InfectionSuite() {
         {/* Маркёры тяжести */}
         <div className="suite-card">
           <div className="suite-card-title">🔴 Маркёры тяжести и триггеры эскалации</div>
-          <table className="suite-table">
+          <table className="suite-table infection-markers-table">
             <thead>
               <tr><th>Показатель</th><th>Тактика</th></tr>
             </thead>

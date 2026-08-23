@@ -119,66 +119,80 @@ export default function ObGynSuite() {
         </div>
       </div>
 
-      {/* Left column (PDR + Screenings) | Right column (Bishop) */}
-      <div style={{ display: 'flex', gap: 12, alignItems: 'stretch', marginBottom: 12 }}>
-
-        {/* Left: PDR on top, Screenings below */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="suite-card" style={{ marginBottom: 0 }}>
-            <div className="suite-card-title">📅 Предполагаемая дата родов (ПДР)</div>
-            <div className="suite-field">
-              <label>Дата последней менструации (ПМ)</label>
-              <input type="date" className="suite-input" value={lmp}
-                max={new Date().toISOString().split('T')[0]}
-                onChange={e => setLmp(e.target.value)} />
-            </div>
-            <div className="suite-dark-box" style={{ marginTop: 12 }}>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">ПДР (Негеле)</span>
-                <span className="suite-dark-value accent-pink">{edd ? formatDate(edd) : '—'}</span>
-              </div>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">Срок беременности</span>
-                <span className="suite-dark-value">{ga ? `${ga.weeks} нед. ${ga.days} дн.` : '—'}</span>
-              </div>
-            </div>
+      {/* ПДР — одна строка во всю ширину, 3 равные колонки */}
+      <div className="suite-card" style={{ marginBottom: 12 }}>
+        <div className="suite-card-title">📅 Предполагаемая дата родов (ПДР)</div>
+        <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 15, color: 'var(--color-text-secondary)', fontWeight: 600, marginBottom: 6 }}>Дата последней менструации</div>
+            <input type="date" className="suite-input" value={lmp}
+              max={new Date().toISOString().split('T')[0]}
+              onChange={e => setLmp(e.target.value)}
+              style={{ width: '100%', boxSizing: 'border-box' }} />
           </div>
-
-          <div className="suite-card" style={{ marginBottom: 0, flex: 1 }}>
-            <div className="suite-card-title">🗓 Обязательные скрининги при беременности</div>
-            {screenings.map((s, i) => (
-              <div key={i} className="suite-screening-item">
-                <div className="suite-screening-dot" style={{ background: '#C084FC' }} />
-                <div>
-                  <div className="suite-screening-title">{s.title}</div>
-                  <div className="suite-screening-desc">{s.desc}</div>
-                </div>
-              </div>
-            ))}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 15, color: 'var(--color-text-secondary)', fontWeight: 600, marginBottom: 6 }}>ПДР (Негеле)</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: '#C084FC' }}>{edd ? formatDate(edd) : '—'}</div>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 15, color: 'var(--color-text-secondary)', fontWeight: 600, marginBottom: 6 }}>Срок беременности</div>
+            <div style={{ fontSize: 22, fontWeight: 700 }}>{ga ? `${ga.weeks} нед. ${ga.days} дн.` : '—'}</div>
           </div>
         </div>
+      </div>
 
-        {/* Right: Bishop scale */}
-        <div className="suite-card" style={{ flex: 1, marginBottom: 0 }}>
-          <div className="suite-card-title">🔢 Шкала Бишопа — зрелость шейки матки</div>
-          {BISHOP_FIELDS.map(f => (
-            <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
-              <label>{f.label}</label>
-              <select className="suite-select"
-                value={bishop[f.id]}
-                onChange={e => setBishop(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
-                {f.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-              </select>
+      {/* Скрининги | Шкала Бишопа */}
+      <div style={{ display: 'flex', gap: 12, alignItems: 'stretch', marginBottom: 12 }}>
+
+        <div className="suite-card" style={{ flex: 2, marginBottom: 0 }}>
+          <div className="suite-card-title">🗓 Обязательные скрининги при беременности</div>
+          {screenings.map((s, i) => (
+            <div key={i} className="suite-screening-item">
+              <div className="suite-screening-dot" style={{ background: '#C084FC' }} />
+              <div>
+                <div className="suite-screening-title">{s.title}</div>
+                <div className="suite-screening-desc">{s.desc}</div>
+              </div>
             </div>
           ))}
-          <div className="suite-result-banner">
-            <div>
-              <div className="suite-score-label">Баллы Бишопа</div>
-              <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
+        </div>
+
+        <div className="suite-card" style={{ flex: 3, marginBottom: 0 }}>
+          <div className="suite-card-title">🔢 Шкала Бишопа — зрелость шейки матки</div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            {/* Левая колонка: 3 поля */}
+            <div style={{ flex: 1 }}>
+              {BISHOP_FIELDS.slice(0, 3).map(f => (
+                <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
+                  <label>{f.label}</label>
+                  <select className="suite-select" value={bishop[f.id]}
+                    onChange={e => setBishop(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
+                    {f.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                  </select>
+                </div>
+              ))}
             </div>
-            <div style={{}}>
-              <span className={`suite-risk-badge ${bRes.badge}`}>{bRes.label}</span>
-              <div className="suite-advice">{bRes.advice}</div>
+            {/* Правая колонка: 2 поля + результат */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+              {BISHOP_FIELDS.slice(3).map(f => (
+                <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
+                  <label>{f.label}</label>
+                  <select className="suite-select" value={bishop[f.id]}
+                    onChange={e => setBishop(prev => ({ ...prev, [f.id]: parseInt(e.target.value) }))}>
+                    {f.opts.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                  </select>
+                </div>
+              ))}
+              <div className="suite-result-banner" style={{ marginTop: 'auto', justifyContent: 'space-between' }}>
+                <div>
+                  <div className="suite-score-label">Баллы Бишопа</div>
+                  <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <span className={`suite-risk-badge ${bRes.badge}`}>{bRes.label}</span>
+                  <div className="suite-advice">{bRes.advice}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -232,7 +246,7 @@ export default function ObGynSuite() {
           const d = CONTRA_DATA[situation]
           return (
             <>
-              <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', margin: '8px 0 12px', lineHeight: 1.5 }}>
+              <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', margin: '8px 0 12px', lineHeight: 1.5 }}>
                 {d.note}
               </p>
               <div>
@@ -240,14 +254,14 @@ export default function ObGynSuite() {
                   const cat = d.rates[m.id]
                   const s = CAT_STYLE[cat]
                   return (
-                    <div key={m.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 0', borderBottom: i < CONTRA_METHODS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
-                      <span style={{ fontSize: 13, color: 'var(--color-text)' }}>{m.label}</span>
-                      <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: s.bg, color: s.color, flexShrink: 0, marginLeft: 8 }}>{s.text}</span>
+                    <div key={m.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '11px 0', borderBottom: i < CONTRA_METHODS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                      <span style={{ fontSize: 19, color: 'var(--color-text)' }}>{m.label}</span>
+                      <span style={{ fontSize: 16, fontWeight: 700, padding: '4px 14px', borderRadius: 20, background: s.bg, color: s.color, flexShrink: 0, marginLeft: 12 }}>{s.text}</span>
                     </div>
                   )
                 })}
               </div>
-              <p style={{ fontSize: 10, color: 'var(--color-text-secondary)', marginTop: 12, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', marginTop: 12, lineHeight: 1.6 }}>
                 Источник: WHO Medical Eligibility Criteria for Contraceptive Use, 5th ed. (2015). Кат. 1 — без ограничений · 2 — польза &gt; риск · 3 — риск &gt; польза · 4 — противопоказано.
               </p>
             </>

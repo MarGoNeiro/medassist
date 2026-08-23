@@ -98,7 +98,7 @@ export default function HematologySuite() {
       <div className="suite-card">
         <div className="suite-card-title">🩺 Степень анемии (ВОЗ)</div>
 
-        {/* Строка 1: три поля */}
+        {/* Строка 1: четыре поля включая Пол */}
         <div className="suite-grid hemato-anemia-grid">
           <div className="suite-field">
             <label>Гемоглобин (г/л)</label>
@@ -120,20 +120,20 @@ export default function HematologySuite() {
               onChange={e => setFerritinRaw(e.target.value)}
               onBlur={() => ferritinRaw !== '' && setFerritinRaw(String(Math.max(0, parseFloat(ferritinRaw) || 0)))} />
           </div>
+          <div className="suite-field">
+            <label>Пол</label>
+            <div className="suite-gender-row">
+              <button className={`suite-gender-btn ${gender === 'female' ? 'active' : ''}`}
+                onClick={() => setGender('female')}>Женский</button>
+              <button className={`suite-gender-btn ${gender === 'male' ? 'active' : ''}`}
+                onClick={() => setGender('male')}>Мужской</button>
+            </div>
+          </div>
         </div>
 
-        {/* Строка 2: пол + результат | интерпретация */}
+        {/* Строка 2: результат | интерпретация */}
         <div className="hemato-anemia-bottom">
           <div className="hemato-anemia-left">
-            <div className="suite-field">
-              <label>Пол</label>
-              <div className="suite-gender-row hemato-gender-col">
-                <button className={`suite-gender-btn ${gender === 'female' ? 'active' : ''}`}
-                  onClick={() => setGender('female')}>Женский</button>
-                <button className={`suite-gender-btn ${gender === 'male' ? 'active' : ''}`}
-                  onClick={() => setGender('male')}>Мужской</button>
-              </div>
-            </div>
             <div className="suite-result-banner scorad-result hemato-hb-result">
               <div className="scorad-score">
                 <div className="suite-score-label">Hb</div>

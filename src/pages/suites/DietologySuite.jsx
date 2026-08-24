@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './suites.css'
 
 function bmiCategory(bmi) {
@@ -56,13 +56,6 @@ export default function DietologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FEFCE8' }}>🥗</div>
-        <div>
-          <h2>Кабинет диетолога / нутрициолога</h2>
-          <p>ИМТ, базальный метаболизм (Mifflin–St Jeor), идеальный вес, NRS-2002</p>
-        </div>
-      </div>
 
       {/* BMI + Mifflin */}
       <div className="suite-card">

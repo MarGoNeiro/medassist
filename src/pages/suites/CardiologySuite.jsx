@@ -67,13 +67,6 @@ export default function CardiologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF1F2' }}>🫀</div>
-        <div>
-          <h2>Рабочий кабинет кардиолога</h2>
-          <p>CHA₂DS₂-VASc, 10-летний сердечно-сосудистый риск ASCVD, шпаргалка ЭКГ</p>
-        </div>
-      </div>
 
       {/* CHA2DS2-VASc */}
       <div className="suite-card">

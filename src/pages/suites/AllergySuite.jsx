@@ -34,13 +34,6 @@ export default function AllergySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF7ED' }}>🌿</div>
-        <div>
-          <h2>Рабочий кабинет аллерголога-иммунолога</h2>
-          <p>Анафилаксия, ступени астмы GINA 2023, шкала SCORAD, антигистаминные</p>
-        </div>
-      </div>
 
       {/* ── Анафилаксия + GINA рядом на десктопе ── */}
       <div className="allergy-two-col">

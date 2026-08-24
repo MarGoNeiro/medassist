@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 function das28Category(score) {
@@ -38,13 +38,6 @@ export default function RheumatologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF1F2' }}>🦴</div>
-        <div>
-          <h2>Рабочий кабинет ревматолога</h2>
-          <p>DAS28-CRP (активность РА), биологические БПВП, критерии АКР/EULAR</p>
-        </div>
-      </div>
 
       {/* DAS28 */}
       <div className="suite-card">

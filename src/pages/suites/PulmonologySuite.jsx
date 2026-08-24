@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const CURB_FIELDS = [
@@ -51,13 +51,6 @@ export default function PulmonologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#EFF6FF' }}>🫁</div>
-        <div>
-          <h2>Рабочий кабинет пульмонолога</h2>
-          <p>CURB-65 (пневмония), CAT тест (ХОБЛ), интерпретация спирометрии</p>
-        </div>
-      </div>
 
       {/* CURB-65 */}
       <div className="suite-card">

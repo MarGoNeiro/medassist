@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const ABCD2_FIELDS = [
@@ -79,13 +79,6 @@ export default function NeurologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#EFF6FF' }}>🧠</div>
-        <div>
-          <h2>Рабочий кабинет невролога</h2>
-          <p>ABCD² (риск инсульта после ТИА) и скринер NIHSS</p>
-        </div>
-      </div>
 
       <div className="cardio-two-col">
       {/* ABCD2 */}

@@ -48,13 +48,6 @@ export default function NephrologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#EFF6FF' }}>🫘</div>
-        <div>
-          <h2>Рабочий кабинет нефролога</h2>
-          <p>СКФ по CKD-EPI 2021, стадии ХБП, коррекция доз при ХБП</p>
-        </div>
-      </div>
 
       {/* CKD-EPI */}
       <div className="suite-card">

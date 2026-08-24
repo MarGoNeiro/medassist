@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const DVT_WELLS = [
@@ -48,13 +48,6 @@ export default function TraumaSuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>🦴</div>
-        <div>
-          <h2>Кабинет травматолога-ортопеда</h2>
-          <p>Wells DVT (тромбоз вен), классификация AO/OTA, Gustilo-Anderson</p>
-        </div>
-      </div>
 
       {/* Wells DVT */}
       <div className="suite-card">

@@ -86,13 +86,6 @@ export default function HematologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF1F2' }}>🩸</div>
-        <div>
-          <h2>Рабочий кабинет гематолога</h2>
-          <p>Анемия (ВОЗ), антикоагулянты, признаки ТГВ</p>
-        </div>
-      </div>
 
       {/* Anemia */}
       <div className="suite-card">

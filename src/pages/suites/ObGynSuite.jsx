@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const BISHOP_FIELDS = [
@@ -111,13 +111,6 @@ export default function ObGynSuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FDF4FF' }}>🤰</div>
-        <div>
-          <h2>Рабочий кабинет акушера-гинеколога</h2>
-          <p>ПДР, срок беременности, шкала Бишопа, скрининги</p>
-        </div>
-      </div>
 
       {/* ПДР — одна строка во всю ширину, 3 равные колонки */}
       <div className="suite-card" style={{ marginBottom: 12 }}>

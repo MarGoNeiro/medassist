@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const IPSS_QUESTIONS = [
@@ -42,13 +42,6 @@ export default function UrologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#EFF6FF' }}>💧</div>
-        <div>
-          <h2>Рабочий кабинет уролога</h2>
-          <p>IPSS (симптомы НМП), мочекаменная болезнь, алгоритмы</p>
-        </div>
-      </div>
 
       {/* IPSS */}
       <div className="suite-card">

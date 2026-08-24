@@ -65,13 +65,6 @@ export default function DermatologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FDF4FF' }}>🔬</div>
-        <div>
-          <h2>Рабочий кабинет дерматолога</h2>
-          <p>PASI (псориаз), ABCDE (меланома), фототип Фицпатрика</p>
-        </div>
-      </div>
 
       <div className="dermato-two-col">
         {/* PASI */}

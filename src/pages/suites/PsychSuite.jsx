@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const PHQ9 = [
@@ -58,13 +58,6 @@ export default function PsychSuite({ specialty }) {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F5F3FF' }}>🧩</div>
-        <div>
-          <h2>Рабочий кабинет {titleSuffix}</h2>
-          <p>PHQ-9 (депрессия), GAD-7 (тревога), шкалы самоопроса</p>
-        </div>
-      </div>
 
       {/* Tab switch */}
       <div className="suite-card" style={{ padding: '6px' }}>

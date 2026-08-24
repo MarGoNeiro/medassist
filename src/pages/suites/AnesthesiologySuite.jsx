@@ -37,13 +37,6 @@ export default function AnesthesiologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>🩺</div>
-        <div>
-          <h2>Кабинет анестезиолога-реаниматолога</h2>
-          <p>ШКГ (Glasgow), классификация ASA, Маллампати – оценка дыхательных путей</p>
-        </div>
-      </div>
 
       {/* GCS */}
       <div className="suite-card">

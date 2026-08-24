@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const QSOFA = [
@@ -38,13 +38,6 @@ export default function InfectionSuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>🦠</div>
-        <div>
-          <h2>Рабочий кабинет инфекциониста</h2>
-          <p>qSOFA (сепсис), спектр антибиотиков, маркёры тяжести COVID-19</p>
-        </div>
-      </div>
 
       <div className="dermato-two-col">
         {/* qSOFA */}

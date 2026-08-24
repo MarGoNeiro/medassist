@@ -48,13 +48,6 @@ export default function PediatricSuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF1F2' }}>👶</div>
-        <div>
-          <h2>Рабочий кабинет педиатра</h2>
-          <p>Расчёт детских дозировок, индекса BSA и календарь вакцинации</p>
-        </div>
-      </div>
 
       {/* Dosing calculator */}
       <div className="suite-card">

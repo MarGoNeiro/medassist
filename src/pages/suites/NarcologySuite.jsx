@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const AUDIT_Q = [
@@ -67,13 +67,6 @@ export default function NarcologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF7ED' }}>🧪</div>
-        <div>
-          <h2>Рабочий кабинет нарколога</h2>
-          <p>AUDIT (алкоголь), CAGE, Тест Фагерстрёма (никотин)</p>
-        </div>
-      </div>
 
       <div className="suite-card" style={{ padding: '6px' }}>
         <div className="suite-gender-row">

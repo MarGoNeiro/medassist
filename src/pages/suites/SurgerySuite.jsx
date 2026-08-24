@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const ALVARADO_FIELDS = [
@@ -68,13 +68,6 @@ export default function SurgerySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F0FFF4' }}>✂️</div>
-        <div>
-          <h2>Рабочий кабинет хирурга</h2>
-          <p>Шкала Альварадо (аппендицит), классификация ран, критерии Рэнсона (панкреатит)</p>
-        </div>
-      </div>
 
       {/* Alvarado */}
       <div className="suite-card">

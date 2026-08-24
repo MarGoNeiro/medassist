@@ -39,13 +39,6 @@ export default function OncologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#F5F3FF' }}>🎗️</div>
-        <div>
-          <h2>Рабочий кабинет онколога</h2>
-          <p>BSA для химиотерапии, шкала ECOG, протоколы противорвотной терапии</p>
-        </div>
-      </div>
 
       {/* BSA */}
       <div className="suite-card">

@@ -52,13 +52,6 @@ export default function GastroSuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF7ED', color: '#EA580C' }}><LiverIcon /></div>
-        <div>
-          <h2>Рабочий кабинет гастроэнтеролога</h2>
-          <p>Child-Pugh (цирроз), Blatchford (ЖКК), Рим IV (ФРЖ)</p>
-        </div>
-      </div>
 
       <div className="gastro-main-col">
         {/* Child-Pugh — левая колонка */}

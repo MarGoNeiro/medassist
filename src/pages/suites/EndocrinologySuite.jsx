@@ -44,13 +44,6 @@ export default function EndocrinologySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF7ED' }}>🦋</div>
-        <div>
-          <h2>Рабочий кабинет эндокринолога</h2>
-          <p>ИМТ, HbA1c ↔ средняя глюкоза, нормы гормонов щитовидной железы</p>
-        </div>
-      </div>
 
       {/* BMI */}
       <div className="suite-card">

@@ -57,13 +57,6 @@ export default function EmergencySuite() {
 
   return (
     <div className="suite">
-      <div className="suite-banner">
-        <div className="suite-banner-emoji" style={{ background: '#FFF1F2' }}>🚑</div>
-        <div>
-          <h2>Кабинет врача скорой помощи</h2>
-          <p>NEWS2 (ранняя тревога), ШКГ Глазго, экстренные алгоритмы</p>
-        </div>
-      </div>
 
       {/* NEWS2 — полная ширина */}
       <div className="suite-card">

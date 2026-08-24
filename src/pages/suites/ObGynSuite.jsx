@@ -177,11 +177,8 @@ export default function ObGynSuite() {
                 </div>
               ))}
               <div className="suite-result-banner" style={{ marginTop: 'auto', justifyContent: 'space-between' }}>
-                <div>
-                  <div className="suite-score-label">Баллы Бишопа</div>
-                  <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
+                <div className="suite-score-big" style={{ color: '#C084FC' }}>{bishopTotal}</div>
+                <div style={{ textAlign: 'right', flex: 1, marginLeft: 12 }}>
                   <span className={`suite-risk-badge ${bRes.badge}`}>{bRes.label}</span>
                   <div className="suite-advice">{bRes.advice}</div>
                 </div>

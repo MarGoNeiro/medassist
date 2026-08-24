@@ -552,6 +552,20 @@
 .news2-grid { grid-template-columns: 1fr 1fr; }
 .news2-toggles { display: flex; flex-direction: column; }
 
+.news2-three-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.news2-col { display: flex; flex-direction: column; gap: 10px; }
+.news2-result-col {
+  padding-top: 14px;
+  border-top: 3px solid #22C55E;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .emergency-two-col {
   display: flex;
   flex-direction: column;
@@ -571,6 +585,24 @@
   .news2-toggles { flex-direction: row; gap: 24px; justify-content: center; flex-wrap: wrap; }
   .news2-toggles .suite-toggle-row { flex: 0 0 auto; width: auto; justify-content: flex-start; gap: 12px; padding: 8px 0; }
   .news2-toggles .suite-toggle-label { flex: 0 1 auto; padding-right: 0; }
+
+  .news2-three-col {
+    flex-direction: row;
+    gap: 0;
+    align-items: stretch;
+  }
+  .news2-col {
+    flex: 1;
+    padding-right: 20px;
+  }
+  .news2-result-col {
+    border-top: none;
+    border-left: 3px solid #22C55E;
+    padding-top: 0;
+    padding-left: 20px;
+    min-width: 180px;
+    justify-content: center;
+  }
   .emergency-two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -593,6 +625,16 @@
 
 /* ─── AnesthesiologySuite ─── */
 .gcs-grid { grid-template-columns: 1fr; }
+
+.gcs-two-col { display: flex; flex-direction: column; gap: 12px; }
+.gcs-fields-col { display: flex; flex-direction: column; gap: 10px; }
+.gcs-result-col {
+  border-top: 3px solid #34D399;
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
 .anesthesia-two-col {
   display: flex;
@@ -659,6 +701,16 @@
   .anesthesia-mallampati-card { display: flex; flex-direction: column; }
   .anesthesia-mallampati-card .mallampati-list { flex: 1; justify-content: space-between; }
   .gcs-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .gcs-two-col { flex-direction: row; gap: 0; align-items: stretch; }
+  .gcs-fields-col { flex: 1; padding-right: 20px; }
+  .gcs-result-col {
+    border-top: none;
+    border-left: 3px solid #34D399;
+    padding-top: 0;
+    padding-left: 20px;
+    min-width: 180px;
+    justify-content: center;
+  }
   .anesthesia-hint { font-size: 11px; }
   .asa-grade { font-size: 13px; min-width: 60px; }
   .asa-desc  { font-size: 12px; }

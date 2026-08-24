@@ -61,56 +61,58 @@ export default function EmergencySuite() {
       {/* NEWS2 — полная ширина */}
       <div className="suite-card">
         <div className="suite-card-title">📊 NEWS2 – шкала ранней тревоги</div>
-        <div className="suite-grid news2-grid">
-          <div className="suite-field">
-            <label>ЧДД (в мин.)</label>
-            <input className="suite-input" type="number" value={rrRaw}
-              onChange={e => setRrRaw(e.target.value)}
-              onBlur={() => setRrRaw(String(Math.max(1, parseInt(rrRaw) || 16)))} />
+        <div className="news2-three-col">
+          {/* Колонка 1: ЧДД, SpO₂, АД */}
+          <div className="news2-col">
+            <div className="suite-field">
+              <label>ЧДД (в мин.)</label>
+              <input className="suite-input" type="number" value={rrRaw}
+                onChange={e => setRrRaw(e.target.value)}
+                onBlur={() => setRrRaw(String(Math.max(1, parseInt(rrRaw) || 16)))} />
+            </div>
+            <div className="suite-field">
+              <label>SpO₂ (%)</label>
+              <input className="suite-input" type="number" value={spo2Raw}
+                onChange={e => setSpo2Raw(e.target.value)}
+                onBlur={() => setSpo2Raw(String(Math.min(100, Math.max(50, parseInt(spo2Raw) || 97))))} />
+            </div>
+            <div className="suite-field">
+              <label>АД сист. (мм рт.ст.)</label>
+              <input className="suite-input" type="number" value={sbpRaw}
+                onChange={e => setSbpRaw(e.target.value)}
+                onBlur={() => setSbpRaw(String(Math.max(40, parseInt(sbpRaw) || 120)))} />
+            </div>
           </div>
-          <div className="suite-field">
-            <label>SpO₂ (%)</label>
-            <input className="suite-input" type="number" value={spo2Raw}
-              onChange={e => setSpo2Raw(e.target.value)}
-              onBlur={() => setSpo2Raw(String(Math.min(100, Math.max(50, parseInt(spo2Raw) || 97))))} />
+
+          {/* Колонка 2: ЧСС, Темп, тогглы */}
+          <div className="news2-col">
+            <div className="suite-field">
+              <label>ЧСС (уд/мин)</label>
+              <input className="suite-input" type="number" value={hrRaw}
+                onChange={e => setHrRaw(e.target.value)}
+                onBlur={() => setHrRaw(String(Math.max(10, parseInt(hrRaw) || 78)))} />
+            </div>
+            <div className="suite-field">
+              <label>Температура (°C)</label>
+              <input className="suite-input" type="number" step="0.1" value={tempRaw}
+                onChange={e => setTempRaw(e.target.value)}
+                onBlur={() => setTempRaw(String(Math.max(25, parseFloat(tempRaw) || 36.6)))} />
+            </div>
+            <button className="suite-toggle-row" onClick={() => setO2(v => !v)}>
+              <span className="suite-toggle-label">Дополнительный O₂</span>
+              <div className={`suite-toggle ${o2 ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
+            <button className="suite-toggle-row" onClick={() => setAlteredCons(v => !v)}>
+              <span className="suite-toggle-label">Нарушение сознания [+3]</span>
+              <div className={`suite-toggle ${alteredCons ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
           </div>
-          <div className="suite-field">
-            <label>АД сист. (мм рт.ст.)</label>
-            <input className="suite-input" type="number" value={sbpRaw}
-              onChange={e => setSbpRaw(e.target.value)}
-              onBlur={() => setSbpRaw(String(Math.max(40, parseInt(sbpRaw) || 120)))} />
-          </div>
-          <div className="suite-field">
-            <label>ЧСС (уд/мин)</label>
-            <input className="suite-input" type="number" value={hrRaw}
-              onChange={e => setHrRaw(e.target.value)}
-              onBlur={() => setHrRaw(String(Math.max(10, parseInt(hrRaw) || 78)))} />
-          </div>
-          <div className="suite-field">
-            <label>Температура (°C)</label>
-            <input className="suite-input" type="number" step="0.1" value={tempRaw}
-              onChange={e => setTempRaw(e.target.value)}
-              onBlur={() => setTempRaw(String(Math.max(25, parseFloat(tempRaw) || 36.6)))} />
-          </div>
-        </div>
-        <div className="news2-toggles">
-          <button className="suite-toggle-row" onClick={() => setO2(v => !v)}>
-            <span className="suite-toggle-label">Дополнительный O₂</span>
-            <div className={`suite-toggle ${o2 ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-          <button className="suite-toggle-row" onClick={() => setAlteredCons(v => !v)}>
-            <span className="suite-toggle-label">Нарушение сознания (не A по AVPU) [+3]</span>
-            <div className={`suite-toggle ${alteredCons ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        </div>
-        <div className="suite-result-banner scorad-result">
-          <div className="scorad-score">
-            <div className="suite-score-label">NEWS2</div>
+
+          {/* Колонка 3: результат */}
+          <div className="news2-result-col">
             <div className="suite-score-big" style={{ color: nRes.color }}>{news}</div>
-          </div>
-          <div className="scorad-verdict">
             <span className={`suite-risk-badge ${nRes.badge}`}>{nRes.label}</span>
-            <div className="suite-advice">{nRes.advice}</div>
+            <div className="suite-advice" style={{ marginTop: 6 }}>{nRes.advice}</div>
           </div>
         </div>
       </div>
@@ -119,34 +121,32 @@ export default function EmergencySuite() {
       <div className="emergency-two-col">
         <div className="suite-card">
           <div className="suite-card-title">🧠 ШКГ Глазго (Glasgow Coma Scale)</div>
-          <div className="suite-grid gcs-grid">
-            <div className="suite-field">
-              <label>Открывание глаз (E)</label>
-              <select className="suite-select" value={eyes} onChange={e => setEyes(parseInt(e.target.value))}>
-                {GCS_EYES.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-              </select>
+          <div className="gcs-two-col">
+            <div className="gcs-fields-col">
+              <div className="suite-field">
+                <label>Открывание глаз (E)</label>
+                <select className="suite-select" value={eyes} onChange={e => setEyes(parseInt(e.target.value))}>
+                  {GCS_EYES.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                </select>
+              </div>
+              <div className="suite-field">
+                <label>Речевой ответ (V)</label>
+                <select className="suite-select" value={verbal} onChange={e => setVerbal(parseInt(e.target.value))}>
+                  {GCS_VERBAL.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                </select>
+              </div>
+              <div className="suite-field">
+                <label>Двигательный ответ (M)</label>
+                <select className="suite-select" value={motor} onChange={e => setMotor(parseInt(e.target.value))}>
+                  {GCS_MOTOR.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                </select>
+              </div>
             </div>
-            <div className="suite-field">
-              <label>Речевой ответ (V)</label>
-              <select className="suite-select" value={verbal} onChange={e => setVerbal(parseInt(e.target.value))}>
-                {GCS_VERBAL.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-              </select>
-            </div>
-            <div className="suite-field">
-              <label>Двигательный ответ (M)</label>
-              <select className="suite-select" value={motor} onChange={e => setMotor(parseInt(e.target.value))}>
-                {GCS_MOTOR.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-              </select>
-            </div>
-          </div>
-          <div className="suite-result-banner scorad-result">
-            <div className="scorad-score">
+            <div className="gcs-result-col">
               <div className="suite-score-label">GCS (E{eyes} V{verbal} M{motor})</div>
               <div className="suite-score-big" style={{ color: '#34D399' }}>{gcsTotal}</div>
-            </div>
-            <div className="scorad-verdict">
               <span className={`suite-risk-badge ${gcsBadge}`}>{gcsLabel}</span>
-              <div className="suite-advice">{gcsAdvice}</div>
+              <div className="suite-advice" style={{ marginTop: 6 }}>{gcsAdvice}</div>
             </div>
           </div>
         </div>

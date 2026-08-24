@@ -756,10 +756,10 @@
   .allergy-anaph-text { font-size: 14px; }
   .allergy-anaph-sub  { font-size: 11px; }
   .allergy-gina-step  { padding: 14px 16px; }
-  .allergy-gina-badge { font-size: 15px; padding: 3px 12px; }
-  .allergy-gina-note  { font-size: 11px; }
-  .allergy-gina-preferred { font-size: 15px; }
-  .allergy-gina-alt   { font-size: 12px; }
+  .allergy-gina-badge { font-size: 13px; padding: 3px 12px; }
+  .allergy-gina-note  { font-size: 9px; }
+  .allergy-gina-preferred { font-size: 13px; }
+  .allergy-gina-alt   { font-size: 10px; }
 }
 
 /* ─── DietologySuite ─── */

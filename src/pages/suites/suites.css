@@ -432,8 +432,12 @@
     display: flex;
     align-items: center;
   }
-  .gastro-hint { font-size: 15px; }
-  .gastro-blatchford-card .suite-criteria-2col .suite-screening-desc { font-size: 18px; }
+  .gastro-hint { font-size: 13px; }
+  .gastro-blatchford-card .suite-criteria-2col .suite-screening-desc { font-size: 16px; }
+  .gastro-cp-card .suite-select { font-size: 14px; }
+  .gastro-cp-card .suite-score-label { font-size: 11px; }
+  .gastro-cp-card .suite-score-big { font-size: 18px; }
+  .gastro-cp-card .suite-advice { font-size: 13px; }
   .rome-two-col { grid-template-columns: 1fr 1fr; }
   .rome-two-col .rome-item:nth-last-child(-n+2) { border-bottom: none; }
   .rome-dx       { font-size: 20px; }
@@ -812,6 +816,11 @@
   .allergy-gina-note  { font-size: 9px; }
   .allergy-gina-preferred { font-size: 13px; }
   .allergy-gina-alt   { font-size: 10px; }
+
+  .hemato-hb-result { flex-wrap: nowrap; align-items: center; gap: 12px; }
+  .hemato-hb-result .suite-score-big { font-size: 18px; white-space: nowrap; }
+  .hemato-hb-result .suite-risk-badge { white-space: nowrap; text-align: center; }
+  .hemato-hb-advice { font-size: 10px; flex-shrink: 1; }
 }
 
 /* ─── DietologySuite ─── */

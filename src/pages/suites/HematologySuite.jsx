@@ -127,15 +127,13 @@ export default function HematologySuite() {
         {/* Строка 2: результат | интерпретация */}
         <div className="hemato-anemia-bottom">
           <div className="hemato-anemia-left">
-            <div className="suite-result-banner scorad-result hemato-hb-result">
-              <div className="scorad-score">
+            <div className="suite-result-banner hemato-hb-result">
+              <div>
                 <div className="suite-score-label">Hb</div>
                 <div className="suite-score-big" style={{ color: hbColor }}>{hb} г/л</div>
               </div>
-              <div className="scorad-verdict">
-                <span className={`suite-risk-badge ${res.badge}`}>{res.label}</span>
-                <div className="suite-advice">{res.advice}</div>
-              </div>
+              <span className={`suite-risk-badge ${res.badge}`}>{res.label}</span>
+              <div className="suite-advice hemato-hb-advice">{res.advice}</div>
             </div>
           </div>
 

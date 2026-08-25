@@ -30,6 +30,24 @@ function abcd2Risk(score) {
   return               { label: 'Высокий риск',      pct: '8% / 2д.',  badge: 'badge-red',    advice: 'Экстренная госпитализация. Риск инсульта в течение 48 ч очень высок.' }
 }
 
+const MOCA_DOMAINS = [
+  { id: 'visuo',     label: 'Зрительно-пространственная / исполнительная', max: 5 },
+  { id: 'naming',    label: 'Называние (3 животных)',                       max: 3 },
+  { id: 'attention', label: 'Внимание',                                     max: 6 },
+  { id: 'language',  label: 'Речь',                                         max: 3 },
+  { id: 'abstract',  label: 'Абстракция',                                   max: 2 },
+  { id: 'recall',    label: 'Отсроченное воспроизведение (5 слов)',         max: 5 },
+  { id: 'orient',    label: 'Ориентация',                                   max: 6 },
+  { id: 'edu',       label: '+ Образование ≤ 12 лет',                      max: 1 },
+]
+
+function mocaResult(score) {
+  if (score >= 26) return { label: 'Норма',                         badge: 'badge-green',  advice: 'Когнитивных нарушений не выявлено. Контроль через 1 год.' }
+  if (score >= 18) return { label: 'Лёгкие когнитивные нарушения', badge: 'badge-yellow', advice: 'МКН — повторное тестирование через 6–12 мес. Исключить депрессию, сосудистые факторы риска.' }
+  if (score >= 10) return { label: 'Умеренные нарушения',           badge: 'badge-yellow', advice: 'МКН средней степени — МРТ головного мозга, расширенное нейропсихологическое тестирование.' }
+  return                  { label: 'Тяжёлые нарушения',             badge: 'badge-red',    advice: 'Выраженный когнитивный дефицит — нейропсихолог, решение вопроса о дееспособности.' }
+}
+
 const nihssItems = [
   { id: 'loc',       label: 'Уровень сознания', max: 3,
     opts: ['0 — Ясное', '1 — Оглушение (выполняет не все команды)', '2 — Сопор (реакция на боль)', '3 — Кома'] },
@@ -70,12 +88,20 @@ function nihssSeverity(score) {
 export default function NeurologySuite() {
   const [abcd2, setAbcd2] = useState({ age: 0, bp: 0, clinical: 0, duration: 0, diabetes: 0 })
   const [nihss, setNihss] = useState(Object.fromEntries(nihssItems.map(f => [f.id, 0])))
+  const [moca,  setMoca]  = useState(Object.fromEntries(MOCA_DOMAINS.map(d => [d.id, 0])))
 
   const abcdScore = Object.values(abcd2).reduce((a, b) => a + b, 0)
   const abcdRes   = abcd2Risk(abcdScore)
 
   const nihssScore = Object.values(nihss).reduce((a, b) => a + b, 0)
   const nihssRes   = nihssSeverity(nihssScore)
+
+  const mocaScore = Math.min(30, Object.values(moca).reduce((a, b) => a + b, 0))
+  const mocaRes   = mocaResult(mocaScore)
+
+  function stepMoca(id, delta, max) {
+    setMoca(prev => ({ ...prev, [id]: Math.max(0, Math.min(max, prev[id] + delta)) }))
+  }
 
   return (
     <div className="suite">
@@ -152,6 +178,29 @@ export default function NeurologySuite() {
             <div className="suite-score-big" style={{ color: '#60A5FA' }}>{nihssScore}</div>
           </div>
           <span className={`suite-risk-badge ${nihssRes.badge}`}>{nihssRes.label}</span>
+        </div>
+      </div>
+
+      {/* MoCA */}
+      <div className="suite-card">
+        <div className="suite-card-title">
+          <span>🧠 MoCA — скрининг когнитивных нарушений</span>
+          <button className="suite-reset-btn" onClick={() => setMoca(Object.fromEntries(MOCA_DOMAINS.map(d => [d.id, 0])))}>Сбросить</button>
+        </div>
+        {MOCA_DOMAINS.map(d => (
+          <div key={d.id} className="moca-row">
+            <span className="moca-label">{d.label}</span>
+            <div className="moca-stepper">
+              <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, -1, d.max)}>−</button>
+              <span className="moca-stepper-val">{moca[d.id]}<span className="moca-stepper-max">/{d.max}</span></span>
+              <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, +1, d.max)}>+</button>
+            </div>
+          </div>
+        ))}
+        <div className="allergy-compact-result" style={{ marginTop: 12, paddingTop: 12, borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
+          <span style={{ fontSize: 20, fontWeight: 800, color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</span>
+          <span className={`suite-risk-badge ${mocaRes.badge}`}>{mocaRes.label}</span>
+          <span className="allergy-compact-advice">{mocaRes.advice}</span>
         </div>
       </div>
 

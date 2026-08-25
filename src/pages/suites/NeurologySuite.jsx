@@ -203,10 +203,15 @@ export default function NeurologySuite() {
             </div>
           ))}
         </div>
-        <div className="allergy-compact-result" style={{ marginTop: 12, paddingTop: 12, justifyContent: 'flex-start', borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
-          <span style={{ fontSize: 20, fontWeight: 800, color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</span>
-          <span className={`suite-risk-badge ${mocaRes.badge}`}>{mocaRes.label}</span>
-          <span className="allergy-compact-advice">{mocaRes.advice}</span>
+        <div className="suite-result-banner" style={{ justifyContent: 'flex-end', borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}`, borderRadius: 0, background: 'none', padding: '12px 0 0 0', marginTop: 12 }}>
+          <div style={{ textAlign: 'right' }}>
+            <div className="suite-score-label">MoCA</div>
+            <div className="suite-score-big" style={{ color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
+          </div>
+          <div>
+            <span className={`suite-risk-badge ${mocaRes.badge}`}>{mocaRes.label}</span>
+            <div className="suite-advice">{mocaRes.advice}</div>
+          </div>
         </div>
       </div>
 

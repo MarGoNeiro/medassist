@@ -190,7 +190,7 @@ export default function CardiologySuite() {
       </div>
 
       {/* CHA₂DS₂-VASc + HAS-BLED — бок о бок */}
-      <div className="cardio-two-col">
+      <div className="cardio-two-col cardio-af-pair">
         <div className="suite-card">
           <div className="suite-card-title">
             <span>🩺 CHA₂DS₂-VASc — риск инсульта при ФП</span>

@@ -1119,6 +1119,22 @@
   }
   .nyha-btn { font-size: 20px; }
   .nyha-detail-desc { font-size: 14px; }
+
+  /* CHA₂DS₂-VASc + HAS-BLED: строки выравниваются по высоте, зелёные линии снизу совпадают */
+  .cardio-af-pair .suite-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .cardio-af-pair .suite-card-title {
+    flex-shrink: 0;
+  }
+  .cardio-af-pair .suite-toggle-row {
+    flex: 1;
+  }
+  .cardio-af-pair .allergy-compact-result {
+    flex-shrink: 0;
+    margin-top: auto !important;
+  }
 }
 
 /* ─── DermatologySuite — DLQI, Топические ГКС ─── */

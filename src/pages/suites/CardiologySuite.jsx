@@ -272,7 +272,7 @@ export default function CardiologySuite() {
             <div className={`suite-toggle ${graceMarkers ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
           </button>
         </div>
-        <div className="allergy-compact-result" style={{ marginTop: 10, paddingTop: 10, borderTop: `3px solid ${graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
+        <div className="allergy-compact-result" style={{ marginTop: 10, paddingTop: 10, justifyContent: 'center', borderTop: `3px solid ${graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
           <span style={{ fontSize: 20, fontWeight: 800, color: graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{graceScore}</span>
           <span className={`suite-risk-badge ${graceRes.badge}`}>{graceRes.label} · {graceRes.risk}</span>
           <span className="allergy-compact-advice">{graceRes.advice}</span>

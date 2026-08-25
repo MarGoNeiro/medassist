@@ -78,11 +78,11 @@ const nihssItems = [
 ]
 
 function nihssSeverity(score) {
-  if (score === 0)  return { label: 'Нет неврологического дефицита', badge: 'badge-green' }
-  if (score <= 4)   return { label: 'Минимальный дефицит',           badge: 'badge-green' }
-  if (score <= 15)  return { label: 'Умеренный инсульт',             badge: 'badge-yellow' }
-  if (score <= 20)  return { label: 'Тяжёлый инсульт',               badge: 'badge-red' }
-  return                  { label: 'Очень тяжёлый инсульт',          badge: 'badge-red' }
+  if (score === 0)  return { label: 'Нет дефицита',        badge: 'badge-green',  advice: 'Тромболизис не показан. Наблюдение, контроль факторов риска.' }
+  if (score <= 4)   return { label: 'Минимальный дефицит', badge: 'badge-green',  advice: 'Малый инсульт. Рассмотреть тромболизис при прогрессировании симптомов.' }
+  if (score <= 15)  return { label: 'Умеренный инсульт',   badge: 'badge-yellow', advice: 'Показан тромболизис в окне 4,5 ч и/или тромбэктомия при окклюзии крупного сосуда.' }
+  if (score <= 20)  return { label: 'Тяжёлый инсульт',     badge: 'badge-red',    advice: 'Тромболизис / тромбэктомия. Рассмотреть нейрохирургию, перевод в ОРИТ.' }
+  return                  { label: 'Очень тяжёлый',        badge: 'badge-red',    advice: 'NIHSS > 20 — тромболизис относительно противопоказан. Тромбэктомия при наличии показаний.' }
 }
 
 export default function NeurologySuite() {
@@ -125,14 +125,14 @@ export default function NeurologySuite() {
             </div>
           ))}
         </div>
-        <div className="suite-result-banner">
-          <div>
+        <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
+          <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">ABCD² Score</div>
             <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{abcdScore}</div>
           </div>
           <div>
-            <span className={`suite-risk-badge ${abcdRes.badge}`}>{abcdRes.label} · {abcdRes.pct}</span>
-            <div className="suite-advice">{abcdRes.advice}</div>
+            <span className={`suite-risk-badge ${abcdRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{abcdRes.label} · {abcdRes.pct}</span>
+            <div className="suite-advice" style={{ fontSize: 13 }}>{abcdRes.advice}</div>
           </div>
         </div>
       </div>
@@ -172,12 +172,15 @@ export default function NeurologySuite() {
             </div>
           ))}
         </div>
-        <div className="suite-result-banner">
-          <div>
+        <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
+          <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">Сумма NIHSS</div>
             <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{nihssScore}</div>
           </div>
-          <span className={`suite-risk-badge ${nihssRes.badge}`}>{nihssRes.label}</span>
+          <div>
+            <span className={`suite-risk-badge ${nihssRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{nihssRes.label}</span>
+            <div className="suite-advice" style={{ fontSize: 13 }}>{nihssRes.advice}</div>
+          </div>
         </div>
       </div>
 
@@ -203,14 +206,14 @@ export default function NeurologySuite() {
             </div>
           ))}
         </div>
-        <div className="suite-result-banner" style={{ justifyContent: 'flex-end', borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}`, borderRadius: 0, background: 'none', padding: '12px 0 0 0', marginTop: 12 }}>
+        <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">MoCA</div>
             <div className="suite-score-big score-sm" style={{ color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${mocaRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{mocaRes.label}</span>
-            <div className="suite-advice" style={{ fontSize: 12 }}>{mocaRes.advice}</div>
+            <div className="suite-advice" style={{ fontSize: 13 }}>{mocaRes.advice}</div>
           </div>
         </div>
       </div>

@@ -901,7 +901,7 @@
   gap: 0;
 }
 .nrs-result-label  { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-secondary); }
-.nrs-result-big    { font-size: 34px; font-weight: 800; line-height: 1; }
+.nrs-result-big    { font-size: 24px; font-weight: 800; line-height: 1; }
 .nrs-result-advice { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; margin-top: 8px; }
 .nrs-age-note      { font-size: 11px; color: #92400E; background: #FEF9C3; border-radius: 6px; padding: 3px 8px; }
 
@@ -917,7 +917,7 @@
     padding: 0 0 0 20px;
     justify-content: center;
   }
-  .nrs-result-big { font-size: 40px; }
+  .nrs-result-big { font-size: 28px; }
 }
 
 /* ─── InfectionSuite ─── */

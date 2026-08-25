@@ -864,7 +864,7 @@
 .cardio-two-col { display: flex; flex-direction: column; gap: 12px; }
 
 @media (min-width: 768px) {
-  .cardio-two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+  .cardio-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 }
 
 /* ─── ASCVD layout: inputs + result rectangle ─── */

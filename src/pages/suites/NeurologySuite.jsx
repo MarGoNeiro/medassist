@@ -187,16 +187,22 @@ export default function NeurologySuite() {
           <span>🧠 MoCA — скрининг когнитивных нарушений</span>
           <button className="suite-reset-btn" onClick={() => setMoca(Object.fromEntries(MOCA_DOMAINS.map(d => [d.id, 0])))}>Сбросить</button>
         </div>
-        {MOCA_DOMAINS.map(d => (
-          <div key={d.id} className="moca-row">
-            <span className="moca-label">{d.label}</span>
-            <div className="moca-stepper">
-              <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, -1, d.max)}>−</button>
-              <span className="moca-stepper-val">{moca[d.id]}<span className="moca-stepper-max">/{d.max}</span></span>
-              <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, +1, d.max)}>+</button>
+        <div className="moca-two-col">
+          {[0, 1].map(col => (
+            <div key={col} className="moca-col">
+              {MOCA_DOMAINS.slice(col * 4, col * 4 + 4).map(d => (
+                <div key={d.id} className="moca-row">
+                  <span className="moca-label">{d.label}</span>
+                  <div className="moca-stepper">
+                    <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, -1, d.max)}>−</button>
+                    <span className="moca-stepper-val">{moca[d.id]}<span className="moca-stepper-max">/{d.max}</span></span>
+                    <button className="moca-stepper-btn" onClick={() => stepMoca(d.id, +1, d.max)}>+</button>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <div className="allergy-compact-result" style={{ marginTop: 12, paddingTop: 12, borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
           <span style={{ fontSize: 20, fontWeight: 800, color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</span>
           <span className={`suite-risk-badge ${mocaRes.badge}`}>{mocaRes.label}</span>

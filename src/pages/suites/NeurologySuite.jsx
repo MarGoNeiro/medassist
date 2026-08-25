@@ -128,7 +128,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">ABCD² Score</div>
-            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{abcdScore}</div>
+            <div className="suite-score-big" style={{ fontSize: 20, color: '#60A5FA' }}>{abcdScore}</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${abcdRes.badge}`}>{abcdRes.label} · {abcdRes.pct}</span>
@@ -175,7 +175,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">Сумма NIHSS</div>
-            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{nihssScore}</div>
+            <div className="suite-score-big" style={{ fontSize: 20, color: '#60A5FA' }}>{nihssScore}</div>
           </div>
           <span className={`suite-risk-badge ${nihssRes.badge}`}>{nihssRes.label}</span>
         </div>

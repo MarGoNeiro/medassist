@@ -1082,6 +1082,45 @@
   .nephr-bp-row    { font-size: 13px; }
 }
 
+/* ─── CardiologySuite — GRACE, NYHA ─── */
+.grace-layout { display: flex; flex-direction: column; gap: 12px; }
+.grace-col    { display: flex; flex-direction: column; gap: 10px; }
+
+.nyha-btns { display: flex; gap: 8px; margin-bottom: 12px; }
+.nyha-btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-card);
+  color: var(--color-text-secondary);
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.nyha-detail { display: flex; flex-direction: column; gap: 6px; }
+.nyha-detail-class { font-size: 15px; font-weight: 800; }
+.nyha-detail-desc  { font-size: 13px; color: var(--color-text); line-height: 1.4; }
+.nyha-detail-prog  { font-size: 11px; color: var(--color-text-secondary); }
+
+@media (min-width: 768px) {
+  .grace-layout { flex-direction: row; gap: 0; align-items: stretch; }
+  .grace-col    { flex: 1; padding-right: 20px; }
+  .grace-col:last-of-type { padding-right: 0; }
+  .grace-layout > .nrs-result-col {
+    border-top: none;
+    border-left: 3px solid #F87171;
+    padding-top: 0;
+    padding-left: 20px;
+    min-width: 190px;
+    justify-content: center;
+  }
+  .nyha-btn { font-size: 20px; }
+  .nyha-detail-desc { font-size: 14px; }
+}
+
 /* ─── DermatologySuite — DLQI, Топические ГКС ─── */
 .dlqi-two-col { display: flex; flex-direction: column; gap: 0; }
 .dlqi-col { display: flex; flex-direction: column; }

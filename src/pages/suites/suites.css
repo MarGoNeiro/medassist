@@ -259,10 +259,8 @@
 .suite-table .col-note { color: var(--color-text-secondary); }
 
 .suite-cheatsheet {
-  background: #1E293B;
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  margin-top: 12px;
+  padding: 4px 0;
+  margin-top: 4px;
 }
 .suite-cheatsheet-title {
   font-size: 9px;

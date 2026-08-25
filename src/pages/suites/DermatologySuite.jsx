@@ -34,6 +34,35 @@ const FITZPATRICK = [
   { type:'VI',  skin:'Тёмная',        burn:'Никогда не сгорает',tan:'не меняет цвет',      risk:'Наименьший риск рака. Высокий риск гиперпигментации, келоидов, псевдофолликулита.' },
 ]
 
+const DLQI_QUESTIONS = [
+  'Зуд, боль или жжение кожи',
+  'Стеснение или беспокойство из-за кожи',
+  'Ограничения в быту (покупки, уборка)',
+  'Выбор одежды из-за кожи',
+  'Социальная и досуговая активность',
+  'Занятия спортом',
+  'Работа или учёба',
+  'Неудобства для партнёра / близких',
+  'Интимная жизнь',
+  'Уход за кожей (процедуры, лечение)',
+]
+const DLQI_OPTS = ['Нет', 'Немного', 'Много', 'Очень']
+
+function dlqiResult(score) {
+  if (score <= 1)  return { label: 'Нет влияния',         badge: 'badge-green',  advice: 'Болезнь не влияет на качество жизни.' }
+  if (score <= 5)  return { label: 'Незначительное',      badge: 'badge-green',  advice: 'Минимальное влияние на качество жизни.' }
+  if (score <= 10) return { label: 'Умеренное',           badge: 'badge-yellow', advice: 'DLQI ≥ 6 — показание для системной терапии. При PASI ≥ 10 — рассмотреть биологики.' }
+  if (score <= 20) return { label: 'Очень значимое',      badge: 'badge-yellow', advice: 'DLQI ≥ 10 + PASI ≥ 10 → критерий назначения биологической терапии по КР РФ.' }
+  return                  { label: 'Чрезвычайно значимое',badge: 'badge-red',    advice: 'DLQI ≥ 10 + PASI ≥ 10 → биологики показаны: ИЛ-17А, ИЛ-23, анти-ФНО-α.' }
+}
+
+const TCS_GROUPS = [
+  { potency: 'Слабые', color: '#34D399', drugs: 'Гидрокортизон 1–2.5%', use: 'Лицо, складки, аногенитальная область, дети' },
+  { potency: 'Умеренные', color: '#FBBF24', drugs: 'Мометазон 0.1%, Флутиказон 0.05%, Флуоцинолон 0.025%', use: 'Туловище, конечности — основная зона' },
+  { potency: 'Сильные', color: '#F97316', drugs: 'Бетаметазон валерат 0.1%, Бетаметазон дипропионат 0.05%', use: 'Кисти, стопы, волосистая часть головы, резистентные очаги' },
+  { potency: 'Сверхсильные', color: '#F87171', drugs: 'Клобетазол пропионат 0.05% (Дермовейт)', use: 'Гиперкератоз, ограниченные очаги. Курс не более 2 нед.' },
+]
+
 const ABCDE = [
   { id:'a', letter:'A', name:'Асимметрия', desc:'Одна половина образования не совпадает с другой' },
   { id:'b', letter:'B', name:'Границы',    desc:'Неровные, размытые или зазубренные края' },
@@ -50,9 +79,13 @@ const initPasi = () => ({
 })
 
 export default function DermatologySuite() {
-  const [pasi,  setPasi]  = useState(initPasi)
-  const [fitz,  setFitz]  = useState(null)
-  const [abcde, setAbcde] = useState({ a:false, b:false, c:false, d:false, e:false })
+  const [pasi,      setPasi]      = useState(initPasi)
+  const [fitz,      setFitz]      = useState(null)
+  const [abcde,     setAbcde]     = useState({ a:false, b:false, c:false, d:false, e:false })
+  const [dlqiScores,setDlqiScores]= useState(Array(10).fill(0))
+
+  const dlqiTotal = dlqiScores.reduce((a, b) => a + b, 0)
+  const dlqiRes   = dlqiResult(dlqiTotal)
 
   const pasiScore  = calcPasi(pasi)
   const pasiRes    = pasiResult(pasiScore)
@@ -141,6 +174,58 @@ export default function DermatologySuite() {
               }
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* DLQI */}
+      <div className="suite-card">
+        <div className="suite-card-title">📋 DLQI — КАЧЕСТВО ЖИЗНИ (последняя неделя)</div>
+        <div className="dlqi-two-col">
+          {[0, 1].map(col => (
+            <div key={col} className="dlqi-col">
+              {DLQI_QUESTIONS.slice(col * 5, col * 5 + 5).map((q, qi) => {
+                const idx = col * 5 + qi
+                return (
+                  <div key={idx} className="dlqi-row">
+                    <div className="dlqi-label">{idx + 1}. {q}</div>
+                    <div className="dlqi-btns">
+                      {DLQI_OPTS.map((opt, oi) => (
+                        <button key={oi}
+                          className={`dlqi-btn ${dlqiScores[idx] === oi ? 'active' : ''}`}
+                          onClick={() => setDlqiScores(prev => prev.map((v, i) => i === idx ? oi : v))}>
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ))}
+        </div>
+        {(() => {
+          const lineColor = dlqiRes.badge === 'badge-green' ? '#34D399' : dlqiRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'
+          return (
+            <div className="allergy-compact-result dlqi-result-line" style={{ marginTop: 14, paddingTop: 12, borderTop: `3px solid ${lineColor}` }}>
+              <span style={{ fontSize: 20, fontWeight: 800, color: lineColor }}>{dlqiTotal}</span>
+              <span className={`suite-risk-badge ${dlqiRes.badge}`}>{dlqiRes.label}</span>
+              <span className="allergy-compact-advice">{dlqiRes.advice}</span>
+            </div>
+          )
+        })()}
+      </div>
+
+      {/* Топические ГКС */}
+      <div className="suite-card">
+        <div className="suite-card-title">💊 ТОПИЧЕСКИЕ ГКС — ШПАРГАЛКА ПО ПОТЕНТНОСТИ</div>
+        <div className="tcs-list">
+          {TCS_GROUPS.map((g, i) => (
+            <div key={i} className="tcs-row">
+              <div className="tcs-potency" style={{ color: g.color }}>{g.potency}</div>
+              <div className="tcs-drugs">{g.drugs}</div>
+              <div className="tcs-use">{g.use}</div>
+            </div>
+          ))}
         </div>
       </div>
 

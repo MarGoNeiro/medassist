@@ -128,7 +128,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">ABCD² Score</div>
-            <div className="suite-score-big" style={{ fontSize: 20, color: '#60A5FA' }}>{abcdScore}</div>
+            <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{abcdScore}</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${abcdRes.badge}`}>{abcdRes.label} · {abcdRes.pct}</span>
@@ -175,7 +175,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">Сумма NIHSS</div>
-            <div className="suite-score-big" style={{ fontSize: 20, color: '#60A5FA' }}>{nihssScore}</div>
+            <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{nihssScore}</div>
           </div>
           <span className={`suite-risk-badge ${nihssRes.badge}`}>{nihssRes.label}</span>
         </div>
@@ -206,7 +206,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner" style={{ justifyContent: 'flex-end', borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}`, borderRadius: 0, background: 'none', padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">MoCA</div>
-            <div className="suite-score-big" style={{ fontSize: 20, color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
+            <div className="suite-score-big score-sm" style={{ color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${mocaRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{mocaRes.label}</span>

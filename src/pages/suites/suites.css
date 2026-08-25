@@ -983,6 +983,7 @@
 
   .suite-result-banner { padding-top: 18px; margin-top: 18px; }
   .suite-score-big { font-size: 40px; }
+  .score-sm { font-size: 20px !important; }
   .suite-score-label { font-size: 13px; }
   .suite-risk-badge { font-size: 13px; padding: 6px 14px; }
   .suite-advice { font-size: 14px; max-width: 340px; }

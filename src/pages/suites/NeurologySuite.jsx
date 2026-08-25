@@ -38,7 +38,7 @@ const MOCA_DOMAINS = [
   { id: 'abstract',  label: 'Абстракция',                                   max: 2 },
   { id: 'recall',    label: 'Отсроченное воспроизведение (5 слов)',         max: 5 },
   { id: 'orient',    label: 'Ориентация',                                   max: 6 },
-  { id: 'edu',       label: '+ Образование ≤ 12 лет',                      max: 1 },
+  { id: 'edu',       label: 'Образование ≤ 12 лет',                        max: 1 },
 ]
 
 function mocaResult(score) {

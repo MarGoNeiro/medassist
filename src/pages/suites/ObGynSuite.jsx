@@ -1,6 +1,40 @@
 import { useState } from 'react'
 import './suites.css'
 
+const APGAR_CRITERIA = [
+  {
+    id: 'appearance',
+    label: 'Цвет кожи',
+    opts: ['Синий / бледный', 'Тело розовое, конечности синие', 'Розовый (весь)'],
+  },
+  {
+    id: 'pulse',
+    label: 'ЧСС',
+    opts: ['Отсутствует', '< 100 уд/мин', '≥ 100 уд/мин'],
+  },
+  {
+    id: 'grimace',
+    label: 'Рефлексы',
+    opts: ['Нет реакции', 'Гримаса', 'Кашель / чиханье / крик'],
+  },
+  {
+    id: 'activity',
+    label: 'Тонус',
+    opts: ['Вялый, атония', 'Снижен, сгибание конечностей', 'Активные движения'],
+  },
+  {
+    id: 'respiration',
+    label: 'Дыхание',
+    opts: ['Отсутствует', 'Нерегулярное / слабый крик', 'Регулярное / громкий крик'],
+  },
+]
+
+function apgarResult(score) {
+  if (score >= 7) return { label: 'Норма',                      badge: 'badge-green',  advice: 'Состояние удовлетворительное. Стандартный уход.' }
+  if (score >= 4) return { label: 'Лёгкая / умеренная асфиксия', badge: 'badge-yellow', advice: 'Тактильная стимуляция. Санация ДП. О₂ через маску. Повторная оценка через 5 мин.' }
+  return                 { label: 'Тяжёлая асфиксия',           badge: 'badge-red',    advice: 'Немедленная реанимация: ИВЛ маска/интубация. Компрессии при ЧСС < 60 уд/мин.' }
+}
+
 const BISHOP_FIELDS = [
   {
     id: 'dilation', label: 'Раскрытие зева',
@@ -103,6 +137,13 @@ export default function ObGynSuite() {
   const [lmp, setLmp]           = useState('')
   const [bishop, setBishop]     = useState({ dilation: 0, effacement: 0, station: 0, consistency: 0, position: 0 })
   const [situation, setSituation] = useState('')
+  const [apgar1, setApgar1]     = useState({ appearance: 2, pulse: 2, grimace: 2, activity: 2, respiration: 2 })
+  const [apgar5, setApgar5]     = useState({ appearance: 2, pulse: 2, grimace: 2, activity: 2, respiration: 2 })
+
+  const score1 = Object.values(apgar1).reduce((a, b) => a + b, 0)
+  const score5 = Object.values(apgar5).reduce((a, b) => a + b, 0)
+  const res1   = apgarResult(score1)
+  const res5   = apgarResult(score5)
 
   const edd = calcEDD(lmp)
   const ga  = calcGA(lmp)
@@ -257,6 +298,47 @@ export default function ObGynSuite() {
             </>
           )
         })()}
+      </div>
+
+
+      {/* Шкала Апгар */}
+      <div className="suite-card">
+        <div className="suite-card-title">👶 Шкала Апгар</div>
+        <div className="apgar-two-col">
+          {[
+            { key: 'a1', label: '1 минута',  state: apgar1, set: setApgar1, score: score1, res: res1 },
+            { key: 'a5', label: '5 минут',   state: apgar5, set: setApgar5, score: score5, res: res5 },
+          ].map(({ key, label, state, set, score, res }) => {
+            const col = res.badge === 'badge-green' ? '#34D399' : res.badge === 'badge-red' ? '#F87171' : '#FBBF24'
+            return (
+              <div key={key} className="apgar-col">
+                <div className="apgar-col-title">{label}</div>
+                {APGAR_CRITERIA.map(c => (
+                  <div key={c.id} className="apgar-row">
+                    <div className="apgar-row-label">{c.label}</div>
+                    <div className="apgar-row-hint">{c.opts[state[c.id]]}</div>
+                    <div className="apgar-btns">
+                      {[0, 1, 2].map(v => (
+                        <button key={v}
+                          className={`apgar-btn ${state[c.id] === v ? 'active' : ''}`}
+                          onClick={() => set(prev => ({ ...prev, [c.id]: v }))}>
+                          {v}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <div className="suite-result-banner" style={{ marginTop: 12 }}>
+                  <div className="suite-score-big" style={{ color: col }}>{score}</div>
+                  <div style={{ flex: 1, marginLeft: 12 }}>
+                    <span className={`suite-risk-badge ${res.badge}`}>{res.label}</span>
+                    <div className="suite-advice" style={{ marginTop: 4 }}>{res.advice}</div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
     </div>

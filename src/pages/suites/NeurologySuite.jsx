@@ -203,7 +203,7 @@ export default function NeurologySuite() {
             </div>
           ))}
         </div>
-        <div className="allergy-compact-result" style={{ marginTop: 12, paddingTop: 12, borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
+        <div className="allergy-compact-result" style={{ marginTop: 12, paddingTop: 12, justifyContent: 'flex-start', borderTop: `3px solid ${mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
           <span style={{ fontSize: 20, fontWeight: 800, color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</span>
           <span className={`suite-risk-badge ${mocaRes.badge}`}>{mocaRes.label}</span>
           <span className="allergy-compact-advice">{mocaRes.advice}</span>

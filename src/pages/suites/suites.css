@@ -1083,8 +1083,8 @@
 }
 
 /* ─── CardiologySuite — GRACE, NYHA ─── */
-.grace-layout { display: flex; flex-direction: column; gap: 12px; }
-.grace-col    { display: flex; flex-direction: column; gap: 10px; }
+.grace-row-top    { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.grace-row-bottom { display: flex; flex-direction: column; gap: 4px; }
 
 .nyha-btns { display: flex; gap: 8px; margin-bottom: 12px; }
 .nyha-btn {
@@ -1106,17 +1106,8 @@
 .nyha-detail-prog  { font-size: 11px; color: var(--color-text-secondary); }
 
 @media (min-width: 768px) {
-  .grace-layout { flex-direction: row; gap: 0; align-items: stretch; }
-  .grace-col    { flex: 1; padding-right: 20px; }
-  .grace-col:last-of-type { padding-right: 0; }
-  .grace-layout > .nrs-result-col {
-    border-top: none;
-    border-left: 3px solid #F87171;
-    padding-top: 0;
-    padding-left: 20px;
-    min-width: 190px;
-    justify-content: center;
-  }
+  .grace-row-top    { grid-template-columns: repeat(4, 1fr); }
+  .grace-row-bottom { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 8px; align-items: stretch; }
   .nyha-btn { font-size: 20px; }
   .nyha-detail-desc { font-size: 14px; }
 

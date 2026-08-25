@@ -237,53 +237,45 @@ export default function CardiologySuite() {
       {/* GRACE score */}
       <div className="suite-card">
         <div className="suite-card-title">🚨 GRACE — риск при ОКС (смерть в стационаре)</div>
-        <div className="grace-layout">
-          <div className="grace-col">
-            {[
-              { label: 'Возраст', opts: GRACE_AGE,   val: graceAge,   set: setGraceAge },
-              { label: 'ЧСС (уд/мин)', opts: GRACE_HR, val: graceHr, set: setGraceHr },
-              { label: 'АД сист. (мм рт.ст.)', opts: GRACE_SBP, val: graceSbp, set: setGraceSbp },
-            ].map(f => (
-              <div key={f.label} className="suite-field">
-                <label>{f.label}</label>
-                <select className="suite-select" value={f.val} onChange={e => f.set(+e.target.value)}>
-                  {f.opts.map((o, i) => <option key={i} value={i}>{o.l} (+{o.pts})</option>)}
-                </select>
-              </div>
-            ))}
-          </div>
-          <div className="grace-col">
-            <div className="suite-field">
-              <label>Креатинин (мкмоль/л)</label>
-              <select className="suite-select" value={graceCreat} onChange={e => setGraceCreat(+e.target.value)}>
-                {GRACE_CREAT.map((o, i) => <option key={i} value={i}>{o.l} (+{o.pts})</option>)}
+        <div className="grace-row-top">
+          {[
+            { label: 'Возраст',          opts: GRACE_AGE,   val: graceAge,   set: setGraceAge },
+            { label: 'ЧСС (уд/мин)',     opts: GRACE_HR,    val: graceHr,    set: setGraceHr },
+            { label: 'АД сист.',         opts: GRACE_SBP,   val: graceSbp,   set: setGraceSbp },
+            { label: 'Креатинин (мкмоль/л)', opts: GRACE_CREAT, val: graceCreat, set: setGraceCreat },
+          ].map(f => (
+            <div key={f.label} className="suite-field">
+              <label>{f.label}</label>
+              <select className="suite-select" value={f.val} onChange={e => f.set(+e.target.value)}>
+                {f.opts.map((o, i) => <option key={i} value={i}>{o.l} (+{o.pts})</option>)}
               </select>
             </div>
-            <div className="suite-field">
-              <label>Класс Killip</label>
-              <select className="suite-select" value={graceKillip} onChange={e => setGraceKillip(+e.target.value)}>
-                {GRACE_KILLIP.map((o, i) => <option key={i} value={i}>{o.l} (+{o.pts})</option>)}
-              </select>
-            </div>
-            <button className="suite-toggle-row" onClick={() => setGraceArrest(v => !v)}>
-              <span className="suite-toggle-label">Остановка сердца при поступлении [+39]</span>
-              <div className={`suite-toggle ${graceArrest ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-            </button>
-            <button className="suite-toggle-row" onClick={() => setGraceSt(v => !v)}>
-              <span className="suite-toggle-label">Отклонение сегмента ST [+28]</span>
-              <div className={`suite-toggle ${graceSt ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-            </button>
-            <button className="suite-toggle-row" onClick={() => setGraceMarkers(v => !v)}>
-              <span className="suite-toggle-label">Повышение кардиомаркёров [+14]</span>
-              <div className={`suite-toggle ${graceMarkers ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-            </button>
+          ))}
+        </div>
+        <div className="grace-row-bottom">
+          <div className="suite-field">
+            <label>Класс Killip</label>
+            <select className="suite-select" value={graceKillip} onChange={e => setGraceKillip(+e.target.value)}>
+              {GRACE_KILLIP.map((o, i) => <option key={i} value={i}>{o.l} (+{o.pts})</option>)}
+            </select>
           </div>
-          <div className="nrs-result-col">
-            <div className="nrs-result-label">GRACE</div>
-            <div className="nrs-result-big" style={{ color: graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{graceScore}</div>
-            <span className={`suite-risk-badge ${graceRes.badge}`}>{graceRes.label} · {graceRes.risk}</span>
-            <div className="nrs-result-advice">{graceRes.advice}</div>
-          </div>
+          <button className="suite-toggle-row" onClick={() => setGraceArrest(v => !v)}>
+            <span className="suite-toggle-label">Остановка сердца [+39]</span>
+            <div className={`suite-toggle ${graceArrest ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          </button>
+          <button className="suite-toggle-row" onClick={() => setGraceSt(v => !v)}>
+            <span className="suite-toggle-label">Отклонение ST [+28]</span>
+            <div className={`suite-toggle ${graceSt ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          </button>
+          <button className="suite-toggle-row" onClick={() => setGraceMarkers(v => !v)}>
+            <span className="suite-toggle-label">Кардиомаркёры [+14]</span>
+            <div className={`suite-toggle ${graceMarkers ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          </button>
+        </div>
+        <div className="allergy-compact-result" style={{ marginTop: 10, paddingTop: 10, borderTop: `3px solid ${graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24'}` }}>
+          <span style={{ fontSize: 20, fontWeight: 800, color: graceRes.badge === 'badge-green' ? '#34D399' : graceRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{graceScore}</span>
+          <span className={`suite-risk-badge ${graceRes.badge}`}>{graceRes.label} · {graceRes.risk}</span>
+          <span className="allergy-compact-advice">{graceRes.advice}</span>
         </div>
       </div>
 

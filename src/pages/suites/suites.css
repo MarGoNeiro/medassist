@@ -918,6 +918,7 @@
     justify-content: center;
   }
   .nrs-result-big { font-size: 28px; }
+  .nrs-result-col .suite-risk-badge { font-size: 11px; padding: 3px 10px; }
 }
 
 /* ─── InfectionSuite ─── */

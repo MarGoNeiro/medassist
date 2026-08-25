@@ -14,10 +14,10 @@ function graceResult(s) {
 }
 
 const NYHA_CLASSES = [
-  { cls:'I',   color:'#34D399', desc:'Нет ограничений, симптомов нет.',                          prog:'5-летняя выживаемость ~85%' },
-  { cls:'II',  color:'#FBBF24', desc:'Симптомы при умеренной нагрузке (≥ 2 этажа).',             prog:'5-летняя выживаемость ~75%' },
-  { cls:'III', color:'#F97316', desc:'Симптомы при минимальной нагрузке (< 1 пролёт).',          prog:'5-летняя выживаемость ~50%' },
-  { cls:'IV',  color:'#F87171', desc:'Симптомы в покое, любая нагрузка невозможна.',              prog:'1-летняя выживаемость ~50%'  },
+  { cls:'I',   color:'#34D399', desc:'Без ограничений. Обычная нагрузка не вызывает симптомов.',                 prog:'5-летняя выживаемость ~85%' },
+  { cls:'II',  color:'#FBBF24', desc:'Небольшое ограничение. Симптомы при умеренной нагрузке (2 этажа, >200 м).', prog:'5-летняя выживаемость ~75%' },
+  { cls:'III', color:'#F97316', desc:'Значительное ограничение. Симптомы при минимальной нагрузке (<1 пролёт).', prog:'5-летняя выживаемость ~50%' },
+  { cls:'IV',  color:'#F87171', desc:'Симптомы в покое. Любая нагрузка усиливает дискомфорт.',                   prog:'1-летняя выживаемость ~50%' },
 ]
 
 const HASBLED_FIELDS = [
@@ -284,21 +284,19 @@ export default function CardiologySuite() {
         <div className="suite-card-title">🫀 NYHA — классификация ХСН</div>
         <div className="nyha-grid">
           {NYHA_CLASSES.map((n, i) => (
-            <div key={i} className="nyha-col">
-              <button className={`nyha-btn ${nyha === i ? 'active' : ''}`}
-                style={nyha === i ? { borderColor: n.color, background: n.color + '22', color: n.color } : {}}
-                onClick={() => setNyha(nyha === i ? null : i)}>
-                {n.cls}
-              </button>
-              {nyha === i && (
-                <div className="nyha-col-info">
-                  <div className="nyha-col-desc" style={{ color: n.color }}>{n.desc}</div>
-                  <div className="nyha-col-prog">{n.prog}</div>
-                </div>
-              )}
-            </div>
+            <button key={i} className={`nyha-btn ${nyha === i ? 'active' : ''}`}
+              style={nyha === i ? { borderColor: n.color, background: n.color + '22', color: n.color } : {}}
+              onClick={() => setNyha(nyha === i ? null : i)}>
+              {n.cls}
+            </button>
           ))}
         </div>
+        {nyha !== null && (
+          <div className="nyha-col-info" style={{ marginLeft: `calc(${nyha} * 25%)` }}>
+            <div className="nyha-col-desc" style={{ color: NYHA_CLASSES[nyha].color }}>{NYHA_CLASSES[nyha].desc}</div>
+            <div className="nyha-col-prog">{NYHA_CLASSES[nyha].prog}</div>
+          </div>
+        )}
         {nyha === null && <p className="dermato-hint">Выберите функциональный класс</p>}
       </div>
 

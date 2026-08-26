@@ -128,7 +128,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">ABCD² Score</div>
-            <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{abcdScore}</div>
+            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{abcdScore}</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${abcdRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{abcdRes.label} · {abcdRes.pct}</span>
@@ -175,7 +175,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">Сумма NIHSS</div>
-            <div className="suite-score-big score-sm" style={{ color: '#60A5FA' }}>{nihssScore}</div>
+            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{nihssScore}</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${nihssRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{nihssRes.label}</span>
@@ -209,7 +209,7 @@ export default function NeurologySuite() {
         <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-label">MoCA</div>
-            <div className="suite-score-big score-sm" style={{ color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
+            <div className="suite-score-big" style={{ color: mocaRes.badge === 'badge-green' ? '#34D399' : mocaRes.badge === 'badge-red' ? '#F87171' : '#FBBF24' }}>{mocaScore}/30</div>
           </div>
           <div>
             <span className={`suite-risk-badge ${mocaRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{mocaRes.label}</span>

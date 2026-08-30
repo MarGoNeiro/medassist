@@ -60,14 +60,14 @@ export default function OncologySuite() {
               onChange={e => setDose(Math.max(1, parseFloat(e.target.value) || 75))} />
           </div>
         </div>
-        <div className="suite-dark-box" style={{ marginTop: 14 }}>
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">BSA (Мостеллер)</span>
-            <span className="suite-dark-value">{bsa} м²</span>
+        <div style={{ marginTop: 14, borderTop: '3px solid #22C55E' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid var(--color-border)' }}>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>BSA (Мостеллер)</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{bsa} м²</span>
           </div>
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">Абсолютная доза</span>
-            <span className="suite-dark-value accent-green">{totalDose} мг</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0' }}>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>Абсолютная доза</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: '#34D399' }}>{totalDose} мг</span>
           </div>
         </div>
       </div>
@@ -81,22 +81,22 @@ export default function OncologySuite() {
             {ECOG.map(e => <option key={e.score} value={e.score}>ECOG {e.score} — {e.label}</option>)}
           </select>
         </div>
-        <div className="suite-dark-box" style={{ marginTop: 14 }}>
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">ECOG статус</span>
+        <div style={{ marginTop: 14, borderTop: `3px solid ${ecogColor(ecog)}` }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid var(--color-border)' }}>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>ECOG статус</span>
             <div style={{ textAlign: 'right' }}>
               <span style={{ fontSize: 24, fontWeight: 900, color: ecogColor(ecog) }}>{ecog}</span>
-              <div style={{ fontSize: 11, color: '#64748B' }}>{ecogInfo.label}</div>
+              <div style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{ecogInfo.label}</div>
             </div>
           </div>
           {ecogInfo.desc && (
-            <div className="suite-dark-row">
-              <span className="suite-dark-label" style={{ maxWidth: '100%' }}>{ecogInfo.desc}</span>
+            <div style={{ padding: '9px 0', borderBottom: '1px solid var(--color-border)', fontSize: 12, color: 'var(--color-text-secondary)' }}>
+              {ecogInfo.desc}
             </div>
           )}
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">Тактика химиотерапии</span>
-            <span className="suite-dark-label" style={{ textAlign: 'right', maxWidth: 170 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '9px 0' }}>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>Тактика ХТ</span>
+            <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', textAlign: 'right', maxWidth: 200 }}>
               {ecog <= 2 ? 'Стандартная ХТ. Хороший прогноз переносимости.' :
                ecog === 3 ? 'Редуцированные дозы. ХТ с осторожностью.' :
                'ХТ, как правило, не показана. Паллиативная помощь.'}

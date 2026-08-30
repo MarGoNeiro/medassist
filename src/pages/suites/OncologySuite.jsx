@@ -74,8 +74,21 @@ export default function OncologySuite() {
         </div>
       </div>
 
+      {/* Antiemetics */}
+      <div className="suite-card">
+        <div className="suite-card-title">🤢 Противорвотная профилактика (ASCO/NCCN)</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {NAUSEA_PROTOCOLS.map((p, i) => (
+            <div key={i} style={{ padding: '8px 10px', background: 'var(--color-bg)', borderRadius: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: 3 }}>{p.risk}</div>
+              <div style={{ fontSize: 12, color: 'var(--color-text)', fontWeight: 600 }}>{p.protocol}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ECOG */}
-      <div className="suite-card" style={{ minWidth: 0 }}>
+      <div className="suite-card">
         <div className="suite-card-title">🏃 Шкала ECOG — статус работоспособности</div>
         <div className="suite-field">
           <label>Статус ECOG</label>
@@ -104,19 +117,6 @@ export default function OncologySuite() {
                'ХТ, как правило, не показана. Паллиативная помощь.'}
             </span>
           </div>
-        </div>
-      </div>
-
-      {/* Antiemetics */}
-      <div className="suite-card">
-        <div className="suite-card-title">🤢 Противорвотная профилактика (ASCO/NCCN)</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {NAUSEA_PROTOCOLS.map((p, i) => (
-            <div key={i} style={{ padding: '8px 10px', background: 'var(--color-bg)', borderRadius: 8 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: 3 }}>{p.risk}</div>
-              <div style={{ fontSize: 12, color: 'var(--color-text)', fontWeight: 600 }}>{p.protocol}</div>
-            </div>
-          ))}
         </div>
       </div>
 

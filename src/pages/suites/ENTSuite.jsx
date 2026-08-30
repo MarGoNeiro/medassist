@@ -54,15 +54,17 @@ export default function ENTSuite() {
               ))}
             </select>
           </div>
-          {MC_ITEMS.map(item => (
-            <button key={item.id} className={`suite-toggle-row ${items[item.id] ? 'active' : ''}`}
-              onClick={() => toggle(item.id)}>
-              <span className="suite-toggle-label">{item.label}</span>
-              <div className={`suite-toggle ${items[item.id] ? 'on' : ''}`}>
-                <div className="suite-toggle-thumb" />
-              </div>
-            </button>
-          ))}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 12px' }}>
+            {MC_ITEMS.map(item => (
+              <button key={item.id} className={`suite-toggle-row ${items[item.id] ? 'active' : ''}`}
+                onClick={() => toggle(item.id)}>
+                <span className="suite-toggle-label">{item.label}</span>
+                <div className={`suite-toggle ${items[item.id] ? 'on' : ''}`}>
+                  <div className="suite-toggle-thumb" />
+                </div>
+              </button>
+            ))}
+          </div>
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
             <div style={{ textAlign: 'right' }}>
               <div className="suite-score-label">Мак-Айзека</div>

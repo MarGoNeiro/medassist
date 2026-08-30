@@ -1021,6 +1021,7 @@
 
 /* ─── NephrologySuite ─── */
 .nephr-two-col { display: flex; flex-direction: column; gap: 12px; }
+.suite-three-col { display: flex; flex-direction: column; gap: 12px; }
 
 .nephr-kdigo-grid {
   display: grid;
@@ -1072,6 +1073,13 @@
     align-items: stretch;
   }
   .nephr-two-col > .suite-card { flex: 1; }
+
+  .suite-three-col {
+    flex-direction: row;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .suite-three-col > .suite-card { flex: 1; }
 
   .nephr-kdigo-cell { font-size: 12px; padding: 11px 6px; }
   .nephr-kdigo-g    { font-size: 13px; }

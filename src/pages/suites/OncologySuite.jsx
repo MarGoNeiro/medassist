@@ -40,7 +40,7 @@ export default function OncologySuite() {
   return (
     <div className="suite">
 
-      <div className="nephr-two-col">
+      <div className="suite-three-col">
 
       {/* BSA */}
       <div className="suite-card">
@@ -107,8 +107,6 @@ export default function OncologySuite() {
         </div>
       </div>
 
-      </div>{/* /nephr-two-col */}
-
       {/* Antiemetics */}
       <div className="suite-card">
         <div className="suite-card-title">🤢 Противорвотная профилактика (ASCO/NCCN)</div>
@@ -121,6 +119,8 @@ export default function OncologySuite() {
           ))}
         </div>
       </div>
+
+      </div>{/* /suite-three-col */}
     </div>
   )
 }

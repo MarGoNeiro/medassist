@@ -27,6 +27,7 @@ import HematologySuite      from './suites/HematologySuite'
 import DermatologySuite    from './suites/DermatologySuite'
 import TraumaSuite          from './suites/TraumaSuite'
 import ENTSuite             from './suites/ENTSuite'
+import OphthalmologySuite  from './suites/OphthalmologySuite'
 import './Home.css'
 
 const SPECIALTY_SUITE = {
@@ -60,6 +61,7 @@ const SPECIALTY_SUITE = {
   'Травматолог-ортопед':       TraumaSuite,
   'Дерматолог':               DermatologySuite,
   'Оториноларинголог (ЛОР)':  ENTSuite,
+  'Офтальмолог':              OphthalmologySuite,
 }
 
 const specialtyNames = {

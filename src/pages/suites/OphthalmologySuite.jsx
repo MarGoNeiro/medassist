@@ -80,11 +80,11 @@ export default function OphthalmologySuite() {
           {GLAUCOMA_STAGES.map((g, i) => (
             <div key={i} style={{ padding: '10px 0', borderBottom: i < GLAUCOMA_STAGES.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{g.stage}</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text)' }}>{g.stage}</span>
                 <span className={`suite-risk-badge ${g.badge}`} style={{ fontSize: 10, padding: '2px 8px' }}>ВГД {g.iop}</span>
               </div>
-              <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginBottom: 3, lineHeight: 1.4 }}>{g.field}</div>
-              <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}><strong>Тактика:</strong> {g.tactics}</div>
+              <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', marginBottom: 3, lineHeight: 1.4 }}>{g.field}</div>
+              <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}><strong>Тактика:</strong> {g.tactics}</div>
             </div>
           ))}
         </div>
@@ -95,11 +95,11 @@ export default function OphthalmologySuite() {
           {DR_STAGES.map((d, i) => (
             <div key={i} style={{ padding: '10px 0', borderBottom: i < DR_STAGES.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{d.stage}</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text)' }}>{d.stage}</span>
                 <span className={`suite-risk-badge ${d.badge}`} style={{ fontSize: 10, padding: '2px 8px' }}>{d.full}</span>
               </div>
-              <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginBottom: 3, lineHeight: 1.4 }}>{d.signs}</div>
-              <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}><strong>Тактика:</strong> {d.tactics}</div>
+              <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', marginBottom: 3, lineHeight: 1.4 }}>{d.signs}</div>
+              <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}><strong>Тактика:</strong> {d.tactics}</div>
             </div>
           ))}
         </div>

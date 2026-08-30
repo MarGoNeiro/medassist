@@ -211,7 +211,7 @@
 .suite-result-banner:has(.badge-red)    { border-top-color: #F87171; }
 
 .suite-score-big { font-size: 28px; font-weight: 900; }
-.suite-score-label { font-size: 10px; color: #94A3B8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.suite-score-label { display: none; }
 
 .suite-risk-badge {
   font-size: 11px;

@@ -105,62 +105,20 @@ export default function NephrologySuite() {
   return (
     <div className="suite">
 
-      {/* CKD-EPI */}
+      {/* Альбуминурия */}
       <div className="suite-card">
-        <div className="suite-card-title">🧪 СКФ по CKD-EPI 2021 (без расовой поправки)</div>
-        <div className="suite-grid">
-          <div className="suite-field">
-            <label>Креатинин (мкмоль/л)</label>
-            <input className="suite-input" type="number" value={creat}
-              onChange={e => setCreat(Math.max(1, parseInt(e.target.value) || 0))} />
+        <div className="suite-card-title">🔬 Категории альбуминурии</div>
+        {ALBUMINURIA.map((a, i) => (
+          <div key={i} style={{ display: 'flex', gap: 12, padding: '8px 0', borderBottom: i < ALBUMINURIA.length - 1 ? '1px solid var(--color-border)' : 'none', alignItems: 'center' }}>
+            <span style={{ fontWeight: 800, color: a.color, fontSize: 13, minWidth: 28 }}>{a.a}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text)', minWidth: 80 }}>{a.label}</span>
+            <span style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{a.note}</span>
           </div>
-          <div className="suite-field">
-            <label>Возраст (лет)</label>
-            <input className="suite-input" type="number" value={age}
-              onChange={e => setAge(Math.max(1, parseInt(e.target.value) || 0))} />
-          </div>
-        </div>
-        <div className="suite-gender-row" style={{ marginTop: 10 }}>
-          <button className={`suite-gender-btn ${!isFemale ? 'active' : ''}`} onClick={() => setFemale(false)}>Мужской</button>
-          <button className={`suite-gender-btn ${isFemale ? 'active' : ''}`}  onClick={() => setFemale(true)}>Женский</button>
-        </div>
-        {stage && (
-          <div className="suite-dark-box" style={{ marginTop: 14 }}>
-            <div className="suite-dark-row">
-              <span className="suite-dark-label">рСКФ (CKD-EPI)</span>
-              <span className="suite-dark-value accent-green">{gfrMdl} мл/мин/1.73 м²</span>
-            </div>
-            <div className="suite-dark-row">
-              <span className="suite-dark-label">Стадия ХБП</span>
-              <span className="suite-dark-value">{stage.g}</span>
-            </div>
-            <div className="suite-dark-row">
-              <span className="suite-dark-label">{stage.label}</span>
-              <span className={`suite-risk-badge ${stage.badge}`} style={{ fontSize: 10 }}>
-                {stage.badge === 'badge-green' ? 'Низкий' : stage.badge === 'badge-yellow' ? 'Умеренный' : 'Высокий'}
-              </span>
-            </div>
-            <div className="suite-dark-row">
-              <span className="suite-dark-label">Тактика</span>
-              <span className="suite-dark-label" style={{ textAlign: 'right', maxWidth: 180 }}>{stage.note}</span>
-            </div>
-          </div>
-        )}
+        ))}
       </div>
 
-      {/* Альбуминурия + KDIGO матрица */}
+      {/* KDIGO матрица + CKD-EPI бок о бок */}
       <div className="nephr-two-col">
-        <div className="suite-card">
-          <div className="suite-card-title">🔬 Категории альбуминурии</div>
-          {ALBUMINURIA.map((a, i) => (
-            <div key={i} style={{ display: 'flex', gap: 12, padding: '8px 0', borderBottom: i < ALBUMINURIA.length - 1 ? '1px solid var(--color-border)' : 'none', alignItems: 'center' }}>
-              <span style={{ fontWeight: 800, color: a.color, fontSize: 13, minWidth: 28 }}>{a.a}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text)', minWidth: 80 }}>{a.label}</span>
-              <span style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{a.note}</span>
-            </div>
-          ))}
-        </div>
-
         <div className="suite-card">
           <div className="suite-card-title">📊 KDIGO — риск прогрессии ХБП</div>
           <div className="nephr-kdigo-grid">
@@ -186,6 +144,48 @@ export default function NephrologySuite() {
               </Fragment>
             ))}
           </div>
+        </div>
+
+        <div className="suite-card">
+          <div className="suite-card-title">🧪 СКФ по CKD-EPI 2021 (без расовой поправки)</div>
+          <div className="suite-grid">
+            <div className="suite-field">
+              <label>Креатинин (мкмоль/л)</label>
+              <input className="suite-input" type="number" value={creat}
+                onChange={e => setCreat(Math.max(1, parseInt(e.target.value) || 0))} />
+            </div>
+            <div className="suite-field">
+              <label>Возраст (лет)</label>
+              <input className="suite-input" type="number" value={age}
+                onChange={e => setAge(Math.max(1, parseInt(e.target.value) || 0))} />
+            </div>
+          </div>
+          <div className="suite-gender-row" style={{ marginTop: 10 }}>
+            <button className={`suite-gender-btn ${!isFemale ? 'active' : ''}`} onClick={() => setFemale(false)}>Мужской</button>
+            <button className={`suite-gender-btn ${isFemale ? 'active' : ''}`}  onClick={() => setFemale(true)}>Женский</button>
+          </div>
+          {stage && (
+            <div className="suite-dark-box" style={{ marginTop: 14 }}>
+              <div className="suite-dark-row">
+                <span className="suite-dark-label">рСКФ (CKD-EPI)</span>
+                <span className="suite-dark-value accent-green">{gfrMdl} мл/мин/1.73 м²</span>
+              </div>
+              <div className="suite-dark-row">
+                <span className="suite-dark-label">Стадия ХБП</span>
+                <span className="suite-dark-value">{stage.g}</span>
+              </div>
+              <div className="suite-dark-row">
+                <span className="suite-dark-label">{stage.label}</span>
+                <span className={`suite-risk-badge ${stage.badge}`} style={{ fontSize: 10 }}>
+                  {stage.badge === 'badge-green' ? 'Низкий' : stage.badge === 'badge-yellow' ? 'Умеренный' : 'Высокий'}
+                </span>
+              </div>
+              <div className="suite-dark-row">
+                <span className="suite-dark-label">Тактика</span>
+                <span className="suite-dark-label" style={{ textAlign: 'right', maxWidth: 180 }}>{stage.note}</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

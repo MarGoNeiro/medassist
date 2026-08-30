@@ -1069,7 +1069,7 @@
   .nephr-two-col {
     flex-direction: row;
     gap: 16px;
-    align-items: flex-start;
+    align-items: stretch;
   }
   .nephr-two-col > .suite-card { flex: 1; }
 

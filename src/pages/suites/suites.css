@@ -1073,10 +1073,10 @@
   }
   .nephr-two-col > .suite-card { flex: 1; }
 
-  .nephr-kdigo-cell { font-size: 10px; padding: 7px 4px; }
-  .nephr-kdigo-g    { font-size: 12px; }
+  .nephr-kdigo-cell { font-size: 12px; padding: 11px 6px; }
+  .nephr-kdigo-g    { font-size: 13px; }
   .nephr-kdigo-gfr  { font-size: 10px; }
-  .nephr-kdigo-head { font-size: 12px; }
+  .nephr-kdigo-head { font-size: 13px; }
 
   .nephr-bp-target { font-size: 32px; }
   .nephr-bp-row    { font-size: 13px; }

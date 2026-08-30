@@ -50,7 +50,7 @@ const RISK_STYLE = [
   { bg: '#DCFCE7', color: '#166534', label: 'Низкий' },
   { bg: '#FEF9C3', color: '#854D0E', label: 'Умеренный' },
   { bg: '#FFEDD5', color: '#9A3412', label: 'Высокий' },
-  { bg: '#FEE2E2', color: '#991B1B', label: 'Очень выс.' },
+  { bg: '#FEE2E2', color: '#991B1B', label: 'Очень высокий' },
 ]
 
 const DOSE_ADJUST = [
@@ -165,24 +165,24 @@ export default function NephrologySuite() {
             <button className={`suite-gender-btn ${isFemale ? 'active' : ''}`}  onClick={() => setFemale(true)}>Женский</button>
           </div>
           {stage && (
-            <div className="suite-dark-box" style={{ marginTop: 14 }}>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">рСКФ (CKD-EPI)</span>
-                <span className="suite-dark-value accent-green">{gfrMdl} мл/мин/1.73 м²</span>
+            <div style={{ marginTop: 14, borderTop: `3px solid ${stage.badge === 'badge-green' ? '#22C55E' : stage.badge === 'badge-yellow' ? '#FBBF24' : '#F87171'}` }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid var(--color-border)' }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>рСКФ (CKD-EPI)</span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: '#34D399' }}>{gfrMdl} мл/мин/1.73 м²</span>
               </div>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">Стадия ХБП</span>
-                <span className="suite-dark-value">{stage.g}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid var(--color-border)' }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>Стадия ХБП</span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-text)' }}>{stage.g}</span>
               </div>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">{stage.label}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderBottom: '1px solid var(--color-border)' }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>{stage.label}</span>
                 <span className={`suite-risk-badge ${stage.badge}`} style={{ fontSize: 10 }}>
                   {stage.badge === 'badge-green' ? 'Низкий' : stage.badge === 'badge-yellow' ? 'Умеренный' : 'Высокий'}
                 </span>
               </div>
-              <div className="suite-dark-row">
-                <span className="suite-dark-label">Тактика</span>
-                <span className="suite-dark-label" style={{ textAlign: 'right', maxWidth: 180 }}>{stage.note}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '9px 0' }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>Тактика</span>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', textAlign: 'right', maxWidth: 160 }}>{stage.note}</span>
               </div>
             </div>
           )}

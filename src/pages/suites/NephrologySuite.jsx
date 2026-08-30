@@ -276,7 +276,7 @@ export default function NephrologySuite() {
               <div className="nephr-bp-row"><strong>СД-нефропатия:</strong> {'<'} 130/80</div>
               <div className="nephr-bp-row"><strong>Пожилые ({'>'} 75 л):</strong> индивидуально, ≥ 110 сист.</div>
             </div>
-            <div style={{ fontSize: 11, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
+            <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
               <strong>Препараты выбора:</strong> ИАПФ или БРА — нефропротекция + снижение протеинурии. Не комбинировать.
             </div>
           </div>

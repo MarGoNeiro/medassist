@@ -110,9 +110,8 @@ export default function NephrologySuite() {
         <div className="suite-card-title">🔬 Категории альбуминурии</div>
         <div style={{ display: 'flex' }}>
           {ALBUMINURIA.map((a, i) => (
-            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3, padding: '10px 14px', borderRight: i < ALBUMINURIA.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
-              <span style={{ fontWeight: 800, color: a.color, fontSize: 15 }}>{a.a}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text)' }}>{a.label}</span>
+            <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 2, padding: '6px 8px', borderRight: i < ALBUMINURIA.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+              <span style={{ fontWeight: 800, color: a.color, fontSize: 13 }}>{a.a} — {a.label}</span>
               <span style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{a.note}</span>
             </div>
           ))}

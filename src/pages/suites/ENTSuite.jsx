@@ -58,7 +58,9 @@ export default function ENTSuite() {
             <button key={item.id} className={`suite-toggle-row ${items[item.id] ? 'active' : ''}`}
               onClick={() => toggle(item.id)}>
               <span className="suite-toggle-label">{item.label}</span>
-              <span className="suite-toggle-check">{items[item.id] ? '✓' : ''}</span>
+              <div className={`suite-toggle ${items[item.id] ? 'on' : ''}`}>
+                <div className="suite-toggle-thumb" />
+              </div>
             </button>
           ))}
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
@@ -77,10 +79,10 @@ export default function ENTSuite() {
         <div className="suite-card">
           <div className="suite-card-title">👂 Степени тугоухости (ВОЗ) — средний порог 500–4000 Гц</div>
           {HEARING_LEVELS.map((h, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '9px 0', borderBottom: i < HEARING_LEVELS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text)', minWidth: 100 }}>{h.degree}</span>
-              <span style={{ fontSize: 13, fontWeight: 800, color: 'var(--color-text-secondary)', minWidth: 56 }}>{h.db} дБ</span>
-              <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>{h.desc}</span>
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: i < HEARING_LEVELS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text)', minWidth: 110 }}>{h.degree}</span>
+              <span style={{ fontSize: 15, fontWeight: 800, color: 'var(--color-text-secondary)', minWidth: 62 }}>{h.db} дБ</span>
+              <span style={{ fontSize: 13, color: 'var(--color-text-secondary)' }}>{h.desc}</span>
             </div>
           ))}
         </div>

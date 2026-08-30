@@ -40,6 +40,8 @@ export default function OncologySuite() {
   return (
     <div className="suite">
 
+      <div className="nephr-two-col">
+
       {/* BSA */}
       <div className="suite-card">
         <div className="suite-card-title">💉 Расчёт дозы химиопрепарата через BSA</div>
@@ -73,7 +75,7 @@ export default function OncologySuite() {
       </div>
 
       {/* ECOG */}
-      <div className="suite-card">
+      <div className="suite-card" style={{ minWidth: 0 }}>
         <div className="suite-card-title">🏃 Шкала ECOG — статус работоспособности</div>
         <div className="suite-field">
           <label>Статус ECOG</label>
@@ -104,6 +106,8 @@ export default function OncologySuite() {
           </div>
         </div>
       </div>
+
+      </div>{/* /nephr-two-col */}
 
       {/* Antiemetics */}
       <div className="suite-card">

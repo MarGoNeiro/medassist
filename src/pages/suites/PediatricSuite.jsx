@@ -140,6 +140,8 @@ export default function PediatricSuite() {
   return (
     <div className="suite">
 
+      <div className="nephr-two-col">
+
       {/* Дозатор */}
       <div className="suite-card">
         <div className="suite-card-title">🧮 Педиатрический дозатор & BSA</div>
@@ -218,9 +220,6 @@ export default function PediatricSuite() {
         </div>
       </div>
 
-      {/* Вестли + Центили */}
-      <div className="nephr-two-col">
-
         {/* Шкала Вестли */}
         <div className="suite-card">
           <div className="suite-card-title">🌬 Шкала Вестли — тяжесть крупа (острый ларинготрахеит)</div>
@@ -244,35 +243,35 @@ export default function PediatricSuite() {
           </div>
         </div>
 
-        {/* Центили */}
-        <div className="suite-card">
-          <div className="suite-card-title">📏 Центили роста и веса (ВОЗ 2006) — P10 / P50 / P90</div>
-          <div className="suite-gender-row" style={{ marginBottom: 12 }}>
-            <button className={`suite-gender-btn ${isBoy ? 'active' : ''}`}  onClick={() => setIsBoy(true)}>Мальчики</button>
-            <button className={`suite-gender-btn ${!isBoy ? 'active' : ''}`} onClick={() => setIsBoy(false)}>Девочки</button>
-          </div>
-          <div style={{ overflowX: 'auto' }}>
-            <table className="suite-table">
-              <thead>
-                <tr>
-                  <th>Возраст</th>
-                  <th>Вес (кг) P10–P50–P90</th>
-                  <th>Рост (см) P10–P50–P90</th>
-                </tr>
-              </thead>
-              <tbody>
-                {centileData.map((r, i) => (
-                  <tr key={i}>
-                    <td className="col-time">{r.age}</td>
-                    <td>{r.w10} – {r.w50} – {r.w90}</td>
-                    <td>{r.h10} – {r.h50} – {r.h90}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      </div>{/* nephr-two-col */}
 
+      {/* Центили — полная ширина */}
+      <div className="suite-card">
+        <div className="suite-card-title">📏 Центили роста и веса (ВОЗ 2006) — P10 / P50 / P90</div>
+        <div className="suite-gender-row" style={{ marginBottom: 12 }}>
+          <button className={`suite-gender-btn ${isBoy ? 'active' : ''}`}  onClick={() => setIsBoy(true)}>Мальчики</button>
+          <button className={`suite-gender-btn ${!isBoy ? 'active' : ''}`} onClick={() => setIsBoy(false)}>Девочки</button>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table className="suite-table">
+            <thead>
+              <tr>
+                <th>Возраст</th>
+                <th>Вес (кг) P10–P50–P90</th>
+                <th>Рост (см) P10–P50–P90</th>
+              </tr>
+            </thead>
+            <tbody>
+              {centileData.map((r, i) => (
+                <tr key={i}>
+                  <td className="col-time">{r.age}</td>
+                  <td>{r.w10} – {r.w50} – {r.w90}</td>
+                  <td>{r.h10} – {r.h50} – {r.h90}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Календарь вакцинации */}

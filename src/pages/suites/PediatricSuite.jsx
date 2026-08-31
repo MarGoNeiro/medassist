@@ -146,53 +146,45 @@ export default function PediatricSuite() {
       <div className="suite-card">
         <div className="suite-card-title">🧮 Педиатрический дозатор & BSA</div>
         <div className="suite-field" style={{ marginBottom: 10 }}>
-          <label>Название препарата (для заметок)</label>
+          <label>Название препарата</label>
           <input className="suite-input" type="text" placeholder="Напр.: Амоксициллин"
             value={drugName} onChange={e => setDrugName(e.target.value)} />
         </div>
         <div className="suite-grid">
           <div className="suite-field">
-            <label>Вес ребёнка (кг)</label>
+            <label>Вес (кг)</label>
             <input className="suite-input" type="number" step="0.1" min="0.1"
               value={weight} onChange={e => setWeight(Math.max(0.1, parseFloat(e.target.value) || 0))} />
           </div>
           <div className="suite-field">
-            <label>Рост ребёнка (см)</label>
+            <label>Рост (см)</label>
             <input className="suite-input" type="number" min="1"
               value={height} onChange={e => setHeight(Math.max(1, parseInt(e.target.value) || 0))} />
           </div>
           <div className="suite-field">
-            <label>Целевая доза (мг / кг / сут)</label>
+            <label>Доза (мг / кг / сут)</label>
             <input className="suite-input" type="number" step="0.5" min="0"
               value={desiredDose} onChange={e => setDesiredDose(Math.max(0, parseFloat(e.target.value) || 0))} />
           </div>
           <div className="suite-field">
-            <label>Кратность (раз в сутки)</label>
+            <label>Кратность (раз / сут)</label>
             <select className="suite-select" value={frequency} onChange={e => setFrequency(parseInt(e.target.value) || 1)}>
-              <option value={1}>1 раз (каждые 24 ч)</option>
-              <option value={2}>2 раза (каждые 12 ч)</option>
-              <option value={3}>3 раза (каждые 8 ч)</option>
-              <option value={4}>4 раза (каждые 6 ч)</option>
+              <option value={1}>1 раз — каждые 24 ч</option>
+              <option value={2}>2 раза — каждые 12 ч</option>
+              <option value={3}>3 раза — каждые 8 ч</option>
+              <option value={4}>4 раза — каждые 6 ч</option>
             </select>
           </div>
-        </div>
-        <div className="suite-subsection" style={{ marginTop: 14, background: '#FFF1F2' }}>
-          <div className="suite-subsection-title">🧃 Расчёт суспензии (напр. 120 мг / 5 мл)</div>
-          <div className="suite-grid">
-            <div className="suite-field">
-              <label>Количество мг в упаковке</label>
-              <input className="suite-input" type="number" min="1" placeholder="120"
-                value={suspStrength} onChange={e => setSuspStrength(Math.max(1, parseInt(e.target.value) || 0))} />
-            </div>
-            <div className="suite-field">
-              <label>На сколько мл (объём флакона)</label>
-              <input className="suite-input" type="number" min="1" placeholder="5"
-                value={suspVolume} onChange={e => setSuspVolume(Math.max(1, parseInt(e.target.value) || 0))} />
-            </div>
+          <div className="suite-field">
+            <label>Суспензия — мг на флакон</label>
+            <input className="suite-input" type="number" min="1" placeholder="250"
+              value={suspStrength} onChange={e => setSuspStrength(Math.max(1, parseInt(e.target.value) || 0))} />
           </div>
-          <p style={{ fontSize: 11, color: '#9F1239', marginTop: 6, lineHeight: 1.4 }}>
-            Амоксициллин 250 мг/5 мл → введите 250 и 5. Нурофен 100 мг/5 мл → 100 и 5.
-          </p>
+          <div className="suite-field">
+            <label>Суспензия — мл флакона</label>
+            <input className="suite-input" type="number" min="1" placeholder="5"
+              value={suspVolume} onChange={e => setSuspVolume(Math.max(1, parseInt(e.target.value) || 0))} />
+          </div>
         </div>
         <div style={{ marginTop: 14, borderTop: '3px solid #22C55E' }}>
           {drugName && (

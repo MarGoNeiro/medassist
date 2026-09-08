@@ -145,7 +145,7 @@ export default function PulmonologySuite() {
 
         <div className="suite-card">
           <div className="suite-card-title">💨 Интерпретация спирометрии</div>
-          <table className="suite-table">
+          <table className="suite-table" style={{ fontSize: 15 }}>
             <thead>
               <tr><th>Паттерн</th><th>ОФВ1/ФЖЕЛ</th><th>ОФВ1%</th><th>Примеры</th></tr>
             </thead>
@@ -154,7 +154,7 @@ export default function PulmonologySuite() {
                 <tr key={i}>
                   <td className="col-time" style={{ minWidth: 80 }}>{r.pattern}</td>
                   <td className="col-drug">{r.fev1fvc}</td>
-                  <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)', fontSize: 12 }}>{r.fev1}</td>
+                  <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)' }}>{r.fev1}</td>
                   <td className="col-note">{r.note}</td>
                 </tr>
               ))}

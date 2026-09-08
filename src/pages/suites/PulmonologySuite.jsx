@@ -140,7 +140,7 @@ export default function PulmonologySuite() {
             const set = v => { const a = [...catScores]; a[idx] = Math.min(5, Math.max(0, v)); setCat(a) }
             return (
               <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 0', borderBottom: '1px solid var(--color-border)' }}>
-                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.3 }}>{idx + 1}. {item}</span>
+                <span style={{ fontSize: 14, color: 'var(--color-text)', lineHeight: 1.3 }}>{idx + 1}. {item}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <button onClick={() => set(catScores[idx] - 1)}
                     style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid var(--color-border)', background: 'var(--color-bg)', fontSize: 18, fontWeight: 700, color: 'var(--color-text)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>−</button>

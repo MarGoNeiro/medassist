@@ -88,7 +88,9 @@ export default function PulmonologySuite() {
   return (
     <div className="suite">
 
-      {/* CURB-65 */}
+      {/* CURB-65 + CAT */}
+      <div className="nephr-two-col">
+
       <div className="suite-card">
           <div className="suite-card-title">🤒 CURB-65 — тяжесть пневмонии</div>
           {CURB_FIELDS.map(f => (
@@ -112,7 +114,7 @@ export default function PulmonologySuite() {
       {/* CAT */}
       <div className="suite-card">
         <div className="suite-card-title">📊 CAT Test — влияние ХОБЛ на жизнь (0–40 баллов)</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {CAT_ITEMS.map((item, idx) => {
             const set = v => { const a = [...catScores]; a[idx] = Math.min(5, Math.max(0, v)); setCat(a) }
             return (
@@ -139,6 +141,8 @@ export default function PulmonologySuite() {
           </div>
         </div>
       </div>
+
+      </div>{/* nephr-two-col CURB+CAT */}
 
       {/* 2×2 grid: Спирометрия | GOLD / mMRC | ABE */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>

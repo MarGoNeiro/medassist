@@ -88,10 +88,8 @@ export default function PulmonologySuite() {
   return (
     <div className="suite">
 
-      {/* CURB-65 + Спирометрия */}
-      <div className="nephr-two-col">
-
-        <div className="suite-card">
+      {/* CURB-65 */}
+      <div className="suite-card">
           <div className="suite-card-title">🤒 CURB-65 — тяжесть пневмонии</div>
           {CURB_FIELDS.map(f => (
             <button key={f.id} className={`suite-toggle-row ${curb[f.id] ? 'active' : ''}`}
@@ -110,27 +108,6 @@ export default function PulmonologySuite() {
             </div>
           </div>
         </div>
-
-        <div className="suite-card">
-          <div className="suite-card-title">💨 Интерпретация спирометрии</div>
-          <table className="suite-table">
-            <thead>
-              <tr><th>Паттерн</th><th>ОФВ1/ФЖЕЛ</th><th>ОФВ1%</th><th>Примеры</th></tr>
-            </thead>
-            <tbody>
-              {SPIRO_PATTERNS.map((r, i) => (
-                <tr key={i}>
-                  <td className="col-time" style={{ minWidth: 80 }}>{r.pattern}</td>
-                  <td className="col-drug">{r.fev1fvc}</td>
-                  <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)', fontSize: 12 }}>{r.fev1}</td>
-                  <td className="col-note">{r.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-      </div>
 
       {/* CAT */}
       <div className="suite-card">
@@ -163,11 +140,32 @@ export default function PulmonologySuite() {
         </div>
       </div>
 
-      {/* GOLD стадии + mMRC & ABE */}
+      {/* Спирометрия + GOLD | mMRC + ABE */}
       <div className="nephr-two-col">
 
-        <div className="suite-card">
-          <div className="suite-card-title">🫁 GOLD — стадии ХОБЛ (post-BD ОФВ1/ФЖЕЛ &lt; 0.70)</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+          <div className="suite-card">
+            <div className="suite-card-title">💨 Интерпретация спирометрии</div>
+            <table className="suite-table">
+              <thead>
+                <tr><th>Паттерн</th><th>ОФВ1/ФЖЕЛ</th><th>ОФВ1%</th><th>Примеры</th></tr>
+              </thead>
+              <tbody>
+                {SPIRO_PATTERNS.map((r, i) => (
+                  <tr key={i}>
+                    <td className="col-time" style={{ minWidth: 80 }}>{r.pattern}</td>
+                    <td className="col-drug">{r.fev1fvc}</td>
+                    <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)', fontSize: 12 }}>{r.fev1}</td>
+                    <td className="col-note">{r.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="suite-card">
+            <div className="suite-card-title">🫁 GOLD — стадии ХОБЛ (post-BD ОФВ1/ФЖЕЛ &lt; 0.70)</div>
           {GOLD_STAGES.map((g, i) => (
             <div key={i} style={{ padding: '10px 0', borderBottom: i < GOLD_STAGES.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
@@ -177,7 +175,9 @@ export default function PulmonologySuite() {
               <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{g.tactics}</div>
             </div>
           ))}
-        </div>
+          </div>
+
+        </div>{/* left column */}
 
         <div className="suite-card">
           <div className="suite-card-title">😮‍💨 Шкала одышки mMRC</div>

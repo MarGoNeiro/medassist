@@ -88,11 +88,10 @@ export default function PulmonologySuite() {
   return (
     <div className="suite">
 
-      {/* CURB-65 + CAT */}
-      <div className="nephr-two-col">
-
+      {/* CURB-65 */}
       <div className="suite-card">
           <div className="suite-card-title">🤒 CURB-65 — тяжесть пневмонии</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
           {CURB_FIELDS.map(f => (
             <button key={f.id} className={`suite-toggle-row ${curb[f.id] ? 'active' : ''}`}
               onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
@@ -100,6 +99,7 @@ export default function PulmonologySuite() {
               <div className={`suite-toggle ${curb[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
             </button>
           ))}
+          </div>
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
             <div style={{ textAlign: 'right' }}>
               <div className="suite-score-big" style={{ color: '#60A5FA' }}>{curbScore}</div>
@@ -114,7 +114,7 @@ export default function PulmonologySuite() {
       {/* CAT */}
       <div className="suite-card">
         <div className="suite-card-title">📊 CAT Test — влияние ХОБЛ на жизнь (0–40 баллов)</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
           {CAT_ITEMS.map((item, idx) => {
             const set = v => { const a = [...catScores]; a[idx] = Math.min(5, Math.max(0, v)); setCat(a) }
             return (
@@ -141,8 +141,6 @@ export default function PulmonologySuite() {
           </div>
         </div>
       </div>
-
-      </div>{/* nephr-two-col CURB+CAT */}
 
       {/* 2×2 grid: Спирометрия | GOLD / mMRC | ABE */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>

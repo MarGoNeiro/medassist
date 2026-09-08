@@ -140,32 +140,30 @@ export default function PulmonologySuite() {
         </div>
       </div>
 
-      {/* Спирометрия + GOLD | mMRC + ABE */}
-      <div className="nephr-two-col" style={{ alignItems: 'flex-start' }}>
+      {/* 2×2 grid: Спирометрия | GOLD / mMRC | ABE */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="suite-card">
+          <div className="suite-card-title">💨 Интерпретация спирометрии</div>
+          <table className="suite-table">
+            <thead>
+              <tr><th>Паттерн</th><th>ОФВ1/ФЖЕЛ</th><th>ОФВ1%</th><th>Примеры</th></tr>
+            </thead>
+            <tbody>
+              {SPIRO_PATTERNS.map((r, i) => (
+                <tr key={i}>
+                  <td className="col-time" style={{ minWidth: 80 }}>{r.pattern}</td>
+                  <td className="col-drug">{r.fev1fvc}</td>
+                  <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)', fontSize: 12 }}>{r.fev1}</td>
+                  <td className="col-note">{r.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-          <div className="suite-card">
-            <div className="suite-card-title">💨 Интерпретация спирометрии</div>
-            <table className="suite-table">
-              <thead>
-                <tr><th>Паттерн</th><th>ОФВ1/ФЖЕЛ</th><th>ОФВ1%</th><th>Примеры</th></tr>
-              </thead>
-              <tbody>
-                {SPIRO_PATTERNS.map((r, i) => (
-                  <tr key={i}>
-                    <td className="col-time" style={{ minWidth: 80 }}>{r.pattern}</td>
-                    <td className="col-drug">{r.fev1fvc}</td>
-                    <td style={{ padding: '9px 8px 9px 0', color: 'var(--color-text)', fontSize: 12 }}>{r.fev1}</td>
-                    <td className="col-note">{r.note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="suite-card">
-            <div className="suite-card-title">🫁 GOLD — стадии ХОБЛ (post-BD ОФВ1/ФЖЕЛ &lt; 0.70)</div>
+        <div className="suite-card">
+          <div className="suite-card-title">🫁 GOLD — стадии ХОБЛ (post-BD ОФВ1/ФЖЕЛ &lt; 0.70)</div>
           {GOLD_STAGES.map((g, i) => (
             <div key={i} style={{ padding: '10px 0', borderBottom: i < GOLD_STAGES.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
@@ -175,9 +173,7 @@ export default function PulmonologySuite() {
               <div style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{g.tactics}</div>
             </div>
           ))}
-          </div>
-
-        </div>{/* left column */}
+        </div>
 
         <div className="suite-card">
           <div className="suite-card-title">😮‍💨 Шкала одышки mMRC</div>
@@ -187,8 +183,10 @@ export default function PulmonologySuite() {
               <span style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{m.desc}</span>
             </div>
           ))}
+        </div>
 
-          <div className="suite-card-title" style={{ marginTop: 16 }}>📂 GOLD ABE — группы ХОБЛ (2023)</div>
+        <div className="suite-card">
+          <div className="suite-card-title">📂 GOLD ABE — группы ХОБЛ (2023)</div>
           {ABE_GROUPS.map((g, i) => (
             <div key={i} style={{ padding: '10px 0', borderBottom: i < ABE_GROUPS.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>

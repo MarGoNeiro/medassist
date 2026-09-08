@@ -141,7 +141,7 @@ export default function PulmonologySuite() {
       </div>
 
       {/* Спирометрия + GOLD | mMRC + ABE */}
-      <div className="nephr-two-col">
+      <div className="nephr-two-col" style={{ alignItems: 'flex-start' }}>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 

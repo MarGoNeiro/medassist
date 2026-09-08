@@ -977,6 +977,8 @@
 
   .suite-toggle-row { padding: 11px 12px; }
   .suite-toggle-label { font-size: 16px; }
+  .curb-compact .suite-toggle-row { min-height: unset; padding-top: 7px; padding-bottom: 7px; }
+  .curb-compact .suite-toggle-label { font-size: 14px; }
   .suite-toggle { width: 44px; height: 26px; border-radius: 13px; }
   .suite-toggle-thumb { width: 20px; height: 20px; }
   .suite-toggle.on .suite-toggle-thumb { left: 21px; }

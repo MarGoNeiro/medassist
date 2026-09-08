@@ -91,7 +91,7 @@ export default function PulmonologySuite() {
       {/* CURB-65 */}
       <div className="suite-card">
           <div className="suite-card-title">🤒 CURB-65 — тяжесть пневмонии</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+          <div className="curb-compact" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
           {CURB_FIELDS.map(f => (
             <button key={f.id} className={`suite-toggle-row ${curb[f.id] ? 'active' : ''}`}
               onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>

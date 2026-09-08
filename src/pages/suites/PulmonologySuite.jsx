@@ -135,21 +135,24 @@ export default function PulmonologySuite() {
       {/* CAT */}
       <div className="suite-card">
         <div className="suite-card-title">📊 CAT Test — влияние ХОБЛ на жизнь (0–40 баллов)</div>
-        {CAT_ITEMS.map((item, idx) => (
-          <div key={idx} style={{ marginBottom: 10 }}>
-            <div className="suite-field">
-              <label style={{ marginBottom: 6, display: 'block' }}>
-                {idx + 1}. {item} — <b>{catScores[idx]}</b>
-              </label>
-              <input type="range" min={0} max={5} value={catScores[idx]}
-                onChange={e => { const a = [...catScores]; a[idx] = parseInt(e.target.value); setCat(a) }}
-                style={{ width: '100%', accentColor: 'var(--color-primary)' }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'var(--color-text-secondary)', marginTop: 2 }}>
-                <span>0 — нет</span><span>5 — максимум</span>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
+          {CAT_ITEMS.map((item, idx) => {
+            const set = v => { const a = [...catScores]; a[idx] = Math.min(5, Math.max(0, v)); setCat(a) }
+            return (
+              <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 0', borderBottom: '1px solid var(--color-border)' }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.3 }}>{idx + 1}. {item}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button onClick={() => set(catScores[idx] - 1)}
+                    style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid var(--color-border)', background: 'var(--color-bg)', fontSize: 18, fontWeight: 700, color: 'var(--color-text)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>−</button>
+                  <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--color-primary)', minWidth: 24, textAlign: 'center' }}>{catScores[idx]}</span>
+                  <button onClick={() => set(catScores[idx] + 1)}
+                    style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid var(--color-border)', background: 'var(--color-bg)', fontSize: 18, fontWeight: 700, color: 'var(--color-text)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}>+</button>
+                  <span style={{ fontSize: 10, color: 'var(--color-text-tertiary)' }}>/ 5</span>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            )
+          })}
+        </div>
         <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
           <div style={{ textAlign: 'right' }}>
             <div className="suite-score-big" style={{ color: '#34D399' }}>{catTotal}</div>

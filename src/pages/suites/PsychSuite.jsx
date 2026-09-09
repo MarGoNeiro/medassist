@@ -94,9 +94,11 @@ export default function PsychSuite({ specialty }) {
 
       {/* Tab switch */}
       <div className="suite-card" style={{ padding: '6px' }}>
-        <div className="suite-gender-row">
-          <button className={`suite-gender-btn ${tab === 'phq' ? 'active' : ''}`} onClick={() => setTab('phq')}>PHQ-9 (депрессия)</button>
-          <button className={`suite-gender-btn ${tab === 'gad' ? 'active' : ''}`} onClick={() => setTab('gad')}>GAD-7 (тревога)</button>
+        <div className="suite-gender-row" style={{ flexWrap: 'wrap' }}>
+          <button className={`suite-gender-btn ${tab === 'phq' ? 'active' : ''}`} onClick={() => setTab('phq')}>PHQ-9 — депрессия</button>
+          <button className={`suite-gender-btn ${tab === 'gad' ? 'active' : ''}`} onClick={() => setTab('gad')}>GAD-7 — тревога</button>
+          <button className={`suite-gender-btn ${tab === 'pc'  ? 'active' : ''}`} onClick={() => setTab('pc')}>PC-PTSD-5 — ПТСР</button>
+          <button className={`suite-gender-btn ${tab === 'alt' ? 'active' : ''}`} onClick={() => setTab('alt')}>Альтмана — мания</button>
         </div>
       </div>
 
@@ -158,9 +160,7 @@ export default function PsychSuite({ specialty }) {
         </div>
       )}
 
-      {/* PC-PTSD-5 + Альтмана */}
-      <div className="nephr-two-col">
-
+      {tab === 'pc' && (
         <div className="suite-card">
           <div className="suite-card-title">🔴 PC-PTSD-5 — скрининг ПТСР (за последний месяц)</div>
           {PCPTSD.map((q, i) => (
@@ -180,7 +180,9 @@ export default function PsychSuite({ specialty }) {
             </div>
           </div>
         </div>
+      )}
 
+      {tab === 'alt' && (
         <div className="suite-card">
           <div className="suite-card-title">🔆 Шкала Альтмана — самооценка мании / гипомании</div>
           {ALTMAN.map((item, i) => (
@@ -202,8 +204,7 @@ export default function PsychSuite({ specialty }) {
             </div>
           </div>
         </div>
-
-      </div>
+      )}
 
     </div>
   )

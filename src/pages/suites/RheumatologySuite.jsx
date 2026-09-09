@@ -114,6 +114,8 @@ export default function RheumatologySuite() {
   return (
     <div className="suite">
 
+      <div className="rheum-top-row">
+
       {/* DAS28-CRP */}
       <div className="suite-card">
         <div className="suite-card-title">📊 DAS28-CRP — активность ревматоидного артрита</div>
@@ -184,6 +186,8 @@ export default function RheumatologySuite() {
           </div>
         </div>
       </div>
+
+      </div>{/* /rheum-top-row */}
 
       {/* SLEDAI-2K */}
       <div className="suite-card">

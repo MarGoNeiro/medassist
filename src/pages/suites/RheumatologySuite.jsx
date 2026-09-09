@@ -188,7 +188,7 @@ export default function RheumatologySuite() {
       {/* SLEDAI-2K */}
       <div className="suite-card">
         <div className="suite-card-title">🌡️ SLEDAI-2K — активность системной красной волчанки</div>
-        <div className="sledai-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 16px' }}>
+        <div className="sledai-grid">
           {SLEDAI_ITEMS.map((item, i) => (
             <button key={i} className={`suite-toggle-row ${sledai[i] ? 'active' : ''}`}
               onClick={() => { const a = [...sledai]; a[i] = !a[i]; setSledai(a) }}>

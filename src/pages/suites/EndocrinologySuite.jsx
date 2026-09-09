@@ -46,28 +46,24 @@ export default function EndocrinologySuite() {
 
       {/* BMI */}
       <div className="suite-card">
-        <div className="suite-card-title">⚖️ Индекс массы тела (ИМТ / BMI)</div>
-        <div className="suite-grid">
-          <div className="suite-field">
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, flexWrap: 'wrap' }}>
+          <div className="suite-field" style={{ flex: 1, minWidth: 100, marginBottom: 0 }}>
             <label>Вес (кг)</label>
             <input className="suite-input" type="number" step="0.5" value={weight}
               onChange={e => setWeight(Math.max(1, parseFloat(e.target.value) || 0))} />
           </div>
-          <div className="suite-field">
+          <div className="suite-field" style={{ flex: 1, minWidth: 100, marginBottom: 0 }}>
             <label>Рост (см)</label>
             <input className="suite-input" type="number" value={height}
               onChange={e => setHeight(Math.max(1, parseInt(e.target.value) || 0))} />
           </div>
-        </div>
-        {bmiVal > 0 && (
-          <div className="suite-result-banner">
-            <div>
-              <div className="suite-score-label">ИМТ</div>
-              <div className="suite-score-big" style={{ color: '#FB923C' }}>{bmiVal}</div>
+          {bmiVal > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingBottom: 2 }}>
+              <span style={{ fontSize: 22, fontWeight: 800, color: '#FB923C' }}>{bmiVal}</span>
+              <span className={`suite-risk-badge ${bmiCat.badge}`}>{bmiCat.label}</span>
             </div>
-            <span className={`suite-risk-badge ${bmiCat.badge}`}>{bmiCat.label}</span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="endo-dm-row">

@@ -215,16 +215,16 @@ export default function RheumatologySuite() {
       {/* Biologic DMARD */}
       <div className="suite-card">
         <div className="suite-card-title">💉 Биологические БПВП при РА (EULAR 2022)</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {BIOLOGIC.map((b, i) => (
-            <div key={i} style={{ padding: '8px 10px', background: 'var(--color-bg)', borderRadius: 8 }}>
-              <span style={{ fontSize: 11, fontWeight: 800, color: 'var(--color-primary)', marginRight: 8 }}>{b.class}</span>
-              <span style={{ fontSize: 12, color: 'var(--color-text)' }}>{b.drugs}</span>
+            <div key={i} style={{ padding: '10px 12px', background: 'var(--color-bg)', borderRadius: 8 }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--color-primary)', marginBottom: 4 }}>{b.class}</div>
+              <div style={{ fontSize: 14, color: 'var(--color-text)', lineHeight: 1.4 }}>{b.drugs}</div>
             </div>
           ))}
         </div>
         <div style={{ marginTop: 10, padding: '8px 12px', background: '#EFF6FF', borderRadius: 8 }}>
-          <p style={{ fontSize: 11, color: '#1D4ED8', lineHeight: 1.5 }}>
+          <p style={{ fontSize: 13, color: '#1D4ED8', lineHeight: 1.5 }}>
             При неэффективности метотрексата (3–6 мес.) + неблагоприятные факторы (RF/АЦЦП высокий, эрозии) → переход на биологическую терапию или JAK-ингибитор.
           </p>
         </div>

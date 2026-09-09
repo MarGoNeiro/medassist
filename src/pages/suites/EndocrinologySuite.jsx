@@ -70,35 +70,39 @@ export default function EndocrinologySuite() {
         )}
       </div>
 
-      {/* Diagnostic criteria */}
-      <div className="suite-card">
-        <div className="suite-card-title">🩸 Критерии диагностики СД и преддиабета (ммоль/л)</div>
-        <table className="suite-table">
-          <thead>
-            <tr><th>Показатель</th><th style={{ color: '#34D399' }}>Норма</th><th style={{ color: '#FBBF24' }}>Преддиабет</th><th style={{ color: '#F87171' }}>СД</th></tr>
-          </thead>
-          <tbody>
-            {DM_CRITERIA.map((r, i) => (
-              <tr key={i}>
-                <td className="col-time">{r.label}</td>
-                <td style={{ padding: '9px 8px', color: '#34D399', fontWeight: 600 }}>{r.norm}</td>
-                <td style={{ padding: '9px 8px', color: '#FBBF24', fontWeight: 600 }}>{r.pre}</td>
-                <td style={{ padding: '9px 8px', color: '#F87171', fontWeight: 600 }}>{r.dm}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="endo-dm-row">
 
-      {/* Target HbA1c */}
-      <div className="suite-card">
-        <div className="suite-card-title">🎯 Целевой HbA1c по группам пациентов (СД2)</div>
-        {HBA1C_TARGETS.map((t, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < HBA1C_TARGETS.length - 1 ? '1px solid var(--color-border)' : 'none', gap: 12 }}>
-            <span style={{ fontSize: 14, color: 'var(--color-text)', lineHeight: 1.4 }}>{t.group}</span>
-            <span className={`suite-risk-badge ${t.badge}`} style={{ flexShrink: 0, fontSize: 13, padding: '4px 12px' }}>{t.target}</span>
-          </div>
-        ))}
+        {/* Diagnostic criteria */}
+        <div className="suite-card endo-dm-criteria">
+          <div className="suite-card-title">🩸 Критерии диагностики СД и преддиабета (ммоль/л)</div>
+          <table className="suite-table">
+            <thead>
+              <tr><th>Показатель</th><th style={{ color: '#34D399' }}>Норма</th><th style={{ color: '#FBBF24' }}>Преддиабет</th><th style={{ color: '#F87171' }}>СД</th></tr>
+            </thead>
+            <tbody>
+              {DM_CRITERIA.map((r, i) => (
+                <tr key={i}>
+                  <td className="col-time">{r.label}</td>
+                  <td style={{ padding: '9px 8px', color: '#34D399', fontWeight: 600 }}>{r.norm}</td>
+                  <td style={{ padding: '9px 8px', color: '#FBBF24', fontWeight: 600 }}>{r.pre}</td>
+                  <td style={{ padding: '9px 8px', color: '#F87171', fontWeight: 600 }}>{r.dm}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Target HbA1c */}
+        <div className="suite-card endo-dm-targets">
+          <div className="suite-card-title">🎯 Целевой HbA1c по группам пациентов (СД2)</div>
+          {HBA1C_TARGETS.map((t, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < HBA1C_TARGETS.length - 1 ? '1px solid var(--color-border)' : 'none', gap: 12 }}>
+              <span style={{ fontSize: 14, color: 'var(--color-text)', lineHeight: 1.4 }}>{t.group}</span>
+              <span className={`suite-risk-badge ${t.badge}`} style={{ flexShrink: 0, fontSize: 13, padding: '4px 12px' }}>{t.target}</span>
+            </div>
+          ))}
+        </div>
+
       </div>
 
       {/* Thyroid reference */}

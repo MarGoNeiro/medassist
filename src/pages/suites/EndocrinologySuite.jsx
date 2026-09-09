@@ -10,18 +10,20 @@ function bmiCategory(bmi) {
   return                 { label: 'Ожирение III (морбидное)', badge: 'badge-red' }
 }
 
-function hba1cToGlucose(hba1c) {
-  return parseFloat(((hba1c * 1.594) - 2.594).toFixed(1))
-}
+const DM_CRITERIA = [
+  { label: 'Глюкоза натощак',      norm: '< 6.1',      pre: '6.1–6.9 (НГН)',  dm: '≥ 7.0' },
+  { label: 'Глюкоза через 2ч ОГТТ', norm: '< 7.8',    pre: '7.8–11.0 (НТГ)', dm: '≥ 11.1' },
+  { label: 'HbA1c',                norm: '< 6.0%',     pre: '6.0–6.4%',       dm: '≥ 6.5%' },
+  { label: 'Случайная глюкоза',    norm: '—',          pre: '—',              dm: '≥ 11.1 + симптомы' },
+]
 
-function hba1cCategory(hba1c) {
-  if (hba1c < 5.7) return { label: 'Норма',                           badge: 'badge-green',  dm: 'СД не исключён' }
-  if (hba1c < 6.0) return { label: 'Преддиабет (риск)',               badge: 'badge-yellow', dm: 'Изменение образа жизни' }
-  if (hba1c < 6.5) return { label: 'Преддиабет',                      badge: 'badge-yellow', dm: 'Высокий риск СД2' }
-  if (hba1c < 7.0) return { label: 'СД — целевые значения',           badge: 'badge-green',  dm: 'Целевой уровень для большинства пациентов' }
-  if (hba1c < 8.0) return { label: 'СД — частичная компенсация',      badge: 'badge-yellow', dm: 'Усилить терапию' }
-  return                  { label: 'СД — декомпенсация',              badge: 'badge-red',    dm: 'Пересмотр терапии обязателен' }
-}
+const HBA1C_TARGETS = [
+  { group: 'Молодые, нет ССЗ, нет риска ГГ',                       target: '< 6.5%', badge: 'badge-green' },
+  { group: 'Большинство пациентов (стандарт)',                       target: '< 7.0%', badge: 'badge-green' },
+  { group: 'Пожилые 65+, умеренный риск ГГ',                        target: '< 7.5%', badge: 'badge-yellow' },
+  { group: 'Пожилые с тяжёлыми ГГ / ССЗ / деменция',               target: '< 8.0%', badge: 'badge-yellow' },
+  { group: 'ХБП 4–5 / ХСН / терминальные состояния',               target: '< 8.5%', badge: 'badge-red' },
+]
 
 const THYROID_REF = [
   { name: 'ТТГ',          range: '0.27–4.2 мЕд/л',   note: 'Первичный скрининг' },
@@ -33,14 +35,11 @@ const THYROID_REF = [
 ]
 
 export default function EndocrinologySuite() {
-  const [weight, setWeight]   = useState(80)
-  const [height, setHeight]   = useState(170)
-  const [hba1c,  setHba1c]   = useState(6.8)
+  const [weight, setWeight] = useState(80)
+  const [height, setHeight] = useState(170)
 
-  const bmiVal  = height > 0 ? parseFloat((weight / Math.pow(height / 100, 2)).toFixed(1)) : 0
-  const bmiCat  = bmiVal > 0 ? bmiCategory(bmiVal) : null
-  const eAG     = hba1cToGlucose(hba1c)
-  const hba1cCat = hba1cCategory(hba1c)
+  const bmiVal = height > 0 ? parseFloat((weight / Math.pow(height / 100, 2)).toFixed(1)) : 0
+  const bmiCat = bmiVal > 0 ? bmiCategory(bmiVal) : null
 
   return (
     <div className="suite">
@@ -71,33 +70,35 @@ export default function EndocrinologySuite() {
         )}
       </div>
 
-      {/* HbA1c */}
+      {/* Diagnostic criteria */}
       <div className="suite-card">
-        <div className="suite-card-title">🍬 HbA1c → Средняя гликемия</div>
-        <div className="suite-field">
-          <label>HbA1c (%)</label>
-          <input className="suite-input" type="number" step="0.1" min="4" max="16" value={hba1c}
-            onChange={e => setHba1c(Math.max(4, Math.min(16, parseFloat(e.target.value) || 6.5)))} />
-        </div>
-        <div className="suite-dark-box">
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">Средняя глюкоза плазмы (eAG)</span>
-            <span className="suite-dark-value accent-yellow">{eAG > 0 ? `${eAG} ммоль/л` : '—'}</span>
+        <div className="suite-card-title">🩸 Критерии диагностики СД и преддиабета (ммоль/л)</div>
+        <table className="suite-table">
+          <thead>
+            <tr><th>Показатель</th><th style={{ color: '#34D399' }}>Норма</th><th style={{ color: '#FBBF24' }}>Преддиабет</th><th style={{ color: '#F87171' }}>СД</th></tr>
+          </thead>
+          <tbody>
+            {DM_CRITERIA.map((r, i) => (
+              <tr key={i}>
+                <td className="col-time">{r.label}</td>
+                <td style={{ padding: '9px 8px', color: '#34D399', fontWeight: 600 }}>{r.norm}</td>
+                <td style={{ padding: '9px 8px', color: '#FBBF24', fontWeight: 600 }}>{r.pre}</td>
+                <td style={{ padding: '9px 8px', color: '#F87171', fontWeight: 600 }}>{r.dm}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Target HbA1c */}
+      <div className="suite-card">
+        <div className="suite-card-title">🎯 Целевой HbA1c по группам пациентов (СД2)</div>
+        {HBA1C_TARGETS.map((t, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0', borderBottom: i < HBA1C_TARGETS.length - 1 ? '1px solid var(--color-border)' : 'none', gap: 12 }}>
+            <span style={{ fontSize: 14, color: 'var(--color-text)', lineHeight: 1.4 }}>{t.group}</span>
+            <span className={`suite-risk-badge ${t.badge}`} style={{ flexShrink: 0, fontSize: 13, padding: '4px 12px' }}>{t.target}</span>
           </div>
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">Интерпретация HbA1c</span>
-            <span className={`suite-risk-badge ${hba1cCat.badge}`} style={{ fontSize: 10 }}>{hba1cCat.label}</span>
-          </div>
-          <div className="suite-dark-row">
-            <span className="suite-dark-label">Рекомендация</span>
-            <span className="suite-dark-label" style={{ textAlign: 'right', maxWidth: 180 }}>{hba1cCat.dm}</span>
-          </div>
-        </div>
-        <div style={{ marginTop: 10, padding: '8px 12px', background: '#FFF7ED', borderRadius: 8 }}>
-          <p style={{ fontSize: 11, color: '#78350F', lineHeight: 1.5 }}>
-            Целевой HbA1c: <b>{'< 7%'}</b> (большинство), <b>{'< 6.5%'}</b> (молодые без риска), <b>{'< 8%'}</b> (пожилые, ≥ 2 тяжёлых ГГ в анамнезе)
-          </p>
-        </div>
+        ))}
       </div>
 
       {/* Thyroid reference */}

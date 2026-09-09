@@ -185,8 +185,9 @@ export default function PsychSuite({ specialty }) {
       {tab === 'alt' && (
         <div className="suite-card">
           <div className="suite-card-title">🔆 Шкала Альтмана — самооценка мании / гипомании</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px 16px' }}>
           {ALTMAN.map((item, i) => (
-            <div key={i} className="suite-field" style={{ marginBottom: 10 }}>
+            <div key={i} className="suite-field" style={{ marginBottom: 6 }}>
               <label>{item.q}</label>
               <select className="suite-select" value={altman[i]}
                 onChange={e => { const a = [...altman]; a[i] = parseInt(e.target.value); setAltman(a) }}>
@@ -194,6 +195,7 @@ export default function PsychSuite({ specialty }) {
               </select>
             </div>
           ))}
+          </div>
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 4 }}>
             <div style={{ textAlign: 'right' }}>
               <div className="suite-score-big" style={{ color: altmanScore >= 6 ? '#F87171' : '#34D399' }}>{altmanScore}</div>

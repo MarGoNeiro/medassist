@@ -119,9 +119,6 @@ export default function RheumatologySuite() {
       {/* DAS28-CRP */}
       <div className="suite-card">
         <div className="suite-card-title">📊 DAS28-CRP — активность ревматоидного артрита</div>
-        <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', marginBottom: 10, lineHeight: 1.5 }}>
-          Оценивают 28 суставов: плечевые, локтевые, лучезапястные, II–V ПФС, ПМФС (кроме ДМФ), коленные.
-        </p>
         <div className="suite-grid">
           <div className="suite-field">
             <label>Болезненные суставы (TJC28)</label>

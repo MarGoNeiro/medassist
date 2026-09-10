@@ -31,7 +31,7 @@ const THYROID_REF = [
   { name: 'Св. Т3',       range: '2.6–5.7 пмоль/л',  note: 'При конверсионной патологии' },
   { name: 'АТ к ТПО',     range: '< 34 МЕ/мл',       note: 'Аутоиммунный тиреоидит' },
   { name: 'АТ к ТГ',      range: '< 115 МЕ/мл',      note: 'Тиреоидит Хашимото' },
-  { name: 'Кальцитонин',  range: '< 5.8 пг/мл (м),\n< 3.4 пг/мл (ж)', note: 'Медуллярный рак ЩЖ' },
+  { name: 'Кальцитонин',  range: '< 5.8 (м) / < 3.4 (ж) пг/мл', note: 'Медуллярный рак ЩЖ' },
 ]
 
 export default function EndocrinologySuite() {
@@ -104,16 +104,21 @@ export default function EndocrinologySuite() {
       {/* Thyroid reference */}
       <div className="suite-card">
         <div className="suite-card-title">🦋 Нормы гормонов щитовидной железы</div>
-        <table className="suite-table" style={{ width: '100%' }}>
+        <table className="suite-table" style={{ width: '100%', tableLayout: 'fixed' }}>
+          <colgroup>
+            <col style={{ width: '28%' }} />
+            <col style={{ width: '32%' }} />
+            <col style={{ width: '40%' }} />
+          </colgroup>
           <thead>
-            <tr><th>Показатель</th><th>Норма</th><th style={{ width: '100%' }}>Применение</th></tr>
+            <tr><th>Показатель</th><th>Норма</th><th>Применение</th></tr>
           </thead>
           <tbody>
             {THYROID_REF.map((r, i) => (
               <tr key={i}>
                 <td className="col-time">{r.name}</td>
-                <td className="col-drug" style={{ whiteSpace: 'pre-line' }}>{r.range}</td>
-                <td className="col-note" style={{ width: '100%' }}>{r.note}</td>
+                <td className="col-drug">{r.range}</td>
+                <td className="col-note">{r.note}</td>
               </tr>
             ))}
           </tbody>

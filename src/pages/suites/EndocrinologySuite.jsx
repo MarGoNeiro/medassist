@@ -104,16 +104,16 @@ export default function EndocrinologySuite() {
       {/* Thyroid reference */}
       <div className="suite-card">
         <div className="suite-card-title">🦋 Нормы гормонов щитовидной железы</div>
-        <table className="suite-table">
+        <table className="suite-table" style={{ width: '100%' }}>
           <thead>
-            <tr><th>Показатель</th><th>Норма</th><th>Применение</th></tr>
+            <tr><th>Показатель</th><th>Норма</th><th style={{ width: '100%' }}>Применение</th></tr>
           </thead>
           <tbody>
             {THYROID_REF.map((r, i) => (
               <tr key={i}>
                 <td className="col-time">{r.name}</td>
                 <td className="col-drug" style={{ whiteSpace: 'pre-line' }}>{r.range}</td>
-                <td className="col-note">{r.note}</td>
+                <td className="col-note" style={{ width: '100%' }}>{r.note}</td>
               </tr>
             ))}
           </tbody>

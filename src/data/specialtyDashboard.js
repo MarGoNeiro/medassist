@@ -1,7 +1,6 @@
 // Maps specialty (localStorage value) → ordered list of calculator IDs for the home dashboard
 export const specialtyCalcs = {
   'Терапевт / ВОП':            ['curb65', 'bmi', 'ckd_epi'],
-  'Семейный врач':             ['curb65', 'bmi', 'ckd_epi'],
   'Кардиолог':                 ['cha2ds2', 'hasbled'],
   'Невролог':                  ['nihss', 'glasgow'],
   'Пульмонолог':               ['wells_pe', 'curb65'],

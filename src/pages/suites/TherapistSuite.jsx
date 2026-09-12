@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './suites.css'
 
 const CURB_FIELDS = [
@@ -15,28 +15,58 @@ function curbResult(score) {
   return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность ~22%.' }
 }
 
-function calcSCORE2(sex, age, smoking, sbp, ldl) {
-  const nonHDL = ldl + 0.7  // ЛПНП → не-ЛПВП: стандартная поправка на ЛПОНП
-  const wAge   = (age - 60) / 5
-  const wSBP   = (sbp - 120) / 20
-  const wChol  = nonHDL - 3.5
-  const wSmoke = smoking ? 1 : 0
-  let lp, s0
-  if (sex === 'm') {
-    lp = 0.3742*wAge + 0.6012*wSmoke + 0.2777*wSBP + 0.1458*wChol - 0.0755*wAge*wSmoke - 0.0255*wAge*wSBP
-    s0 = 0.9605
-  } else {
-    lp = 0.4648*wAge + 0.7744*wSmoke + 0.3131*wSBP + 0.1002*wChol - 0.1088*wAge*wSmoke - 0.0277*wAge*wSBP
-    s0 = 0.9776
-  }
-  return Math.round(Math.max(0, (1 - Math.pow(s0, Math.exp(lp))) * 100) * 10) / 10
+// Classic SCORE table — высокий риск (Россия), риск смерти от ССЗ за 10 лет
+// [sex][smoke][age][sbp] → массив из 5 значений для ОХС 4,5,6,7,8 ммоль/л
+const SCORE_TABLE = {
+  f: {
+    0: {
+      40: { 120:[0,0,0,0,0], 140:[0,0,0,0,0], 160:[0,0,0,0,0], 180:[0,0,0,0,0] },
+      50: { 120:[0,0,1,1,1], 140:[0,1,1,1,1], 160:[1,1,1,1,1], 180:[1,1,1,2,2] },
+      55: { 120:[1,1,1,1,1], 140:[1,1,1,1,2], 160:[1,2,2,2,3], 180:[2,2,3,3,4] },
+      60: { 120:[1,1,2,2,2], 140:[2,2,2,3,3], 160:[3,3,3,4,5], 180:[4,4,5,6,7] },
+      65: { 120:[2,2,3,3,4], 140:[3,3,4,5,6], 160:[5,5,6,7,8], 180:[7,8,9,10,12] },
+    },
+    1: {
+      40: { 120:[0,0,0,0,0], 140:[0,0,0,0,0], 160:[0,0,0,0,0], 180:[0,0,0,1,1] },
+      50: { 120:[1,1,1,1,1], 140:[1,1,1,1,2], 160:[1,2,2,2,3], 180:[2,2,3,3,4] },
+      55: { 120:[1,1,2,2,2], 140:[2,2,2,3,3], 160:[3,3,4,4,5], 180:[4,5,5,6,7] },
+      60: { 120:[2,3,3,4,4], 140:[3,4,5,5,6], 160:[5,6,7,8,9], 180:[8,9,10,11,13] },
+      65: { 120:[4,5,5,6,7], 140:[6,7,8,9,11], 160:[9,10,12,13,16], 180:[13,15,17,19,22] },
+    },
+  },
+  m: {
+    0: {
+      40: { 120:[0,0,1,1,1], 140:[0,1,1,1,1], 160:[1,1,1,1,1], 180:[1,1,1,2,2] },
+      50: { 120:[1,1,2,2,2], 140:[2,2,2,3,3], 160:[2,3,3,4,5], 180:[4,4,5,6,7] },
+      55: { 120:[2,2,3,3,4], 140:[3,3,4,5,6], 160:[4,5,6,7,8], 180:[6,7,8,10,12] },
+      60: { 120:[3,3,4,5,6], 140:[4,5,6,7,9], 160:[6,7,9,10,12], 180:[9,11,13,15,18] },
+      65: { 120:[4,5,6,7,9], 140:[6,8,9,11,13], 160:[9,11,13,15,18], 180:[14,16,19,22,26] },
+    },
+    1: {
+      40: { 120:[1,1,1,1,1], 140:[1,1,1,2,2], 160:[1,2,2,2,3], 180:[2,2,3,3,4] },
+      50: { 120:[2,3,3,4,5], 140:[3,4,5,6,7], 160:[5,6,7,8,10], 180:[7,8,10,12,14] },
+      55: { 120:[4,4,5,6,8], 140:[5,6,8,9,11], 160:[8,9,11,13,16], 180:[12,13,16,19,22] },
+      60: { 120:[6,7,8,10,12], 140:[8,9,11,13,16], 160:[12,14,17,20,24], 180:[18,21,24,28,33] },
+      65: { 120:[9,10,12,14,17], 140:[13,15,17,20,24], 160:[18,21,25,29,34], 180:[26,30,35,41,47] },
+    },
+  },
 }
 
-function score2Category(risk, age) {
-  const threshold = age < 50 ? [2.5, 7.5] : [5, 10]
-  if (risk < threshold[0]) return { label: 'Низкий / умеренный риск', badge: 'badge-green',  advice: 'Коррекция образа жизни. Медикаменты — по клинической ситуации.' }
-  if (risk < threshold[1]) return { label: 'Высокий риск',            badge: 'badge-yellow', advice: 'Рассмотреть статины. Цель ХС-ЛПНП < 1.8 ммоль/л.' }
-  return                         { label: 'Очень высокий риск',       badge: 'badge-red',    advice: 'Статины обязательны. Цель ХС-ЛПНП < 1.4 ммоль/л. Возможна комбинация.' }
+const SCORE_AGES = [40, 50, 55, 60, 65]
+const SCORE_SBPS = [120, 140, 160, 180]
+
+function lookupSCORE(sex, age, smoking, sbp, chol) {
+  const snapAge  = SCORE_AGES.reduce((p, c) => Math.abs(c-age) < Math.abs(p-age) ? c : p)
+  const snapSBP  = SCORE_SBPS.reduce((p, c) => Math.abs(c-sbp) < Math.abs(p-sbp) ? c : p)
+  const cholIdx  = Math.min(4, Math.max(0, Math.round(chol) - 4))
+  return SCORE_TABLE[sex][smoking ? 1 : 0][snapAge][snapSBP][cholIdx]
+}
+
+function scoreCategory(risk) {
+  if (risk < 1)  return { label: 'Низкий риск',          badge: 'badge-green',  advice: 'Коррекция образа жизни.' }
+  if (risk < 5)  return { label: 'Умеренный риск',        badge: 'badge-yellow', advice: 'Коррекция образа жизни. Рассмотреть статины при ХС-ЛПНП > 4.9 ммоль/л.' }
+  if (risk < 10) return { label: 'Высокий риск',          badge: 'badge-red',    advice: 'Статины. Цель ХС-ЛПНП < 1.8 ммоль/л или снижение ≥ 50%.' }
+  return               { label: 'Очень высокий риск',    badge: 'badge-red',    advice: 'Статины обязательны. Цель ХС-ЛПНП < 1.4 ммоль/л или снижение ≥ 50%.' }
 }
 
 function calcCKDEPI(sex, age, creatumol) {
@@ -81,11 +111,11 @@ export default function TherapistSuite() {
   const [curb, setCurb]     = useState({ confusion: false, urea: false, rr: false, bp: false, age: false })
   const [weight, setWeight] = useState(75)
   const [height, setHeight] = useState(170)
-  const [s2Sex,    setS2Sex]    = useState('m')
-  const [s2Age,    setS2Age]    = useState(55)
-  const [s2Smoke,  setS2Smoke]  = useState(false)
-  const [s2SBP,    setS2SBP]    = useState(130)
-  const [s2LDL, setS2LDL] = useState(3.1)
+  const [scoreSex,   setSCoreSex]   = useState('m')
+  const [scoreAge,   setScoreAge]   = useState(55)
+  const [scoreSmoke, setScoreSmoke] = useState(false)
+  const [scoreSBP,   setScoreSBP]   = useState(140)
+  const [scoreChol,  setScoreChol]  = useState(5.0)
   const [ckdSex, setCkdSex] = useState('m')
   const [ckdAge, setCkdAge] = useState(55)
   const [creat,  setCreat]  = useState(90)
@@ -96,8 +126,8 @@ export default function TherapistSuite() {
   const bmiCat    = bmiVal > 0 ? bmiCategory(bmiVal) : null
   const egfr      = creat > 0 && ckdAge > 0 ? calcCKDEPI(ckdSex, ckdAge, creat) : null
   const ckdRes    = egfr !== null ? ckdStage(egfr) : null
-  const s2Risk    = s2Age >= 40 && s2Age <= 69 ? calcSCORE2(s2Sex, s2Age, s2Smoke, s2SBP, s2LDL) : null
-  const s2Res     = s2Risk !== null ? score2Category(s2Risk, s2Age) : null
+  const scoreRisk = scoreAge >= 40 && scoreAge <= 65 ? lookupSCORE(scoreSex, scoreAge, scoreSmoke, scoreSBP, scoreChol) : null
+  const scoreRes  = scoreRisk !== null ? scoreCategory(scoreRisk) : null
 
   return (
     <div className="suite">
@@ -126,47 +156,50 @@ export default function TherapistSuite() {
         </div>
       </div>
 
-      {/* SCORE2 */}
+      {/* Classic SCORE */}
       <div className="suite-card">
-        <div className="suite-card-title">❤️ SCORE2 — 10-летний риск ССЗ (возраст 40–69 лет)</div>
+        <div className="suite-card-title">❤️ SCORE — 10-летний риск смерти от ССЗ (возраст 40–65 лет)</div>
         <div className="suite-gender-row">
-          <button className={`suite-gender-btn ${s2Sex === 'm' ? 'active' : ''}`} onClick={() => setS2Sex('m')}>Мужской</button>
-          <button className={`suite-gender-btn ${s2Sex === 'f' ? 'active' : ''}`} onClick={() => setS2Sex('f')}>Женский</button>
+          <button className={`suite-gender-btn ${scoreSex === 'm' ? 'active' : ''}`} onClick={() => setSCoreSex('m')}>Мужской</button>
+          <button className={`suite-gender-btn ${scoreSex === 'f' ? 'active' : ''}`} onClick={() => setSCoreSex('f')}>Женский</button>
         </div>
         <div className="suite-grid">
           <div className="suite-field">
-            <label>Возраст (40–69 лет)</label>
-            <input className="suite-input" type="number" min="40" max="69" value={s2Age}
-              onChange={e => setS2Age(Math.min(69, Math.max(40, parseInt(e.target.value) || 40)))} />
+            <label>Возраст (40–65 лет)</label>
+            <input className="suite-input" type="number" min="40" max="65" value={scoreAge}
+              onChange={e => setScoreAge(Math.min(65, Math.max(40, parseInt(e.target.value) || 55)))} />
           </div>
           <div className="suite-field">
             <label>АД систолическое (мм рт.ст.)</label>
-            <input className="suite-input" type="number" step="1" value={s2SBP}
-              onChange={e => setS2SBP(Math.max(80, parseInt(e.target.value) || 120))} />
+            <input className="suite-input" type="number" step="5" min="100" max="200" value={scoreSBP}
+              onChange={e => setScoreSBP(Math.min(200, Math.max(100, parseInt(e.target.value) || 140)))} />
           </div>
           <div className="suite-field">
-            <label>ЛПНП холестерин (ммоль/л)</label>
-            <input className="suite-input" type="number" step="0.1" value={s2LDL}
-              onChange={e => setS2LDL(Math.max(0.5, parseFloat(e.target.value) || 3.1))} />
+            <label>Общий холестерин (ммоль/л)</label>
+            <input className="suite-input" type="number" step="0.5" min="3" max="9" value={scoreChol}
+              onChange={e => setScoreChol(Math.min(9, Math.max(3, parseFloat(e.target.value) || 5.0)))} />
           </div>
         </div>
-        <button className={`suite-toggle-row ${s2Smoke ? 'active' : ''}`} onClick={() => setS2Smoke(v => !v)}>
+        <button className={`suite-toggle-row ${scoreSmoke ? 'active' : ''}`} onClick={() => setScoreSmoke(v => !v)}>
           <span className="suite-toggle-label">Курит в настоящее время</span>
-          <div className={`suite-toggle ${s2Smoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          <div className={`suite-toggle ${scoreSmoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
         </button>
-        {s2Res && (
+        {scoreRes && (
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
             <div>
-              <div className="suite-score-big" style={{ color: s2Risk >= 10 ? '#F87171' : s2Risk >= (s2Age < 50 ? 2.5 : 5) ? '#FBBF24' : '#34D399' }}>
-                {s2Risk}%
+              <div className="suite-score-big" style={{ color: scoreRisk >= 10 ? '#F87171' : scoreRisk >= 5 ? '#F87171' : scoreRisk >= 1 ? '#FBBF24' : '#34D399' }}>
+                {scoreRisk}%
               </div>
             </div>
             <div>
-              <span className={`suite-risk-badge ${s2Res.badge}`}>{s2Res.label}</span>
-              <div className="suite-advice">{s2Res.advice}</div>
+              <span className={`suite-risk-badge ${scoreRes.badge}`}>{scoreRes.label}</span>
+              <div className="suite-advice">{scoreRes.advice}</div>
             </div>
           </div>
         )}
+        {scoreAge < 40 || scoreAge > 65 ? (
+          <div className="suite-advice" style={{ paddingTop: 8 }}>Возраст вне диапазона таблицы SCORE (40–65 лет)</div>
+        ) : null}
       </div>
 
       {/* CKD-EPI */}

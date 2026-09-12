@@ -15,7 +15,8 @@ function curbResult(score) {
   return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность ~22%.' }
 }
 
-function calcSCORE2(sex, age, smoking, sbp, nonHDL) {
+function calcSCORE2(sex, age, smoking, sbp, ldl) {
+  const nonHDL = ldl + 0.7  // ЛПНП → не-ЛПВП: стандартная поправка на ЛПОНП
   const wAge   = (age - 60) / 5
   const wSBP   = (sbp - 120) / 20
   const wChol  = nonHDL - 3.5
@@ -84,7 +85,7 @@ export default function TherapistSuite() {
   const [s2Age,    setS2Age]    = useState(55)
   const [s2Smoke,  setS2Smoke]  = useState(false)
   const [s2SBP,    setS2SBP]    = useState(130)
-  const [s2NonHDL, setS2NonHDL] = useState(3.8)
+  const [s2LDL, setS2LDL] = useState(3.1)
   const [ckdSex, setCkdSex] = useState('m')
   const [ckdAge, setCkdAge] = useState(55)
   const [creat,  setCreat]  = useState(90)
@@ -95,7 +96,7 @@ export default function TherapistSuite() {
   const bmiCat    = bmiVal > 0 ? bmiCategory(bmiVal) : null
   const egfr      = creat > 0 && ckdAge > 0 ? calcCKDEPI(ckdSex, ckdAge, creat) : null
   const ckdRes    = egfr !== null ? ckdStage(egfr) : null
-  const s2Risk    = s2Age >= 40 && s2Age <= 69 ? calcSCORE2(s2Sex, s2Age, s2Smoke, s2SBP, s2NonHDL) : null
+  const s2Risk    = s2Age >= 40 && s2Age <= 69 ? calcSCORE2(s2Sex, s2Age, s2Smoke, s2SBP, s2LDL) : null
   const s2Res     = s2Risk !== null ? score2Category(s2Risk, s2Age) : null
 
   return (
@@ -144,12 +145,11 @@ export default function TherapistSuite() {
               onChange={e => setS2SBP(Math.max(80, parseInt(e.target.value) || 120))} />
           </div>
           <div className="suite-field">
-            <label>Не-ЛПВП холестерин (ммоль/л)</label>
-            <input className="suite-input" type="number" step="0.1" value={s2NonHDL}
-              onChange={e => setS2NonHDL(Math.max(0.5, parseFloat(e.target.value) || 3.5))} />
+            <label>ЛПНП холестерин (ммоль/л)</label>
+            <input className="suite-input" type="number" step="0.1" value={s2LDL}
+              onChange={e => setS2LDL(Math.max(0.5, parseFloat(e.target.value) || 3.1))} />
           </div>
         </div>
-        <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', margin: '4px 0 8px' }}>Не-ЛПВП = Общий ХС − ЛПВП</p>
         <button className={`suite-toggle-row ${s2Smoke ? 'active' : ''}`} onClick={() => setS2Smoke(v => !v)}>
           <span className="suite-toggle-label">Курит в настоящее время</span>
           <div className={`suite-toggle ${s2Smoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>

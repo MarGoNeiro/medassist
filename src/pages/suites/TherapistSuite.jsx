@@ -15,6 +15,24 @@ function curbResult(score) {
   return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность ~22%.' }
 }
 
+function calcCKDEPI(sex, age, creatumol) {
+  const creat  = creatumol / 88.4
+  const kappa  = sex === 'f' ? 0.7  : 0.9
+  const alpha  = sex === 'f' ? -0.241 : -0.302
+  const sexFactor = sex === 'f' ? 1.012 : 1.0
+  const ratio  = creat / kappa
+  return Math.round(142 * Math.pow(Math.min(ratio, 1), alpha) * Math.pow(Math.max(ratio, 1), -1.2) * Math.pow(0.9938, age) * sexFactor)
+}
+
+function ckdStage(egfr) {
+  if (egfr >= 90) return { stage: 'G1', label: 'Норма / повышена',      badge: 'badge-green',  advice: 'ХБП — только при наличии маркёров повреждения почек.' }
+  if (egfr >= 60) return { stage: 'G2', label: 'Незначительно снижена', badge: 'badge-green',  advice: 'Наблюдение. Контроль АД, отказ от нефротоксинов.' }
+  if (egfr >= 45) return { stage: 'G3а', label: 'Умеренно снижена',     badge: 'badge-yellow', advice: 'Коррекция доз ряда препаратов. Нефролог при прогрессировании.' }
+  if (egfr >= 30) return { stage: 'G3б', label: 'Существенно снижена',  badge: 'badge-yellow', advice: 'Коррекция доз. Направление к нефрологу.' }
+  if (egfr >= 15) return { stage: 'G4',  label: 'Тяжёлая',              badge: 'badge-red',    advice: 'Нефролог обязателен. Подготовка к ЗПТ.' }
+  return               { stage: 'G5',  label: 'Терминальная ХБП',      badge: 'badge-red',    advice: 'ЗПТ (диализ или трансплантация).' }
+}
+
 function bmiCategory(bmi) {
   if (bmi < 16.0)  return { label: 'Тяжёлый дефицит массы', badge: 'badge-red' }
   if (bmi < 17.0)  return { label: 'Умеренный дефицит',     badge: 'badge-red' }
@@ -35,17 +53,20 @@ const BP_CLASSES = [
   { name: 'АГ 3 степени',         sys: '≥ 180',   dia: '≥ 110',  color: '#EF4444' },
 ]
 
-export default function TherapistSuite({ specialty }) {
-  const titleSuffix = specialty === 'Семейный врач' ? 'семейного врача' : 'терапевта'
-  const [curb, setCurb]   = useState({ confusion: false, urea: false, rr: false, bp: false, age: false })
+export default function TherapistSuite() {
+  const [curb, setCurb]     = useState({ confusion: false, urea: false, rr: false, bp: false, age: false })
   const [weight, setWeight] = useState(75)
   const [height, setHeight] = useState(170)
+  const [ckdSex, setCkdSex] = useState('m')
+  const [ckdAge, setCkdAge] = useState(55)
+  const [creat,  setCreat]  = useState(90)
 
   const curbScore = Object.values(curb).filter(Boolean).length
   const curbRes   = curbResult(curbScore)
-
-  const bmiVal  = height > 0 ? parseFloat((weight / Math.pow(height / 100, 2)).toFixed(1)) : 0
-  const bmiCat  = bmiVal > 0 ? bmiCategory(bmiVal) : null
+  const bmiVal    = height > 0 ? parseFloat((weight / Math.pow(height / 100, 2)).toFixed(1)) : 0
+  const bmiCat    = bmiVal > 0 ? bmiCategory(bmiVal) : null
+  const egfr      = creat > 0 && ckdAge > 0 ? calcCKDEPI(ckdSex, ckdAge, creat) : null
+  const ckdRes    = egfr !== null ? ckdStage(egfr) : null
 
   return (
     <div className="suite">
@@ -72,6 +93,41 @@ export default function TherapistSuite({ specialty }) {
             <div className="suite-advice">{curbRes.advice}</div>
           </div>
         </div>
+      </div>
+
+      {/* CKD-EPI */}
+      <div className="suite-card">
+        <div className="suite-card-title">🫘 рСКФ по CKD-EPI 2021</div>
+        <div className="suite-gender-row">
+          <button className={`suite-gender-btn ${ckdSex === 'm' ? 'active' : ''}`} onClick={() => setCkdSex('m')}>Мужской</button>
+          <button className={`suite-gender-btn ${ckdSex === 'f' ? 'active' : ''}`} onClick={() => setCkdSex('f')}>Женский</button>
+        </div>
+        <div className="suite-grid">
+          <div className="suite-field">
+            <label>Возраст (лет)</label>
+            <input className="suite-input" type="number" min="18" max="110" value={ckdAge}
+              onChange={e => setCkdAge(Math.min(110, Math.max(18, parseInt(e.target.value) || 18)))} />
+          </div>
+          <div className="suite-field">
+            <label>Креатинин (мкмоль/л)</label>
+            <input className="suite-input" type="number" step="1" min="20" value={creat}
+              onChange={e => setCreat(Math.max(1, parseFloat(e.target.value) || 0))} />
+          </div>
+        </div>
+        {ckdRes && (
+          <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
+            <div>
+              <div className="suite-score-big" style={{ color: egfr >= 60 ? '#34D399' : egfr >= 30 ? '#FBBF24' : '#F87171' }}>
+                {egfr}
+                <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color-text-secondary)' }}> мл/мин/1.73м²</span>
+              </div>
+            </div>
+            <div>
+              <span className={`suite-risk-badge ${ckdRes.badge}`}>{ckdRes.stage} — {ckdRes.label}</span>
+              <div className="suite-advice">{ckdRes.advice}</div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* BMI */}

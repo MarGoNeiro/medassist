@@ -15,6 +15,29 @@ function curbResult(score) {
   return               { label: 'Высокий риск',     badge: 'badge-red',    advice: 'Госпитализация обязательна. При 4–5 — ОРИТ. Летальность ~22%.' }
 }
 
+function calcSCORE2(sex, age, smoking, sbp, nonHDL) {
+  const wAge   = (age - 60) / 5
+  const wSBP   = (sbp - 120) / 20
+  const wChol  = nonHDL - 3.5
+  const wSmoke = smoking ? 1 : 0
+  let lp, s0
+  if (sex === 'm') {
+    lp = 0.3742*wAge + 0.6012*wSmoke + 0.2777*wSBP + 0.1458*wChol - 0.0755*wAge*wSmoke - 0.0255*wAge*wSBP
+    s0 = 0.9605
+  } else {
+    lp = 0.4648*wAge + 0.7744*wSmoke + 0.3131*wSBP + 0.1002*wChol - 0.1088*wAge*wSmoke - 0.0277*wAge*wSBP
+    s0 = 0.9776
+  }
+  return Math.round(Math.max(0, (1 - Math.pow(s0, Math.exp(lp))) * 100) * 10) / 10
+}
+
+function score2Category(risk, age) {
+  const threshold = age < 50 ? [2.5, 7.5] : [5, 10]
+  if (risk < threshold[0]) return { label: 'Низкий / умеренный риск', badge: 'badge-green',  advice: 'Коррекция образа жизни. Медикаменты — по клинической ситуации.' }
+  if (risk < threshold[1]) return { label: 'Высокий риск',            badge: 'badge-yellow', advice: 'Рассмотреть статины. Цель ХС-ЛПНП < 1.8 ммоль/л.' }
+  return                         { label: 'Очень высокий риск',       badge: 'badge-red',    advice: 'Статины обязательны. Цель ХС-ЛПНП < 1.4 ммоль/л. Возможна комбинация.' }
+}
+
 function calcCKDEPI(sex, age, creatumol) {
   const creat  = creatumol / 88.4
   const kappa  = sex === 'f' ? 0.7  : 0.9
@@ -57,6 +80,11 @@ export default function TherapistSuite() {
   const [curb, setCurb]     = useState({ confusion: false, urea: false, rr: false, bp: false, age: false })
   const [weight, setWeight] = useState(75)
   const [height, setHeight] = useState(170)
+  const [s2Sex,    setS2Sex]    = useState('m')
+  const [s2Age,    setS2Age]    = useState(55)
+  const [s2Smoke,  setS2Smoke]  = useState(false)
+  const [s2SBP,    setS2SBP]    = useState(130)
+  const [s2NonHDL, setS2NonHDL] = useState(3.8)
   const [ckdSex, setCkdSex] = useState('m')
   const [ckdAge, setCkdAge] = useState(55)
   const [creat,  setCreat]  = useState(90)
@@ -67,6 +95,8 @@ export default function TherapistSuite() {
   const bmiCat    = bmiVal > 0 ? bmiCategory(bmiVal) : null
   const egfr      = creat > 0 && ckdAge > 0 ? calcCKDEPI(ckdSex, ckdAge, creat) : null
   const ckdRes    = egfr !== null ? ckdStage(egfr) : null
+  const s2Risk    = s2Age >= 40 && s2Age <= 69 ? calcSCORE2(s2Sex, s2Age, s2Smoke, s2SBP, s2NonHDL) : null
+  const s2Res     = s2Risk !== null ? score2Category(s2Risk, s2Age) : null
 
   return (
     <div className="suite">
@@ -93,6 +123,50 @@ export default function TherapistSuite() {
             <div className="suite-advice">{curbRes.advice}</div>
           </div>
         </div>
+      </div>
+
+      {/* SCORE2 */}
+      <div className="suite-card">
+        <div className="suite-card-title">❤️ SCORE2 — 10-летний риск ССЗ (возраст 40–69 лет)</div>
+        <div className="suite-gender-row">
+          <button className={`suite-gender-btn ${s2Sex === 'm' ? 'active' : ''}`} onClick={() => setS2Sex('m')}>Мужской</button>
+          <button className={`suite-gender-btn ${s2Sex === 'f' ? 'active' : ''}`} onClick={() => setS2Sex('f')}>Женский</button>
+        </div>
+        <div className="suite-grid">
+          <div className="suite-field">
+            <label>Возраст (40–69 лет)</label>
+            <input className="suite-input" type="number" min="40" max="69" value={s2Age}
+              onChange={e => setS2Age(Math.min(69, Math.max(40, parseInt(e.target.value) || 40)))} />
+          </div>
+          <div className="suite-field">
+            <label>АД систолическое (мм рт.ст.)</label>
+            <input className="suite-input" type="number" step="1" value={s2SBP}
+              onChange={e => setS2SBP(Math.max(80, parseInt(e.target.value) || 120))} />
+          </div>
+          <div className="suite-field">
+            <label>Не-ЛПВП холестерин (ммоль/л)</label>
+            <input className="suite-input" type="number" step="0.1" value={s2NonHDL}
+              onChange={e => setS2NonHDL(Math.max(0.5, parseFloat(e.target.value) || 3.5))} />
+          </div>
+        </div>
+        <p style={{ fontSize: 11, color: 'var(--color-text-secondary)', margin: '4px 0 8px' }}>Не-ЛПВП = Общий ХС − ЛПВП</p>
+        <button className={`suite-toggle-row ${s2Smoke ? 'active' : ''}`} onClick={() => setS2Smoke(v => !v)}>
+          <span className="suite-toggle-label">Курит в настоящее время</span>
+          <div className={`suite-toggle ${s2Smoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+        </button>
+        {s2Res && (
+          <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
+            <div>
+              <div className="suite-score-big" style={{ color: s2Risk >= 10 ? '#F87171' : s2Risk >= (s2Age < 50 ? 2.5 : 5) ? '#FBBF24' : '#34D399' }}>
+                {s2Risk}%
+              </div>
+            </div>
+            <div>
+              <span className={`suite-risk-badge ${s2Res.badge}`}>{s2Res.label}</span>
+              <div className="suite-advice">{s2Res.advice}</div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* CKD-EPI */}

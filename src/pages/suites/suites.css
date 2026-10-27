@@ -1386,3 +1386,23 @@
 @media (min-width: 768px) {
   .sledai-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
+
+/* ─── TherapistSuite — SCORE + Классификация АД ─── */
+.therapist-score-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .therapist-score-row {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .therapist-score-row > .suite-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+}

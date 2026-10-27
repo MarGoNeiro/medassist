@@ -156,6 +156,8 @@ export default function TherapistSuite() {
         </div>
       </div>
 
+      <div className="therapist-score-row">
+
       {/* Classic SCORE */}
       <div className="suite-card">
         <div className="suite-card-title">❤️ SCORE — 10-летний риск смерти от ССЗ (возраст 40–65 лет)</div>
@@ -200,6 +202,22 @@ export default function TherapistSuite() {
         {scoreAge < 40 || scoreAge > 65 ? (
           <div className="suite-advice" style={{ paddingTop: 8 }}>Возраст вне диапазона таблицы SCORE (40–65 лет)</div>
         ) : null}
+      </div>
+
+      {/* BP classes */}
+      <div className="suite-card">
+        <div className="suite-card-title">💓 Классификация АД (ЕОК 2023)</div>
+        <div className="suite-cheatsheet">
+          <div className="suite-cheatsheet-title">Категории артериального давления (мм рт.ст.)</div>
+          {BP_CLASSES.map((bp, i) => (
+            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderBottom: i < BP_CLASSES.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+              <span style={{ fontSize: 12, color: '#94A3B8' }}>{bp.name}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: bp.color, textAlign: 'right' }}>{bp.sys} / {bp.dia}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       </div>
 
       {/* CKD-EPI */}
@@ -263,19 +281,6 @@ export default function TherapistSuite() {
         )}
       </div>
 
-      {/* BP classes */}
-      <div className="suite-card">
-        <div className="suite-card-title">💓 Классификация АД (ЕОК 2023)</div>
-        <div className="suite-cheatsheet">
-          <div className="suite-cheatsheet-title">Категории артериального давления (мм рт.ст.)</div>
-          {BP_CLASSES.map((bp, i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderBottom: i < BP_CLASSES.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-              <span style={{ fontSize: 12, color: '#94A3B8' }}>{bp.name}</span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: bp.color, textAlign: 'right' }}>{bp.sys} / {bp.dia}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

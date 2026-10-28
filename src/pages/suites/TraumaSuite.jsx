@@ -82,16 +82,16 @@ export default function TraumaSuite() {
       {/* AO */}
       <div className="suite-card">
         <div className="suite-card-title">📋 Классификация AO/OTA переломов</div>
-        <div style={{ columnCount: 2, columnGap: 16 }}>
+        <div className="ao-grid" style={{ columnCount: 2, columnGap: 16 }}>
           {AO_GUIDE.map((r, i) => (
             <div key={i} style={{ breakInside: 'avoid', display: 'flex', gap: 10, alignItems: 'center', padding: '5px 0', borderBottom: '1px solid var(--color-border)' }}>
-              <span style={{ fontSize: 11, fontWeight: 800, color: r.color, minWidth: 70, flexShrink: 0 }}>{r.type}</span>
-              <span style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{r.sub}</span>
+              <span className="ao-type" style={{ color: r.color }}>{r.type}</span>
+              <span className="ao-sub">{r.sub}</span>
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 10, padding: '8px 12px', background: '#EFF6FF', borderRadius: 8 }}>
-          <p style={{ fontSize: 11, color: '#1D4ED8', lineHeight: 1.4 }}>
+        <div className="ao-note" style={{ marginTop: 10, padding: '8px 12px', background: '#EFF6FF', borderRadius: 8 }}>
+          <p style={{ lineHeight: 1.4, color: '#1D4ED8' }}>
             Система: 2 цифры (кость · сегмент) + A/B/C (простой/частичный/сложный) + 1–3 подгруппа. Пример: 32-A1 = диафиз бедра, простой клиновидный.
           </p>
         </div>

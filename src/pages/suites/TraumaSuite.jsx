@@ -55,14 +55,16 @@ export default function TraumaSuite() {
           <span>🩸 Wells – вероятность ТГВ нижних конечностей</span>
           <button className="suite-reset-btn" onClick={() => setWells(Object.fromEntries(DVT_WELLS.map(f => [f.id, false])))}>Сбросить</button>
         </div>
-        {DVT_WELLS.map(f => (
-          <button key={f.id} className="suite-toggle-row" onClick={() => setWells(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
-            <span className="suite-toggle-label" style={{ color: f.pts < 0 ? '#F87171' : 'var(--color-text)' }}>
-              {f.label} <span style={{ color: 'var(--color-text-secondary)', fontSize: 11 }}>[{f.pts > 0 ? '+' : ''}{f.pts}]</span>
-            </span>
-            <div className={`suite-toggle ${wells[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        ))}
+        <div className="suite-form-2col">
+          {DVT_WELLS.map(f => (
+            <button key={f.id} className="suite-toggle-row" onClick={() => setWells(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+              <span className="suite-toggle-label" style={{ color: f.pts < 0 ? '#F87171' : 'var(--color-text)' }}>
+                {f.label} <span style={{ color: 'var(--color-text-secondary)', fontSize: 11 }}>[{f.pts > 0 ? '+' : ''}{f.pts}]</span>
+              </span>
+              <div className={`suite-toggle ${wells[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
+          ))}
+        </div>
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">Wells DVT</div>
@@ -75,12 +77,14 @@ export default function TraumaSuite() {
         </div>
       </div>
 
+      <div className="trauma-two-col">
+
       {/* AO */}
       <div className="suite-card">
         <div className="suite-card-title">📋 Классификация AO/OTA переломов</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div style={{ columnCount: 2, columnGap: 16 }}>
           {AO_GUIDE.map((r, i) => (
-            <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'center', padding: '5px 0', borderBottom: '1px solid var(--color-border)' }}>
+            <div key={i} style={{ breakInside: 'avoid', display: 'flex', gap: 10, alignItems: 'center', padding: '5px 0', borderBottom: '1px solid var(--color-border)' }}>
               <span style={{ fontSize: 11, fontWeight: 800, color: r.color, minWidth: 70, flexShrink: 0 }}>{r.type}</span>
               <span style={{ fontSize: 11, color: 'var(--color-text-secondary)' }}>{r.sub}</span>
             </div>
@@ -107,6 +111,8 @@ export default function TraumaSuite() {
             </div>
           ))}
         </div>
+      </div>
+
       </div>
     </div>
   )

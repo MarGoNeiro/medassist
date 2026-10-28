@@ -1404,6 +1404,22 @@
   .bp-cheatsheet  { padding: 0; margin-top: 10px; }
 }
 
+/* ─── TraumaSuite — AO/OTA + Gustilo-Anderson бок о бок ─── */
+.trauma-two-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .trauma-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .trauma-two-col .suite-card { margin-bottom: 0; }
+}
+
 /* ─── TherapistSuite — CURB-65: пары в ряд, АД по центру последним рядом ─── */
 .curb-grid-pair {
   display: grid;

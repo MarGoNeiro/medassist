@@ -196,7 +196,7 @@ export default function TherapistSuite() {
 
       </div>
 
-      <div className="therapist-score-row">
+      <div className="therapist-curb-ckd-row">
 
       {/* CURB-65 */}
       <div className="suite-card">

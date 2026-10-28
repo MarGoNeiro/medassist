@@ -1435,3 +1435,25 @@
     margin-bottom: 0;
   }
 }
+
+.therapist-curb-ckd-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .therapist-curb-ckd-row {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .therapist-curb-ckd-row > .suite-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+  .therapist-curb-ckd-row .suite-result-banner {
+    margin-top: auto !important;
+  }
+}

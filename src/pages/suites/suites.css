@@ -1401,6 +1401,7 @@
   .bp-class-name  { font-size: 15px; }
   .bp-class-value { font-size: 15px; }
   .bp-class-row   { padding: 10px 0; }
+  .bp-cheatsheet  { padding: 0; margin-top: 10px; }
 }
 
 /* ─── TherapistSuite — CURB-65: пары в ряд, АД по центру последним рядом ─── */

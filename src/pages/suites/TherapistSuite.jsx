@@ -183,7 +183,7 @@ export default function TherapistSuite() {
       {/* BP classes */}
       <div className="suite-card">
         <div className="suite-card-title">💓 Классификация АД (ЕОК 2023)</div>
-        <div className="suite-cheatsheet">
+        <div className="suite-cheatsheet bp-cheatsheet">
           <div className="suite-cheatsheet-title">Категории артериального давления (мм рт.ст.)</div>
           {BP_CLASSES.map((bp, i) => (
             <div key={i} className="bp-class-row" style={{ borderBottom: i < BP_CLASSES.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>

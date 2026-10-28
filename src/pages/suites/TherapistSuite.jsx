@@ -132,30 +132,6 @@ export default function TherapistSuite() {
   return (
     <div className="suite">
 
-      {/* CURB-65 */}
-      <div className="suite-card">
-        <div className="suite-card-title">
-          <span>🫁 CURB-65 — тяжесть пневмонии</span>
-          <button className="suite-reset-btn" onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}>Сбросить</button>
-        </div>
-        {CURB_FIELDS.map(f => (
-          <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
-            <span className="suite-toggle-label">{f.label}</span>
-            <div className={`suite-toggle ${curb[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        ))}
-        <div className="suite-result-banner">
-          <div>
-            <div className="suite-score-label">CURB-65</div>
-            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{curbScore}</div>
-          </div>
-          <div style={{}}>
-            <span className={`suite-risk-badge ${curbRes.badge}`}>{curbRes.label}</span>
-            <div className="suite-advice">{curbRes.advice}</div>
-          </div>
-        </div>
-      </div>
-
       <div className="therapist-score-row">
 
       {/* Classic SCORE */}
@@ -181,11 +157,11 @@ export default function TherapistSuite() {
             <input className="suite-input" type="number" step="0.5" min="3" max="9" value={scoreChol}
               onChange={e => setScoreChol(Math.min(9, Math.max(3, parseFloat(e.target.value) || 5.0)))} />
           </div>
+          <button className={`suite-toggle-row ${scoreSmoke ? 'active' : ''}`} onClick={() => setScoreSmoke(v => !v)} style={{ alignSelf: 'end' }}>
+            <span className="suite-toggle-label">Курит</span>
+            <div className={`suite-toggle ${scoreSmoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          </button>
         </div>
-        <button className={`suite-toggle-row ${scoreSmoke ? 'active' : ''}`} onClick={() => setScoreSmoke(v => !v)}>
-          <span className="suite-toggle-label">Курит в настоящее время</span>
-          <div className={`suite-toggle ${scoreSmoke ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-        </button>
         {scoreRes && (
           <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
             <div>
@@ -218,6 +194,32 @@ export default function TherapistSuite() {
         </div>
       </div>
 
+      </div>
+
+      <div className="therapist-score-row">
+
+      {/* CURB-65 */}
+      <div className="suite-card">
+        <div className="suite-card-title">
+          <span>🫁 CURB-65 — тяжесть пневмонии</span>
+          <button className="suite-reset-btn" onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}>Сбросить</button>
+        </div>
+        {CURB_FIELDS.map(f => (
+          <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+            <span className="suite-toggle-label">{f.label}</span>
+            <div className={`suite-toggle ${curb[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+          </button>
+        ))}
+        <div className="suite-result-banner">
+          <div>
+            <div className="suite-score-label">CURB-65</div>
+            <div className="suite-score-big" style={{ color: '#60A5FA' }}>{curbScore}</div>
+          </div>
+          <div style={{}}>
+            <span className={`suite-risk-badge ${curbRes.badge}`}>{curbRes.label}</span>
+            <div className="suite-advice">{curbRes.advice}</div>
+          </div>
+        </div>
       </div>
 
       {/* CKD-EPI */}
@@ -253,6 +255,8 @@ export default function TherapistSuite() {
             </div>
           </div>
         )}
+      </div>
+
       </div>
 
       {/* BMI */}

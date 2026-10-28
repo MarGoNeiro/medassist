@@ -186,9 +186,9 @@ export default function TherapistSuite() {
         <div className="suite-cheatsheet">
           <div className="suite-cheatsheet-title">Категории артериального давления (мм рт.ст.)</div>
           {BP_CLASSES.map((bp, i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderBottom: i < BP_CLASSES.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-              <span style={{ fontSize: 12, color: '#94A3B8' }}>{bp.name}</span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: bp.color, textAlign: 'right' }}>{bp.sys} / {bp.dia}</span>
+            <div key={i} className="bp-class-row" style={{ borderBottom: i < BP_CLASSES.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
+              <span className="bp-class-name">{bp.name}</span>
+              <span className="bp-class-value" style={{ color: bp.color }}>{bp.sys} / {bp.dia}</span>
             </div>
           ))}
         </div>

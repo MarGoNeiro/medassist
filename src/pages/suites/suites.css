@@ -1387,6 +1387,22 @@
   .sledai-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
 
+/* ─── TherapistSuite — Классификация АД ─── */
+.bp-class-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+}
+.bp-class-name  { font-size: 12px; color: #94A3B8; }
+.bp-class-value { font-size: 12px; font-weight: 700; text-align: right; }
+
+@media (min-width: 768px) {
+  .bp-class-name  { font-size: 15px; }
+  .bp-class-value { font-size: 15px; }
+  .bp-class-row   { padding: 10px 0; }
+}
+
 /* ─── TherapistSuite — CURB-65: пары в ряд, АД по центру последним рядом ─── */
 .curb-grid-pair {
   display: grid;

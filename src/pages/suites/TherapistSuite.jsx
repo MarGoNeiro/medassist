@@ -5,8 +5,8 @@ const CURB_FIELDS = [
   { id: 'confusion', label: 'Нарушение сознания (новое)' },
   { id: 'urea',      label: 'Мочевина > 7 ммоль/л' },
   { id: 'rr',        label: 'ЧДД ≥ 30 в мин.' },
-  { id: 'bp',        label: 'АД сист. < 90 или диаст. ≤ 60 мм рт.ст.' },
   { id: 'age',       label: 'Возраст ≥ 65 лет' },
+  { id: 'bp',        label: 'АД сист. < 90 или диаст. ≤ 60 мм рт.ст.' },
 ]
 
 function curbResult(score) {
@@ -204,12 +204,14 @@ export default function TherapistSuite() {
           <span>🫁 CURB-65 — тяжесть пневмонии</span>
           <button className="suite-reset-btn" onClick={() => setCurb({ confusion:false, urea:false, rr:false, bp:false, age:false })}>Сбросить</button>
         </div>
-        {CURB_FIELDS.map(f => (
-          <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
-            <span className="suite-toggle-label">{f.label}</span>
-            <div className={`suite-toggle ${curb[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
-          </button>
-        ))}
+        <div className="curb-grid-pair">
+          {CURB_FIELDS.map(f => (
+            <button key={f.id} className="suite-toggle-row" onClick={() => setCurb(prev => ({ ...prev, [f.id]: !prev[f.id] }))}>
+              <span className="suite-toggle-label">{f.label}</span>
+              <div className={`suite-toggle ${curb[f.id] ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
+          ))}
+        </div>
         <div className="suite-result-banner">
           <div>
             <div className="suite-score-label">CURB-65</div>

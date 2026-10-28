@@ -1387,6 +1387,18 @@
   .sledai-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
 
+/* ─── TherapistSuite — CURB-65: пары в ряд, АД по центру последним рядом ─── */
+.curb-grid-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+.curb-grid-pair .suite-toggle-row:last-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 70%;
+}
+
 /* ─── TherapistSuite — SCORE + Классификация АД ─── */
 .therapist-score-row {
   display: flex;

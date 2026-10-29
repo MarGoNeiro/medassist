@@ -33,12 +33,44 @@ const KIDNEY_STONES = [
   { type: 'Цистиновые (1%)', color: '#C084FC', tips: 'Гидратация > 3 л/сут. D-пеницилламин или тиопронин. Ощелачивание.' },
 ]
 
+const PSA_AGE_NORMS = [
+  { age: '40–49 лет', max: '≤ 2.5 нг/мл' },
+  { age: '50–59 лет', max: '≤ 3.5 нг/мл' },
+  { age: '60–69 лет', max: '≤ 4.5 нг/мл' },
+  { age: '70–79 лет', max: '≤ 6.5 нг/мл' },
+]
+
+const GLEASON_OPTS = [
+  { v: 'low',  l: '≤ 6 (3+3)' },
+  { v: 'mid',  l: '7 (3+4 или 4+3)' },
+  { v: 'high', l: '≥ 8' },
+]
+const TSTAGE_OPTS = [
+  { v: 'low',  l: 'T1c – T2a' },
+  { v: 'mid',  l: 'T2b' },
+  { v: 'high', l: 'T2c и выше' },
+]
+
+function damicoRisk(psa, gleason, tStage) {
+  if (psa > 20 || gleason === 'high' || tStage === 'high') {
+    return { label: 'Высокий риск', badge: 'badge-red', advice: 'Мультимодальное лечение: лучевая терапия + длительная АДТ, либо простатэктомия с расширенной лимфаденэктомией.' }
+  }
+  if (psa <= 10 && gleason === 'low' && tStage === 'low') {
+    return { label: 'Низкий риск', badge: 'badge-green', advice: 'Возможно активное наблюдение. Радикальное лечение (простатэктомия/лучевая терапия) — по выбору пациента.' }
+  }
+  return { label: 'Промежуточный риск', badge: 'badge-yellow', advice: 'Радикальное лечение (простатэктомия/лучевая терапия) ± короткий курс АДТ при неблагоприятных факторах.' }
+}
+
 export default function UrologySuite() {
   const [ipss, setIpss] = useState(Object.fromEntries(IPSS_QUESTIONS.map(q => [q.id, 0])))
   const [qol, setQol]   = useState(3)
+  const [psa,     setPsa]     = useState(5)
+  const [gleason, setGleason] = useState('low')
+  const [tStage,  setTStage]  = useState('low')
 
   const ipssScore = Object.values(ipss).reduce((a, b) => a + b, 0)
   const ipssRes   = ipssResult(ipssScore)
+  const damicoRes = damicoRisk(psa, gleason, tStage)
 
   return (
     <div className="suite">
@@ -46,17 +78,19 @@ export default function UrologySuite() {
       {/* IPSS */}
       <div className="suite-card">
         <div className="suite-card-title">📋 IPSS — симптомы нижних мочевых путей (ДГПЖ)</div>
-        {IPSS_QUESTIONS.map((q, idx) => (
-          <div key={q.id} className="suite-field" style={{ marginBottom: 10 }}>
-            <label>{idx + 1}. {q.q}</label>
-            <select className="suite-select" value={ipss[q.id]}
-              onChange={e => setIpss(prev => ({ ...prev, [q.id]: parseInt(e.target.value) }))}>
-              {(q.isNocturia ? NOCTURIA_OPTS : IPSS_OPTS_USUAL).map(o => (
-                <option key={o.v} value={o.v}>{o.l}</option>
-              ))}
-            </select>
-          </div>
-        ))}
+        <div className="suite-form-2col">
+          {IPSS_QUESTIONS.map((q, idx) => (
+            <div key={q.id} className="suite-field" style={{ marginBottom: 10 }}>
+              <label>{idx + 1}. {q.q}</label>
+              <select className="suite-select" value={ipss[q.id]}
+                onChange={e => setIpss(prev => ({ ...prev, [q.id]: parseInt(e.target.value) }))}>
+                {(q.isNocturia ? NOCTURIA_OPTS : IPSS_OPTS_USUAL).map(o => (
+                  <option key={o.v} value={o.v}>{o.l}</option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
         <div className="suite-field" style={{ marginTop: 6 }}>
           <label>Качество жизни при данных симптомах (0 — отлично, 6 — ужасно)</label>
           <input type="range" min={0} max={6} value={qol} onChange={e => setQol(parseInt(e.target.value))}
@@ -86,6 +120,52 @@ export default function UrologySuite() {
             <div style={{ fontSize: 11, color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{s.tips}</div>
           </div>
         ))}
+      </div>
+
+      {/* PSA norms */}
+      <div className="suite-card">
+        <div className="suite-card-title">🧪 ПСА — нормы по возрасту</div>
+        <table className="suite-table">
+          <thead>
+            <tr><th>Возраст</th><th>Верхняя граница нормы</th></tr>
+          </thead>
+          <tbody>
+            {PSA_AGE_NORMS.map((r, i) => (
+              <tr key={i}>
+                <td className="col-time">{r.age}</td>
+                <td className="col-drug">{r.max}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* D'Amico risk */}
+      <div className="suite-card">
+        <div className="suite-card-title">🎯 Группа риска рака простаты (D'Amico)</div>
+        <div className="suite-grid">
+          <div className="suite-field">
+            <label>ПСА (нг/мл)</label>
+            <input className="suite-input" type="number" step="0.1" min="0" value={psa}
+              onChange={e => setPsa(Math.max(0, parseFloat(e.target.value) || 0))} />
+          </div>
+          <div className="suite-field">
+            <label>Индекс Глисона</label>
+            <select className="suite-select" value={gleason} onChange={e => setGleason(e.target.value)}>
+              {GLEASON_OPTS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+            </select>
+          </div>
+          <div className="suite-field">
+            <label>Клиническая стадия (T)</label>
+            <select className="suite-select" value={tStage} onChange={e => setTStage(e.target.value)}>
+              {TSTAGE_OPTS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+            </select>
+          </div>
+        </div>
+        <div className="suite-result-banner" style={{ background: 'none', borderRadius: 0, padding: '12px 0 0 0', marginTop: 12 }}>
+          <span className={`suite-risk-badge ${damicoRes.badge}`}>{damicoRes.label}</span>
+          <div className="suite-advice">{damicoRes.advice}</div>
+        </div>
       </div>
     </div>
   )

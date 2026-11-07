@@ -42,7 +42,16 @@ function CalcView({ calc, onBack }) {
   const score = getScore()
   const result = score !== null ? calc.interpret(score) : null
 
-  function setValue(id, val) { setValues(prev => ({ ...prev, [id]: val })) }
+  function setValue(id, val) {
+    setValues(prev => {
+      const next = { ...prev, [id]: val }
+      if (calc.id === 'cha2ds2' && val) {
+        if (id === 'age75') next.age65 = false
+        if (id === 'age65') next.age75 = false
+      }
+      return next
+    })
+  }
 
   function shareResult() {
     if (!result) return

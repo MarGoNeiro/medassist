@@ -104,7 +104,7 @@ export default function CardiologySuite() {
   function toggle(id) {
     setFlags(prev => {
       const next = { ...prev, [id]: !prev[id] }
-      if (id === 'age75' && !prev['age75']) next.age65 = true
+      if (id === 'age75' && !prev['age75']) next.age65 = false
       return next
     })
   }

@@ -62,16 +62,45 @@ const WESTLEY = [
     id: 'consciousness',
     label: 'Уровень сознания',
     opts: [
-      { v: 0, l: 'Норма, в сознании' },
+      { v: 0, l: 'Норма (включая сон)' },
       { v: 5, l: 'Нарушено / дезориентация' },
     ],
   },
 ]
 
 function westleyResult(score) {
-  if (score <= 2) return { label: 'Лёгкий круп',    badge: 'badge-green',  advice: 'Дексаметазон 0.15 мг/кг однократно внутрь. Наблюдение в амбулаторных условиях.' }
-  if (score <= 7) return { label: 'Средний круп',   badge: 'badge-yellow', advice: 'Дексаметазон 0.6 мг/кг в/м. Будесонид 2 мг ингаляционно. Наблюдение в стационаре.' }
-  return               { label: 'Тяжёлый круп',    badge: 'badge-red',    advice: 'Госпитализация. Адреналин 1 мг/мл (1:1000) ингаляционно 0.5 мл/кг. О₂. Дексаметазон 0.6 мг/кг в/в.' }
+  const steroidAdvice = 'Глюкокортикостероид рекомендован при крупе: будесонид 2 мг через небулайзер (однократно или по 1 мг дважды с интервалом 30 минут) ИЛИ дексаметазон внутрь 0,15 мг/кг однократно; при введении в/м или в/в — 0,15–0,6 мг/кг. Рутинно сочетать будесонид с дексаметазоном не рекомендуется. Выбор препарата, пути введения и дозы определяется клинической картиной и степенью стеноза, а не только суммой баллов.'
+  const sources = {
+    sourceUrl: 'https://cr.minzdrav.gov.ru/view-cr/352_3',
+    sourceLabel: 'КР Минздрава России №352, версия 3 (2025)',
+    classificationSourceUrl: 'https://www.aafp.org/pubs/afp/issues/2018/0501/p575.html',
+    classificationSourceLabel: 'Классификация Westley: AAFP',
+  }
+
+  if (score <= 2) return {
+    label: 'Лёгкий круп',
+    badge: 'badge-green',
+    advice: `${steroidAdvice} Амбулаторное наблюдение или госпитализацию определяют по осмотру, динамике и возможности безопасного наблюдения.`,
+    ...sources,
+  }
+  if (score <= 7) return {
+    label: 'Средний круп',
+    badge: 'badge-yellow',
+    advice: `${steroidAdvice} Необходимость госпитализации определяется клинической степенью стеноза, ответом на терапию и условиями наблюдения.`,
+    ...sources,
+  }
+  if (score <= 11) return {
+    label: 'Тяжёлый круп',
+    badge: 'badge-red',
+    advice: `${steroidAdvice} Требуется срочная оценка и решение о госпитализации. При тяжёлом крупе или отсутствии глюкокортикостероидов КР допускают эпинефрин 1 мг/мл (1:1000): 5 мл через небулайзер за ингаляцию независимо от массы тела. Не применять как монотерапию; кислород — при SpO₂ ≤92%. В РФ применение эпинефрина у детей при крупе off-label; соблюдайте порядок медорганизации и информированного согласия. Данных о необходимости и эффективности повторных ингаляций нет; действовать по локальному протоколу.`,
+    ...sources,
+  }
+  return {
+    label: 'Угрожающая дыхательная недостаточность',
+    badge: 'badge-red',
+    advice: `Экстренная помощь: немедленно привлечь старшего педиатра и анестезиолога-реаниматолога, обеспечить готовность к поддержке дыхательных путей и переводу в ОРИТ. ${steroidAdvice} При тяжёлом крупе или отсутствии глюкокортикостероидов КР допускают эпинефрин 1 мг/мл (1:1000): 5 мл через небулайзер за ингаляцию независимо от массы тела; не как монотерапию. В РФ применение у детей при крупе off-label; соблюдать порядок медорганизации и информированного согласия. Данных о повторных ингаляциях нет; действовать по локальному протоколу.`,
+    ...sources,
+  }
 }
 
 // WHO 2006 growth reference (P10, P50, P90) — approximate
@@ -215,6 +244,7 @@ export default function PediatricSuite() {
         {/* Шкала Вестли */}
         <div className="suite-card">
           <div className="suite-card-title">🌬 Шкала Вестли — тяжесть крупа (острый ларинготрахеит)</div>
+          <div className="suite-advice" style={{ fontSize: 12, marginBottom: 12 }}>Баллы помогают описать тяжесть состояния. Они не заменяют клиническую оценку и сами по себе не определяют лечение или место наблюдения.</div>
           {WESTLEY.map(f => (
             <div key={f.id} className="suite-field" style={{ marginBottom: 10 }}>
               <label>{f.label}</label>
@@ -231,6 +261,16 @@ export default function PediatricSuite() {
             <div>
               <span className={`suite-risk-badge ${westleyRes.badge}`} style={{ fontSize: 11, padding: '3px 10px' }}>{westleyRes.label}</span>
               <div className="suite-advice" style={{ fontSize: 13 }}>{westleyRes.advice}</div>
+              {westleyRes.sourceUrl && (
+                <a href={westleyRes.sourceUrl} target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 6, fontSize: 11, color: '#93C5FD' }}>
+                  Источник: {westleyRes.sourceLabel}
+                </a>
+              )}
+              {westleyRes.classificationSourceUrl && (
+                <a href={westleyRes.classificationSourceUrl} target="_blank" rel="noreferrer" style={{ display: 'block', marginTop: 4, fontSize: 11, color: '#93C5FD' }}>
+                  Классификация шкалы: {westleyRes.classificationSourceLabel}
+                </a>
+              )}
             </div>
           </div>
         </div>

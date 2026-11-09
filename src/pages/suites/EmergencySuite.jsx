@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import './suites.css'
 
-function newsParameters({ rr, spo2, o2, sbp, hr, temp, conscious }) {
+function newsParameters({ rr, spo2, spo2Scale2, o2, sbp, hr, temp, conscious }) {
   let rrScore = 0
   if (rr <= 8) rrScore = 3; else if (rr <= 11) rrScore = 1; else if (rr <= 20) rrScore = 0; else if (rr <= 24) rrScore = 2; else rrScore = 3
 
   let spo2Score = 0
-  if (spo2 <= 91) spo2Score = 3; else if (spo2 <= 93) spo2Score = 2; else if (spo2 <= 95) spo2Score = 1
+  if (spo2Scale2 && o2) {
+    if (spo2 <= 83) spo2Score = 3; else if (spo2 <= 85) spo2Score = 2; else if (spo2 <= 87) spo2Score = 1; else if (spo2 <= 92) spo2Score = 0; else if (spo2 <= 94) spo2Score = 1; else if (spo2 <= 96) spo2Score = 2; else spo2Score = 3
+  } else if (spo2Scale2) {
+    if (spo2 <= 83) spo2Score = 3; else if (spo2 <= 85) spo2Score = 2; else if (spo2 <= 87) spo2Score = 1
+  } else if (spo2 <= 91) spo2Score = 3; else if (spo2 <= 93) spo2Score = 2; else if (spo2 <= 95) spo2Score = 1
 
   let sbpScore = 0
   if (sbp <= 90) sbpScore = 3; else if (sbp <= 100) sbpScore = 2; else if (sbp <= 110) sbpScore = 1; else if (sbp <= 219) sbpScore = 0; else sbpScore = 3
@@ -75,6 +79,7 @@ export default function EmergencySuite() {
   const [rrRaw,       setRrRaw]       = useState('16')
   const [spo2Raw,     setSpo2Raw]     = useState('97')
   const [o2,          setO2]          = useState(false)
+  const [useSpo2Scale2, setUseSpo2Scale2] = useState(false)
   const [sbpRaw,      setSbpRaw]      = useState('120')
   const [hrRaw,       setHrRaw]       = useState('78')
   const [tempRaw,     setTempRaw]     = useState('36.6')
@@ -89,7 +94,7 @@ export default function EmergencySuite() {
   const hr   = Math.max(10,  parseInt(hrRaw)     || 78)
   const temp = Math.max(25,  parseFloat(tempRaw) || 36.6)
 
-  const newsScores = newsParameters({ rr, spo2, o2, sbp, hr, temp, conscious: !alteredCons })
+  const newsScores = newsParameters({ rr, spo2, spo2Scale2: useSpo2Scale2, o2, sbp, hr, temp, conscious: !alteredCons })
   const news = Object.values(newsScores).reduce((sum, value) => sum + value, 0)
   const hasSingleRedScore = [
     newsScores.respiration,
@@ -148,10 +153,17 @@ export default function EmergencySuite() {
                 onChange={e => setTempRaw(e.target.value)}
                 onBlur={() => setTempRaw(String(Math.max(25, parseFloat(tempRaw) || 36.6)))} />
             </div>
-            <button className="suite-toggle-row" onClick={() => setO2(v => !v)}>
+            <button className="suite-toggle-row" onClick={() => { setO2(v => !v); setUseSpo2Scale2(false) }}>
               <span className="suite-toggle-label">Дополнительный O₂</span>
               <div className={`suite-toggle ${o2 ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
             </button>
+            <button className="suite-toggle-row" disabled={!o2} onClick={() => setUseSpo2Scale2(v => !v)}>
+              <span className="suite-toggle-label">Показания к шкале SpO₂ 2 подтверждены</span>
+              <div className={`suite-toggle ${useSpo2Scale2 && o2 ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>
+            </button>
+            <div className="suite-advice" style={{ fontSize: 11 }}>
+              Шкала 2 применима только при подтверждённой газами крови гиперкапнической дыхательной недостаточности, назначенном целевом SpO₂ 88–92% и решении компетентного специалиста. Она доступна при дополнительном O₂.
+            </div>
             <button className="suite-toggle-row" onClick={() => setAlteredCons(v => !v)}>
               <span className="suite-toggle-label">Нарушение сознания [+3]</span>
               <div className={`suite-toggle ${alteredCons ? 'on' : ''}`}><div className="suite-toggle-thumb" /></div>

@@ -1,23 +1,64 @@
 import { useState } from 'react'
 import './suites.css'
 
-function newsScore({ rr, spo2, o2, sbp, hr, temp, conscious }) {
-  let s = 0
-  if (rr <= 8) s += 3; else if (rr <= 11) s += 1; else if (rr <= 20) s += 0; else if (rr <= 24) s += 2; else s += 3
-  if (spo2 <= 91) s += 3; else if (spo2 <= 93) s += 2; else if (spo2 <= 95) s += 1
-  if (o2) s += 2
-  if (sbp <= 90) s += 3; else if (sbp <= 100) s += 2; else if (sbp <= 110) s += 1; else if (sbp <= 219) s += 0; else s += 3
-  if (hr <= 40) s += 3; else if (hr <= 50) s += 1; else if (hr <= 90) s += 0; else if (hr <= 110) s += 1; else if (hr <= 130) s += 2; else s += 3
-  if (temp <= 35.0) s += 3; else if (temp <= 36.0) s += 1; else if (temp <= 38.0) s += 0; else if (temp <= 39.0) s += 1; else s += 2
-  if (!conscious) s += 3
-  return s
+function newsParameters({ rr, spo2, o2, sbp, hr, temp, conscious }) {
+  let rrScore = 0
+  if (rr <= 8) rrScore = 3; else if (rr <= 11) rrScore = 1; else if (rr <= 20) rrScore = 0; else if (rr <= 24) rrScore = 2; else rrScore = 3
+
+  let spo2Score = 0
+  if (spo2 <= 91) spo2Score = 3; else if (spo2 <= 93) spo2Score = 2; else if (spo2 <= 95) spo2Score = 1
+
+  let sbpScore = 0
+  if (sbp <= 90) sbpScore = 3; else if (sbp <= 100) sbpScore = 2; else if (sbp <= 110) sbpScore = 1; else if (sbp <= 219) sbpScore = 0; else sbpScore = 3
+
+  let hrScore = 0
+  if (hr <= 40) hrScore = 3; else if (hr <= 50) hrScore = 1; else if (hr <= 90) hrScore = 0; else if (hr <= 110) hrScore = 1; else if (hr <= 130) hrScore = 2; else hrScore = 3
+
+  let tempScore = 0
+  if (temp <= 35.0) tempScore = 3; else if (temp <= 36.0) tempScore = 1; else if (temp <= 38.0) tempScore = 0; else if (temp <= 39.0) tempScore = 1; else tempScore = 2
+
+  return {
+    respiration: rrScore,
+    oxygenSaturation: spo2Score,
+    systolicBloodPressure: sbpScore,
+    pulse: hrScore,
+    temperature: tempScore,
+    consciousness: conscious ? 0 : 3,
+    supplementalOxygen: o2 ? 2 : 0,
+  }
 }
 
-function newsResult(score) {
-  if (score <= 2)  return { label: 'Низкий',              badge: 'badge-green',  color: '#34D399', advice: 'Мониторинг каждые 4–6 ч.' }
-  if (score <= 4)  return { label: 'Средний',             badge: 'badge-yellow', color: '#FBBF24', advice: 'Мониторинг каждые 1 ч. Оценить врача.' }
-  if (score <= 6)  return { label: 'Средний',             badge: 'badge-yellow', color: '#FBBF24', advice: 'Срочный осмотр врача. Мониторинг каждые 1 ч.' }
-  return             { label: 'Высокий – экстренный', badge: 'badge-red',    color: '#F87171', advice: 'Немедленная реакция. Вызов реанимационной бригады.' }
+function newsResult(score, hasSingleRedScore) {
+  if (score >= 7) return {
+    label: 'Высокий',
+    badge: 'badge-red',
+    color: '#F87171',
+    advice: 'Непрерывный контроль жизненных показателей и экстренная оценка командой с компетенциями критической помощи; необходимость перевода и дальнейшие действия — по локальному протоколу.',
+  }
+  if (score >= 5) return {
+    label: 'Средний',
+    badge: 'badge-yellow',
+    color: '#FBBF24',
+    advice: 'Срочный осмотр врача. Контроль показателей не реже 1 раза в час до осмотра и документированного плана; оценить необходимость эскалации помощи.',
+  }
+  if (hasSingleRedScore) return {
+    label: 'Одиночный тревожный параметр',
+    badge: 'badge-yellow',
+    color: '#FBBF24',
+    advice: 'Один физиологический параметр получил 3 балла: требуется срочный осмотр врача. Контроль не реже 1 раза в час до осмотра и плана дальнейшего наблюдения.',
+  }
+  if (score === 0) return {
+    label: 'Низкий',
+    badge: 'badge-green',
+    color: '#34D399',
+    advice: 'Сумма 0. По NEWS2 RCP минимальный интервал наблюдения — 12 часов; корректировать частоту по клинической оценке и локальному протоколу.',
+  }
+  return {
+    label: 'Низкий',
+    badge: 'badge-green',
+    color: '#34D399',
+    advice: 'Сумма 1–4. По NEWS2 RCP наблюдение обычно проводят каждые 4–6 часов; корректировать частоту по клинической оценке и локальному протоколу.',
+  }
 }
 
 const GCS_EYES   = [{ v:4,l:'4 – Самопроизвольно' },{ v:3,l:'3 – На голос' },{ v:2,l:'2 – На боль' },{ v:1,l:'1 – Нет' }]
@@ -48,8 +89,17 @@ export default function EmergencySuite() {
   const hr   = Math.max(10,  parseInt(hrRaw)     || 78)
   const temp = Math.max(25,  parseFloat(tempRaw) || 36.6)
 
-  const news     = newsScore({ rr, spo2, o2, sbp, hr, temp, conscious: !alteredCons })
-  const nRes     = newsResult(news)
+  const newsScores = newsParameters({ rr, spo2, o2, sbp, hr, temp, conscious: !alteredCons })
+  const news = Object.values(newsScores).reduce((sum, value) => sum + value, 0)
+  const hasSingleRedScore = [
+    newsScores.respiration,
+    newsScores.oxygenSaturation,
+    newsScores.systolicBloodPressure,
+    newsScores.pulse,
+    newsScores.temperature,
+    newsScores.consciousness,
+  ].some(score => score === 3)
+  const nRes = newsResult(news, hasSingleRedScore)
   const gcsTotal = eyes + verbal + motor
   const gcsLabel = gcsTotal >= 13 ? 'Лёгкое нарушение' : gcsTotal >= 9 ? 'Умеренное' : 'Тяжёлая кома'
   const gcsBadge = gcsTotal >= 9 ? 'badge-yellow' : 'badge-red'
@@ -113,6 +163,9 @@ export default function EmergencySuite() {
             <div className="suite-score-big" style={{ color: nRes.color }}>{news}</div>
             <span className={`suite-risk-badge ${nRes.badge}`}>{nRes.label}</span>
             <div className="suite-advice" style={{ marginTop: 6 }}>{nRes.advice}</div>
+            <a href="https://www.rcp.ac.uk/resources/national-early-warning-score-news-2/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 6, fontSize: 11, color: '#93C5FD' }}>
+              Источник порогов: Royal College of Physicians (NEWS2)
+            </a>
           </div>
         </div>
       </div>
